@@ -1,0 +1,76 @@
+#
+# Automatically generated make config: don't edit
+# Sat Apr 16 15:43:43 2011
+#
+
+#
+# Board Settings
+#
+CONFIG_karch="x86"
+CONFIG_cflags="-O2"
+CONFIG_ac_target="i486-linux"
+
+#
+# Software Packages
+#
+
+#
+# libraries
+#
+# CONFIG_apache-log4cxx is not set
+# CONFIG_apr is not set
+# CONFIG_apr-util is not set
+# CONFIG_apr-util-expat is not set
+# CONFIG_boost is not set
+# CONFIG_expat is not set
+CONFIG_glibc=y
+# CONFIG_libconfigpp is not set
+# CONFIG_libdaemon is not set
+# CONFIG_libgtest is not set
+# CONFIG_liblog4cpp is not set
+# CONFIG_libpng is not set
+# CONFIG_qt-qws is not set
+# CONFIG_tslib is not set
+CONFIG_zlib=y
+
+#
+# main
+#
+CONFIG_basefiles=y
+CONFIG_busybox=y
+# CONFIG_fbv is not set
+# CONFIG_mtd-utils is not set
+CONFIG_networking=y
+# CONFIG_qwt is not set
+CONFIG_startup_script=y
+# CONFIG_udev is not set
+
+#
+# networking
+#
+# CONFIG_avahi is not set
+# CONFIG_csshover is not set
+# CONFIG_ethtool is not set
+# CONFIG_fcgi is not set
+# CONFIG_jsprogressbarhandler is not set
+# CONFIG_lighttpd is not set
+# CONFIG_ntp is not set
+# CONFIG_open-flash-chart is not set
+CONFIG_openssh=y
+CONFIG_openssl=y
+# CONFIG_php is not set
+# CONFIG_prototype is not set
+# CONFIG_ptpd is not set
+# CONFIG_swfobject is not set
+# CONFIG_vsftpd is not set
+# CONFIG_xcache is not set
+
+#
+# Image Options
+#
+CONFIG_initrd=y
+CONFIG_initrd_size=16384
+# CONFIG_jffs2 is not set
+CONFIG_manifest=y
+# CONFIG_ubifs is not set
+CONFIG_tftp_dir="/home/tftp"

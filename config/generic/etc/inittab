@@ -1,0 +1,14 @@
+::sysinit:/etc/startup.sh
+
+::shutdown:/etc/shutdown.sh
+
+tty1::askfirst:/bin/sh
+tty2::askfirst:/bin/sh
+tty3::askfirst:/bin/sh
+tty4::askfirst:/bin/sh
+
+# Login prompt on ttyS0:
+#::respawn:/sbin/getty -L ttyS0 115200 vt100
+
+# Open root shell on ttyS0:
+# ttyS0::askfirst:/bin/ash --login
