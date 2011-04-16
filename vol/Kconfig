@@ -1,0 +1,112 @@
+comment "Image Options"
+
+config manifest
+	prompt "manifest"
+	default y
+	bool
+	help
+	 Create a manifest of contents in the image.
+
+config tftp_dir
+	prompt "tftp directory"
+	default "/home/tftp"
+	string
+	help
+	 Path to a directory on the development machine into which
+	 images are installed. If you are serving images to your
+	 embedded devices via TFTP, then set this to the server's root
+	 directory. If you do not have a TFTP server, then just ignore
+	 this option.
+
+comment "Image Types"
+
+config initrd
+	prompt "initrd"
+	default n
+	bool
+	help
+	 Create a initial RAM disk image.
+
+config initrd_size
+	depends on initrd
+	prompt "initrd size KB"
+	default 16384
+	int
+	help
+	 Size of the initial RAM disk in kilobytes.
+
+comment "JFFS2"
+
+config jffs2
+	prompt "jffs2"
+	default n
+	bool
+	help
+	 Create a jffs2 flash image.
+
+if jffs2
+
+config jffs2_ebs
+	prompt "jffs2 erase block size"
+	default 0x20000
+	hex
+	help
+	 Size of the jffs2 erase block size in bytes. However, if you
+	 give a value less than 0x1000, the image making tool assumes
+	 you mean kilobytes instead.
+
+config jffs2_pad
+	prompt "jffs2 total image size"
+	default 0xC00000
+	hex
+	help
+	 Size of the jffs2 image bytes.
+
+config jffs2_ext
+	prompt "jffs2 extra options"
+	default ""
+	string
+	help
+	 This string will be appended to the image making tool's
+	 command line. There are quite a number of options to choose
+	 from. See MKFS.JFFS2(1) for more information.
+
+endif
+
+comment "UBIFS"
+
+config ubifs
+	prompt "ubifs"
+	default n
+	bool
+	help
+	 Create a ubifs flash image.
+
+if ubifs
+
+config ubi_ebs
+	prompt "UBI erase block size"
+	default 129024
+	int
+
+config ubi_ext
+	prompt "UBI extra options"
+	default "-m 2048 -c 4074"
+	string
+
+config ubinize_opt
+	prompt "ubinize options"
+	default "-s 512 -O 512 -p 131072 -m 2048"
+	string
+
+config ubi_volume_name
+	prompt "UBI volume name"
+	default "root"
+	string
+
+config ubi_volume_size
+	prompt "UBI volume size"
+	default "250MiB"
+	string
+
+endif

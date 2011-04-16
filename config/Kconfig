@@ -1,0 +1,30 @@
+menu "Board Settings"
+
+config karch
+	prompt "Linux Kernel Architecture"
+	default ""
+	string
+	help
+	 When compiling a Linux kernel, this value for the ARCH
+	 environment variable.
+
+config cflags
+	prompt "GNU autoconf cflags"
+	default "-O2"
+	string
+	help
+	 When compiling a package that uses the GNU autoconf system,
+	 this value for the CFLAGS environment variable.
+
+config ac_target
+	prompt "GNU autoconf target"
+	default ""
+	string
+	help
+	 When compiling a package that uses the GNU autoconf system,
+	 this value for the --host flag to the configure script. This
+	 flag describes the target machine where the programs should
+	 run and is sometimes the same as or similar to the name of
+	 the cross compiler.
+
+endmenu
