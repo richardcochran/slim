@@ -27,16 +27,50 @@ Q              ?= @
 out = $(BOARD)
 pwd = $(shell pwd)
 
+#
+# Always include the configuration.
+#
 config = .config.$(BOARD)
 -include $(config)
 
-all: images
+#
+# Directories for the board's build products.
+#
+export build  = $(pwd)/$(out)/build
+export dld    = $(pwd)/$(out)/download
+export redist = $(pwd)/$(out)/redist
+export rootfs = $(pwd)/$(out)/rootfs
+export stage  = $(pwd)/$(out)/stage
+export stamp  = $(out)/stamp
 
-images: packages
-	@echo making images
+dirs = $(build) $(dld) $(redist) $(rootfs) $(stage) $(stamp)
+
+all: $(dirs) images
+
+$(dirs):
+	$(Q) mkdir -p $(build)
+	$(Q) mkdir -p $(dld)
+	$(Q) mkdir -p $(redist)
+	$(Q) mkdir -p $(rootfs)
+	$(Q) mkdir -p $(stage)
+	$(Q) mkdir -p $(stamp)
 
 packages:
 	@echo making packages
+
+#
+# Create the image files.
+#
+
+$(stamp)/images: $(volumes)
+	$(Q) touch $@
+
+images: packages $(stamp)/images
+	@echo making images
+
+#
+# Clean up after ourselves.
+#
 
 clean:
 	rm -Rf $(out)
@@ -139,4 +173,4 @@ scripts/kconfig/mconf:
 #
 # Many targets are not files at all.
 #
-.PHONY: all clean defconfig distclean menuconfig rescue
+.PHONY: all clean defconfig distclean images menuconfig packages rescue
