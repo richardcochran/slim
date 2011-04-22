@@ -59,6 +59,15 @@ packages:
 	@echo making packages: $(pkg-y)
 
 #
+# Control the verbosity.
+#
+
+ifndef V
+MAKEFLAGS += -s --no-print-directory
+export muffle := 1>/dev/null
+endif
+
+#
 # Create the image files.
 #
 
@@ -73,10 +82,10 @@ $(foreach v, $(all_vols), $(eval $(call vol_template,$(v))))
 volumes := $(foreach v, $(vol-y), $(stamp)/vol.$(v))
 
 $(stamp)/vol.%:
-	$(Q) printf "%s   IMAGE    vol/$*\n%s" $(NL) $(NL)
+	$(Q) printf "   IMAGE    vol/$*\n"
 	$(Q) touch $@
 
-# $(volumes): $(manifests)
+$(volumes): $(stamp)/manifest
 
 $(stamp)/images: packages $(volumes)
 	@echo making images: $(vol-y)
@@ -92,17 +101,6 @@ clean:
 distclean: clean
 	$(MAKE) -C scripts/kconfig distclean
 	rm -f $(config)
-
-#
-# Control the verbosity.
-#
-
-ifdef V
-NL = "\n"
-else
-MAKEFLAGS += -s --no-print-directory
-export muffle = 1>/dev/null
-endif
 
 #
 # The configuration file
@@ -132,9 +130,57 @@ define pkg_template
 pkg-$$(CONFIG_$(1)) += $(1)
 endef
 
-all_packages = $(notdir $(wildcard pkg/*))
+all_packages := $(notdir $(wildcard pkg/*))
 
 $(foreach p,$(all_packages),$(eval $(call pkg_template,$(p))))
+
+install := $(foreach p, $(pkg-y), $(stamp)/pkg.$(p).install)
+
+#
+# Create a manifest
+#
+
+$(stamp)/manifest: $(install)
+	@echo Create a manifest
+	$(Q) touch $@
+
+#
+# prefetch fetch unpack prep build stage install
+#
+
+$(stamp)/pkg.%.prefetch: pkg/%/makefile
+	$(Q) printf "   PREFETCH pkg/$*\n"
+	$(Q) touch $@
+
+$(stamp)/pkg.%.fetch: $(stamp)/pkg.%.prefetch
+	$(Q) printf "   FETCH    pkg/$*\n"
+#	$(Q) $(MAKE) -C pkg/$* -I$(pwd) fetch
+	$(Q) touch $@
+
+$(stamp)/pkg.%.unpack: $(stamp)/pkg.%.fetch
+	$(Q) printf "   UNPACK   pkg/$*\n"
+#	$(Q) $(MAKE) -C pkg/$* -I$(pwd) unpack
+	$(Q) touch $@
+
+$(stamp)/pkg.%.prep: $(stamp)/pkg.%.unpack
+	$(Q) printf "   PREP     pkg/$*\n"
+#	$(Q) $(MAKE) -C pkg/$* -I$(pwd) prep
+	$(Q) touch $@
+
+$(stamp)/pkg.%.build: $(stamp)/pkg.%.prep
+	$(Q) printf "   BUILD    pkg/$*\n"
+#	$(Q) $(MAKE) -C pkg/$* -I$(pwd) build
+	$(Q) touch $@
+
+$(stamp)/pkg.%.stage: $(stamp)/pkg.%.build
+	$(Q) printf "   STAGE    pkg/$*\n"
+#	$(Q) $(MAKE) -C pkg/$* -I$(pwd) stage
+	$(Q) touch $@
+
+$(stamp)/pkg.%.install: $(stamp)/pkg.%.stage
+	$(Q) printf "   INSTALL  pkg/$*\n"
+#	$(Q) $(MAKE) -C pkg/$* -I$(pwd) install
+	$(Q) touch $@
 
 #
 # Menu support
