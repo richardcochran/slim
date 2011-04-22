@@ -45,7 +45,7 @@ export stamp  = $(out)/stamp
 
 dirs = $(build) $(dld) $(redist) $(rootfs) $(stage) $(stamp)
 
-all: $(dirs) images
+all: $(dirs) $(stamp)/images
 
 $(dirs):
 	$(Q) mkdir -p $(build)
@@ -56,17 +56,31 @@ $(dirs):
 	$(Q) mkdir -p $(stamp)
 
 packages:
-	@echo making packages
+	@echo making packages: $(pkg-y)
 
 #
 # Create the image files.
 #
 
-$(stamp)/images: $(volumes)
+define vol_template
+vol-$$(CONFIG_$(1)) += $(1)
+endef
+
+all_vols := $(notdir $(wildcard vol/*))
+
+$(foreach v, $(all_vols), $(eval $(call vol_template,$(v))))
+
+volumes := $(foreach v, $(vol-y), $(stamp)/vol.$(v))
+
+$(stamp)/vol.%:
+	$(Q) printf "%s   IMAGE    vol/$*\n%s" $(NL) $(NL)
 	$(Q) touch $@
 
-images: packages $(stamp)/images
-	@echo making images
+# $(volumes): $(manifests)
+
+$(stamp)/images: packages $(volumes)
+	@echo making images: $(vol-y)
+	$(Q) touch $@
 
 #
 # Clean up after ourselves.
@@ -121,18 +135,6 @@ endef
 all_packages = $(notdir $(wildcard pkg/*))
 
 $(foreach p,$(all_packages),$(eval $(call pkg_template,$(p))))
-
-#
-# Create a the list of image types to include in the build.
-#
-
-define vol_template
-vol-$$(CONFIG_$(1)) += $(1)
-endef
-
-all_vols = $(notdir $(wildcard vol/*))
-
-$(foreach v,$(all_vols),$(eval $(call vol_template,$(v))))
 
 #
 # Menu support
