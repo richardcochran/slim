@@ -171,6 +171,19 @@ scripts/kconfig/mconf:
 	$(Q) $(MAKE) -C scripts/kconfig mconf
 
 #
+# Help on the make targets.
+#
+
+help:
+	printf "\nSimple Linux Image Maker\n\n"
+	printf "Targets:\n"
+	printf " all        - Build the image.\n"
+	printf " menuconfig - Update current config utilising a menu based program.\n"
+	printf " clean      - Remove all the build products.\n"
+	printf " distclean  - Remove all the build products and the configuration file.\n"
+	printf "\n"
+
+#
 # Many targets are not files at all.
 #
-.PHONY: all clean defconfig distclean images menuconfig packages rescue
+.PHONY: all clean defconfig distclean help images menuconfig packages rescue
