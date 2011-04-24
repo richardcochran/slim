@@ -4,6 +4,25 @@ set -e
 set -o pipefail
 trap error_exit ERR
 
+do_clone()
+{
+    #
+    # If the directory does not exist, assume it is a remote allowing
+    # the git-archive command.
+    #
+    [ ! -d "$slimgit" ] && return
+    #
+    # If the directory exists, assume it is the cloned repository.
+    #
+    [ -d "$slimgit/$dirname" ] && return
+    #
+    # Clone the remote git URL.
+    #
+    cd "$slimgit"
+    echo "   CLONE    $source/$dirname as $slimgit"
+    git clone  --bare $source/$dirname $dirname
+}
+
 error_exit()
 {
     echo
@@ -11,7 +30,8 @@ error_exit()
     echo
     case "$method" in
 	git)
-	    echo "git archive --format=tar --prefix=$dirname/ --remote=$source $tag | gzip > $file"
+	    echo "git archive --format=tar --prefix=$dirname/ \\"
+	    echo "    --remote=$slimgit/$dirname $tag | gzip > $file"
 	    ;;
 	wget)
 	    echo wget "$source/$file"
@@ -38,6 +58,8 @@ usage ()
 
 dest=$dld
 tag=master
+slimgit=$SLIM_GIT
+[ -z "$slimgit" ] && slimgit=$HOME/slim_git
 
 while getopts :d:hf:m:s:t:u: OPT; do
     case $OPT in
@@ -87,19 +109,20 @@ if [ -z "$source" ]; then
     exit 1
 fi
 
-cd "$dest"
-
 case "$method" in
     git)
 	dirname=`basename $file .tgz`
-	git archive --format=tar --prefix=$dirname/ --remote=$source $tag | \
+	do_clone
+	cd "$dest"
+	git archive --format=tar --prefix=$dirname/ --remote=$slimgit/$dirname $tag | \
 	    gzip > $file
 	if [ ! -z "$upstream" ]; then
 	    git archive --format=tar --prefix=upstream_$dirname/ \
-		--remote=$source $upstream | gzip > upstream_$file
+		--remote=$slimgit/$dirname $upstream | gzip > upstream_$file
 	fi
 	;;
     wget)
+	cd "$dest"
 	if [ -n "$OEL_WGET_MIRROR" ]; then
 	    echo "   FETCH    from $OEL_WGET_MIRROR instead of $source"
 	    source="$OEL_WGET_MIRROR"
