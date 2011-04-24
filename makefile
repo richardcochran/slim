@@ -45,6 +45,15 @@ export stamp  = $(out)/stamp
 
 dirs = $(build) $(dld) $(redist) $(rootfs) $(stage) $(stamp)
 
+#
+# Scripts for the package makefiles.
+#
+export comply = $(pwd)/scripts/comply.sh
+export fetch  = $(pwd)/scripts/fetch.sh
+export needed = $(pwd)/scripts/needed.sh
+export start  = $(pwd)/scripts/start.sh -d $(stage)/etc
+export unpack = $(pwd)/scripts/unpack.sh
+
 all: $(dirs) $(stamp)/images
 
 $(dirs):
