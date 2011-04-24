@@ -26,7 +26,7 @@ usage ()
     echo ""
     echo "usage: `basename $0` [ARGS]"
     echo ""
-    echo "-d destination directory (defaults to .)"
+    echo "-d destination directory (defaults to \$dld)"
     echo "-f file"
     echo "-h shows this message"
     echo "-m method"
@@ -36,7 +36,7 @@ usage ()
     echo ""
 }
 
-dest=.
+dest=$dld
 tag=master
 
 while getopts :d:hf:m:s:t:u: OPT; do

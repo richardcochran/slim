@@ -7,12 +7,13 @@ usage ()
     echo ""
     echo "-d name   destination directory"
     echo "-f name   source tar file"
-    echo "-s name   source directory"
-    echo "-u        unpack and diff the upstream tar file"
+    echo "-s name   source directory (default \$dld)"
     echo ""
 }
 
-while getopts :d:f:hs:u OPT; do
+srcdir=$dld
+
+while getopts :d:f:hs: OPT; do
     case $OPT in
 	d)
 	    destdir="$OPTARG"
@@ -22,9 +23,6 @@ while getopts :d:f:hs:u OPT; do
 	    ;;
 	s)
 	    srcdir="$OPTARG"
-	    ;;
-	u)
-	    upstream=1
 	    ;;
 	h)
 	    usage
@@ -60,7 +58,7 @@ cd "$destdir"
 
 tar -xzf "$srcdir"/"$file"
 
-[ -z $upstream ] && exit 0
+[ ! -e "$srcdir"/upstream_"$file" ] && exit 0
 
 tar -xzf "$srcdir"/upstream_"$file"
 
