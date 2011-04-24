@@ -20,7 +20,7 @@ config tftp_dir
 
 comment "Image Types"
 
-config initrd
+menuconfig initrd
 	prompt "initrd"
 	default n
 	bool
@@ -35,9 +35,7 @@ config initrd_size
 	help
 	 Size of the initial RAM disk in kilobytes.
 
-comment "JFFS2"
-
-config jffs2
+menuconfig jffs2
 	prompt "jffs2"
 	default n
 	bool
@@ -73,9 +71,7 @@ config jffs2_ext
 
 endif
 
-comment "UBIFS"
-
-config ubifs
+menuconfig ubifs
 	prompt "ubifs"
 	default n
 	bool
