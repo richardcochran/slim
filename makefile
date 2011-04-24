@@ -64,6 +64,9 @@ $(dirs):
 	$(Q) mkdir -p $(stage)
 	$(Q) mkdir -p $(stamp)
 
+depend := $(stamp)/depend
+-include $(depend)
+
 packages:
 	@echo making packages: $(pkg-y)
 
@@ -125,11 +128,11 @@ $(config):
 
 defconfig:
 	$(create_defconfig)
-#	rm -f $(depend)
+	rm -f $(depend)
 
 rescue:
 	cp config/$(BOARD)/rescue_config $(config)
-#	rm -f $(depend)
+	rm -f $(depend)
 
 #
 # Create a the list of packages to include in the build.
@@ -156,6 +159,16 @@ $(stamp)/manifest: $(install)
 #
 # prefetch fetch unpack prep build stage install
 #
+
+pkg_depend := $(foreach p, $(pkg-y), $(stamp)/pkg.$(p).depend)
+
+$(depend): $(config) $(pkg_depend)
+	[ -d $(stamp) ] && cat $(pkg_depend) > $(depend)
+
+$(stamp)/pkg.%.depend: pkg/%/makefile
+	$(Q) printf "   DEPEND   pkg/$*\n"
+	$(Q) mkdir -p $(stamp)
+	$(Q) $(MAKE) -C pkg/$* -I$(pwd) depend OUTPUT=$(pwd)/$@ pkg=$*
 
 $(stamp)/pkg.%.prefetch: pkg/%/makefile
 	$(Q) printf "   PREFETCH pkg/$*\n"

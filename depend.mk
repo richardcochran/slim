@@ -12,21 +12,21 @@ OUTPUT ?= /dev/null
 #
 
 depend:
-	$(QQ) printf "%s: " $(stamp)/.$(pkg).prep > $(OUTPUT)
+	$(QQ) printf "%s: " $(stamp)/pkg.$(pkg).prep    >  $(OUTPUT)
 	$(QQ) for d in $(PREP_DEPEND); do \
-		printf "\\\\\n\t%s " $(stamp)/.$$d >> $(OUTPUT) ; \
+		printf "\\\\\n\t%s " $(stamp)/pkg.$$d   >> $(OUTPUT) ; \
 	done
-	$(QQ) printf "\n" >> $(OUTPUT)
-	$(QQ) printf "%s: " $(stamp)/.$(pkg).build >> $(OUTPUT)
+	$(QQ) printf "\n"                               >> $(OUTPUT)
+	$(QQ) printf "%s: " $(stamp)/pkg.$(pkg).build   >> $(OUTPUT)
 	$(QQ) for d in $(BUILD_DEPEND); do \
-		printf "\\\\\n\t%s " $(stamp)/.$$d >> $(OUTPUT) ; \
+		printf "\\\\\n\t%s " $(stamp)/pkg.$$d   >> $(OUTPUT) ; \
 	done
 	$(QQ) printf "\n" >> $(OUTPUT)
-	$(QQ) printf "%s: " $(stamp)/.$(pkg).install >> $(OUTPUT)
+	$(QQ) printf "%s: " $(stamp)/pkg.$(pkg).install >> $(OUTPUT)
 	$(QQ) for d in $(INSTALL_DEPEND); do \
-		printf "\\\\\n\t%s " $(stamp)/.$$d >> $(OUTPUT) ; \
+		printf "\\\\\n\t%s " $(stamp)/pkg.$$d   >> $(OUTPUT) ; \
 	done
-	$(QQ) printf "\n" >> $(OUTPUT)
+	$(QQ) printf "\n"                               >> $(OUTPUT)
 
 #
 # Generate a manifest and comply with the source licenses.
