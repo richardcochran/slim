@@ -58,14 +58,18 @@ ifneq ($(strip $(PROVIDES)),)
 	$(QQ) echo $(PKG) $(LICENSE) PROVIDES $(PROVIDES) >>$(OUTPUT)
 endif
 
+liclist:
+ifneq ($(GET),NOOP)
+	$(QQ) $(catlic) -d $(redist) -f $(LICFILE) -l $(liclist) -p $(pkg)
+endif
+
 manifest:
 ifneq ($(GET),NOOP)
 	$(QQ) printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\n" \
-	$(pkg) $(VER) $(GET) $(URL) $(LICENSE) $(LICFILE) $(sha1sum) >>$(OUTPUT)
+	$(pkg) $(VER) $(GET) $(URL) $(LICENSE) $(LICFILE) $(sha1sum) > $(OUTPUT)
 	$(QQ) mkdir -p $(redist)
 	$(QQ) $(comply) \
-		-d $(redist) -f $(LICFILE) -l $(liclist) -p $(pkg) \
-		-s $(dld)/$(TGZ) -t $(LICENSE)
+		-d $(redist) -f $(LICFILE) -p $(pkg) -s $(dld)/$(TGZ) -t $(LICENSE)
 endif
 
 #

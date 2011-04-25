@@ -8,23 +8,19 @@ usage ()
     echo "-d destination directory"
     echo "-f license file"
     echo "-h shows this message"
-    echo "-l license list (append license file onto this)"
     echo "-p package name"
     echo "-s source tar file name"
     echo "-t license type"
     echo ""
 }
 
-while getopts :d:f:hl:p:s:t: OPT; do
+while getopts :d:f:hp:s:t: OPT; do
     case $OPT in
 	d)
 	    destdir="$OPTARG"
 	    ;;
 	f)
 	    file="$OPTARG"
-	    ;;
-	l)
-	    liclist="$OPTARG"
 	    ;;
 	p)
 	    pkg="$OPTARG"
@@ -52,13 +48,6 @@ HR="==========================================================================="
 if [ -f "$file" ]; then
     mkdir -p "$destdir/$pkg"
     cp "$file" "$destdir/$pkg"
-    echo $HR	>> "$destdir/$liclist"
-    echo "License Notification for the '$pkg' Package" >> "$destdir/$liclist"
-    echo $HR	>> "$destdir/$liclist"
-    echo ""     >> "$destdir/$liclist"
-    cat "$file" | sed s/"\r"// | sed s/"\f"// >> "$destdir/$liclist"
-    echo ""     >> "$destdir/$liclist"
-    echo ""     >> "$destdir/$liclist"
 fi
 
 if [ -f "$source" ]; then
@@ -85,4 +74,3 @@ if [ -f "$source" ]; then
 fi
 
 exit 0
-

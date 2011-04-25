@@ -49,11 +49,14 @@ dirs = $(build) $(dld) $(redist) $(rootfs) $(stage) $(stamp)
 # Scripts for the package makefiles.
 #
 export etc    = $(pwd)/config/$(BOARD)/etc
+export catlic = $(pwd)/scripts/catlic.sh
 export comply = $(pwd)/scripts/comply.sh
 export fetch  = $(pwd)/scripts/fetch.sh
 export needed = $(pwd)/scripts/needed.sh
 export start  = $(pwd)/scripts/start.sh -d $(stage)/etc
 export unpack = $(pwd)/scripts/unpack.sh
+
+export liclist = OSS_LICENSE.TXT
 
 all: $(dirs) $(stamp)/images
 
@@ -67,9 +70,6 @@ $(dirs):
 
 depend := $(stamp)/depend
 -include $(depend)
-
-packages:
-	@echo making packages: $(pkg-y)
 
 #
 # Control the verbosity.
@@ -100,7 +100,7 @@ $(stamp)/vol.%:
 
 $(volumes): $(stamp)/manifest
 
-$(stamp)/images: packages $(volumes)
+$(stamp)/images: $(volumes)
 	@echo making images: $(vol-y)
 	$(Q) touch $@
 
@@ -153,8 +153,28 @@ install := $(foreach p, $(pkg-y), $(stamp)/pkg.$(p).install)
 # Create a manifest
 #
 
-$(stamp)/manifest: $(install)
-	@echo Create a manifest
+pkg_manifest := $(foreach p, $(pkg-y), $(stamp)/pkg.$(p).manifest)
+
+$(stamp)/manifest: $(install) $(pkg_manifest)
+	$(Q) cat $(pkg_manifest) > $(redist)/manifest.txt
+	$(Q) rm -f $(redist)/$(liclist)
+	$(Q) for p in $(pkg-y) ; do \
+		$(MAKE) -C pkg/$$p -I$(pwd) liclist pkg=$$p ; \
+	done
+	$(Q) $(pwd)/scripts/pretty_manifest.awk \
+		-v board=$(BOARD) -v strip=$(pwd)/ \
+		< $(redist)/manifest.txt \
+		> $(redist)/manifest.html
+	$(Q) $(pwd)/scripts/short_manifest.awk \
+		-v board=$(BOARD) \
+		< $(redist)/manifest.txt \
+		> $(redist)/OSS_LICENSE.TSV
+	$(Q) cp $(pwd)/scripts/pretty_manifest.css $(redist)/
+	$(Q) touch $@
+
+$(stamp)/pkg.%.manifest: $(stamp)/pkg.%.install
+	$(Q) printf "   MANIFEST pkg/$*\n"
+	$(Q) $(MAKE) -C pkg/$* -I$(pwd) manifest OUTPUT=$(pwd)/$@ pkg=$*
 	$(Q) touch $@
 
 #
@@ -251,4 +271,4 @@ help:
 #
 # Many targets are not files at all.
 #
-.PHONY: all clean defconfig distclean help images menuconfig packages rescue
+.PHONY: all clean defconfig distclean help images menuconfig rescue
