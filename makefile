@@ -48,6 +48,7 @@ dirs = $(build) $(dld) $(redist) $(rootfs) $(stage) $(stamp)
 #
 # Scripts for the package makefiles.
 #
+export etc    = $(pwd)/config/$(BOARD)/etc
 export comply = $(pwd)/scripts/comply.sh
 export fetch  = $(pwd)/scripts/fetch.sh
 export needed = $(pwd)/scripts/needed.sh
@@ -174,35 +175,29 @@ $(stamp)/pkg.%.prefetch: pkg/%/makefile
 	$(Q) printf "   PREFETCH pkg/$*\n"
 	$(Q) touch $@
 
-$(stamp)/pkg.%.fetch: $(stamp)/pkg.%.prefetch
-	$(Q) printf "   FETCH    pkg/$*\n"
-#	$(Q) $(MAKE) -C pkg/$* -I$(pwd) fetch
+define step
+	$(Q) printf "   %-8s pkg/$*\n" $(1)
+	$(Q) $(MAKE) -C pkg/$* -I$(pwd) $(2)
 	$(Q) touch $@
+endef
+
+$(stamp)/pkg.%.fetch: $(stamp)/pkg.%.prefetch
+	$(call step,FETCH,fetch)
 
 $(stamp)/pkg.%.unpack: $(stamp)/pkg.%.fetch
-	$(Q) printf "   UNPACK   pkg/$*\n"
-#	$(Q) $(MAKE) -C pkg/$* -I$(pwd) unpack
-	$(Q) touch $@
+	$(call step,UNPACK,unpack)
 
 $(stamp)/pkg.%.prep: $(stamp)/pkg.%.unpack
-	$(Q) printf "   PREP     pkg/$*\n"
-#	$(Q) $(MAKE) -C pkg/$* -I$(pwd) prep
-	$(Q) touch $@
+	$(call step,PREP,prep)
 
 $(stamp)/pkg.%.build: $(stamp)/pkg.%.prep
-	$(Q) printf "   BUILD    pkg/$*\n"
-#	$(Q) $(MAKE) -C pkg/$* -I$(pwd) build
-	$(Q) touch $@
+	$(call step,BUILD,build)
 
 $(stamp)/pkg.%.stage: $(stamp)/pkg.%.build
-	$(Q) printf "   STAGE    pkg/$*\n"
-#	$(Q) $(MAKE) -C pkg/$* -I$(pwd) stage
-	$(Q) touch $@
+	$(call step,STAGE,stage)
 
 $(stamp)/pkg.%.install: $(stamp)/pkg.%.stage
-	$(Q) printf "   INSTALL  pkg/$*\n"
-#	$(Q) $(MAKE) -C pkg/$* -I$(pwd) install
-	$(Q) touch $@
+	$(call step,INSTALL,install)
 
 #
 # Menu support
