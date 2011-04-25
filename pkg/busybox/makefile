@@ -39,7 +39,7 @@ ifdef kconfig
 endif
 
 build:
-	$(Q) $(MAKE) -C $(SRC)
+	$(Q) $(MAKE) $(J) -C $(SRC)
 
 stage:
 	$(Q) true
