@@ -7,14 +7,14 @@ BEGIN {
     printf "<link rel=\"stylesheet\" type=\"text/css\" href=\"linkage.css\" />"
     printf "\n"
     printf "<title>"
-    printf "OEL Linkage Report for " board
+    printf "SLIM Linkage Report for " board
     printf "</title>"
     printf "\n"
     printf "</head>"
     printf "\n"
     printf "<body>"
     printf "<h1>"
-    printf "OEL Linkage Report for " board
+    printf "SLIM Linkage Report for " board
     printf "</h1>"
     printf "\n"
     printf "<center>"

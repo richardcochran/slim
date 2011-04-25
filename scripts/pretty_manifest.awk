@@ -8,14 +8,14 @@ BEGIN {
     printf "<link rel=\"stylesheet\" type=\"text/css\" href=\"pretty_manifest.css\" />"
     printf "\n"
     printf "<title>"
-    printf "OEL Manifest for " board
+    printf "SLIM Manifest for " board
     printf "</title>"
     printf "\n"
     printf "</head>"
     printf "\n"
     printf "<body>"
     printf "<h1>"
-    printf "OEL Manifest for " board
+    printf "SLIM Manifest for " board
     printf "</h1>"
     printf "\n"
     printf "<center>"
