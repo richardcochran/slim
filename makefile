@@ -238,6 +238,14 @@ $(stamp)/pkg.%.install: $(stamp)/pkg.%.stage
 	$(call step,INSTALL,install)
 
 #
+# Operate on individual packages.
+#
+
+%/distclean:
+	touch $(stamp)/pkg.$(notdir $*).prefetch
+	$(Q) $(MAKE) -C $* -I$(pwd) distclean
+
+#
 # Menu support
 #
 
