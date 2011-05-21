@@ -127,6 +127,12 @@ distclean: clean
 	$(MAKE) -C scripts/kconfig distclean
 	rm -f $(config)
 
+repopulate:
+	$(Q) rm -Rf $(rootfs)
+	$(Q) rm -f $(stage)/etc/startup-[0-9]*-*
+	$(Q) rm -f $(install)
+	$(MAKE) all
+
 #
 # The configuration file
 #
