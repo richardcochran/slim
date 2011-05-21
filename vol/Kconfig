@@ -7,6 +7,13 @@ config manifest
 	help
 	 Create a manifest of contents in the image.
 
+config startup
+	prompt "startup script"
+	default y
+	bool
+	help
+	 Run the startup script when booting the system.
+
 config tftp_dir
 	prompt "tftp directory"
 	default "/home/tftp"
@@ -27,13 +34,24 @@ menuconfig initrd
 	help
 	 Create a initial RAM disk image.
 
+if initrd
+
 config initrd_size
-	depends on initrd
 	prompt "initrd size KB"
 	default 16384
 	int
 	help
 	 Size of the initial RAM disk in kilobytes.
+
+config uboot_initrd
+	prompt "uboot wrapper"
+	default y
+	bool
+	help
+	 Say yes here to produce an initial RAM disk wrapped in an
+	 image suitable for use with the u-boot boot loader.
+
+endif
 
 menuconfig jffs2
 	prompt "jffs2"
@@ -62,7 +80,7 @@ config jffs2_pad
 
 config jffs2_ext
 	prompt "jffs2 extra options"
-	default ""
+	default "-b -U"
 	string
 	help
 	 This string will be appended to the image making tool's
@@ -87,7 +105,7 @@ config ubi_ebs
 
 config ubi_ext
 	prompt "UBI extra options"
-	default "-m 2048 -c 4074"
+	default "-U -m 2048 -c 4074"
 	string
 
 config ubinize_opt

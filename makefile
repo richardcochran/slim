@@ -88,14 +88,26 @@ define vol_template
 vol-$$(CONFIG_$(1)) += $(1)
 endef
 
-all_vols := $(notdir $(wildcard vol/*))
+all_vols := manifest startup initrd jffs2 ubifs
 
 $(foreach v, $(all_vols), $(eval $(call vol_template,$(v))))
 
 volumes := $(foreach v, $(vol-y), $(stamp)/vol.$(v))
 
+export CONFIG_initrd_size
+export CONFIG_jffs2_ebs
+export CONFIG_jffs2_pad
+export CONFIG_jffs2_ext       := $(shell echo $(CONFIG_jffs2_ext))
+export CONFIG_tftp_dir        := $(shell echo $(CONFIG_tftp_dir))
+export CONFIG_ubi_ebs
+export CONFIG_ubi_ext         := $(shell echo $(CONFIG_ubi_ext))
+export CONFIG_ubinize_opt     := $(shell echo $(CONFIG_ubinize_opt))
+export CONFIG_ubi_volume_name := $(shell echo $(CONFIG_ubi_volume_name))
+export CONFIG_ubi_volume_size := $(shell echo $(CONFIG_ubi_volume_size))
+
 $(stamp)/vol.%:
 	$(Q) printf "   IMAGE    vol/$*\n"
+	$(Q) $(MAKE) -C vol -f $*.mk
 	$(Q) touch $@
 
 $(volumes): $(stamp)/manifest
