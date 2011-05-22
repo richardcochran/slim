@@ -11,7 +11,7 @@ DST = $(rootfs)/usr/share/udhcpc
 
 LICENSE  = GPL2
 LICFILE  = $(SRC)/LICENSE
-UPSTREAM = ""
+UPSTREAM =
 BINARIES = busybox
 PROVIDES =
 CATEGORY = main
@@ -26,7 +26,7 @@ environment for any small system, both embedded environments and more full \
 featured systems concerned about space.
 
 fetch:
-	$(Q) $(fetch) -m $(GET) -f $(TGZ) -s $(URL) -t $(VER) -u $(UPSTREAM)
+	$(Q) $(fetch) -m $(GET) -f $(TGZ) -s $(URL) -t $(VER)
 
 unpack:
 	$(Q) $(unpack) -d $(build) -f $(TGZ)

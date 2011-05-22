@@ -1,9 +1,9 @@
 # SLIM makefile for the 'glibc' package.
 
 PKG = glibc
-VER =
-GET =
-URL =
+VER = NA
+GET = NA
+URL = NA
 PRG =
 TGZ =
 SRC = $(shell ./findlibc.sh)
