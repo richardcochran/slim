@@ -19,8 +19,8 @@ do_clone()
     # Clone the remote git URL.
     #
     cd "$slimgit"
-    echo "   CLONE    $source/$dirname as $slimgit"
-    git clone  --bare $source/$dirname $dirname
+    echo "   CLONE    $source as $slimgit/$dirname"
+    git clone --bare $source $dirname
 }
 
 error_exit()

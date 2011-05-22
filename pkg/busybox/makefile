@@ -3,7 +3,7 @@
 PKG = busybox
 VER = 1_16_0
 GET = git
-URL = git://git.busybox.net
+URL = git://git.busybox.net/busybox
 PRG =
 TGZ = $(PKG).tgz
 SRC = $(build)/$(PKG)
