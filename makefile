@@ -58,6 +58,20 @@ export unpack = $(pwd)/scripts/unpack.sh
 
 export liclist = OSS_LICENSE.TXT
 
+#
+# Variables for passing to autoconf.
+#
+export ac_env := \
+	CC=$(CROSS_COMPILE)gcc \
+	CFLAGS=$(CONFIG_cflags) \
+	CPPFLAGS=-I$(stage)/usr/include \
+	LDFLAGS=-L$(stage)/usr/lib
+
+export ac_flags := \
+	--build=i486-pc-linux-gnu \
+	--host=$(CONFIG_ac_target) \
+	--prefix=/usr
+
 all: $(dirs) $(stamp)/images
 
 $(dirs):
