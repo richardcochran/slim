@@ -43,7 +43,7 @@ export rootfs = $(pwd)/$(out)/rootfs
 export stage  = $(pwd)/$(out)/stage
 export stamp  = $(out)/stamp
 
-dirs = $(build) $(dld) $(redist) $(rootfs) $(stage) $(stamp)
+dirs = $(build) $(dld) download $(redist) $(rootfs) $(stage) $(stamp)
 
 #
 # Scripts for the package makefiles.
@@ -63,6 +63,7 @@ all: $(dirs) $(stamp)/images
 $(dirs):
 	$(Q) mkdir -p $(build)
 	$(Q) mkdir -p $(dld)
+	$(Q) mkdir -p download
 	$(Q) mkdir -p $(redist)
 	$(Q) mkdir -p $(rootfs)
 	$(Q) mkdir -p $(stage)
