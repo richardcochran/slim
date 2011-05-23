@@ -97,7 +97,7 @@ endif
 #
 
 CATEGORY    ?= "main"
-DESCRIPTION ?= "Sorry, no description for this item."
+DESCRIPTION ?= Sorry, no description for this item.
 PROMPT      ?= $(pkg)
 
 kc_output = $(OUTPUT).$(CATEGORY)
