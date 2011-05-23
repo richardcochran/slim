@@ -1,0 +1,35 @@
+#
+# Startup for the SLIM 'openssh' package.
+#
+
+DEFKEY=/etc/ssh/default_key
+DSAKEY=/etc/ssh/backup/ssh_host_dsa_key
+RSAKEY=/etc/ssh/backup/ssh_host_rsa_key
+
+ssh_generate_backup()
+{
+    rm -f $DSAKEY $RSAKEY
+    /usr/bin/ssh-keygen -N "" -t dsa -f $DSAKEY
+    /usr/bin/ssh-keygen -N "" -t rsa -f $RSAKEY
+    sync
+}
+
+ssh_restore_backup()
+{
+    cp $DSAKEY $RSAKEY /etc/ssh
+    sync
+    rm -f $DEFKEY
+    sync
+}
+
+if [ -f $DEFKEY ]; then
+    if [ -e $DSAKEY -a -e $RSAKEY ]; then
+	ssh_restore_backup;
+    else
+	(ssh_generate_backup; ssh_restore_backup;) &
+    fi
+fi
+
+mkdir -p /var/empty
+chmod 0700 /var/empty
+/usr/sbin/sshd &
