@@ -56,11 +56,11 @@ fi
 
 cd "$destdir"
 
-tar -xzf "$srcdir"/"$file"
+tar -xf "$srcdir"/"$file"
 
 [ ! -e "$srcdir"/upstream_"$file" ] && exit 0
 
-tar -xzf "$srcdir"/upstream_"$file"
+tar -xf "$srcdir"/upstream_"$file"
 
 original=`basename upstream_"$file" .tgz`
 derived=`basename "$file" .tgz`
