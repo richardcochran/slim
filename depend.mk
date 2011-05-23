@@ -115,5 +115,5 @@ ifneq ($(strip $(kc_select)),)
 	done
 endif
 	$(QQ) printf "\thelp\n"                          >> $(kc_output)
-	$(QQ) echo "\t $(DESCRIPTION)" | fmt -c -        >> $(kc_output)
+	$(QQ) printf "\t $(DESCRIPTION)\n" | fmt -c -    >> $(kc_output)
 	$(QQ) printf "\n"                                >> $(kc_output)
