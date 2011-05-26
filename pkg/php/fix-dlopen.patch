@@ -1,0 +1,13 @@
+--- php-5.3.0/configure~	2009-06-29 17:46:18.000000000 +0200
++++ php-5.3.0/configure	2009-08-17 15:51:40.000000000 +0200
+@@ -14718,7 +14718,7 @@
+     ac_libs=$LIBS
+     LIBS="$LIBS -ldl"
+     if test "$cross_compiling" = yes; then
+-  found=no
++  found=yes
+ else
+   cat > conftest.$ac_ext <<EOF
+ #line 14725 "configure"
+
+Diff finished.  Mon Aug 17 15:51:49 2009
