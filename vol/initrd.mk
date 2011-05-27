@@ -15,7 +15,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 IMAGE   = $(build)/../$(BOARD)-initrd
-OPTIONS = -q -b $(CONFIG_initrd_size) -N $(CONFIG_initrd_size) -i 1024
+OPTIONS = -U -b $(CONFIG_initrd_size) -N $(CONFIG_initrd_size) -i 1024
 
 all: uboot-initrd
 
