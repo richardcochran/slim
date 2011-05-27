@@ -29,7 +29,7 @@ prep:
 build:
 stage:
 
-DIR = bin dev etc home/omicron lib mnt proc root sbin tmp sys usr \
+DIR = bin dev etc home/slim lib mnt proc root sbin tmp sys usr \
 var/lib var/lock var/log var/run
 
 DIR += \
