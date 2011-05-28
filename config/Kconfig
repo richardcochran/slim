@@ -5,7 +5,7 @@ config karch
 	default ""
 	string
 	help
-	 When compiling a Linux kernel, this value for the ARCH
+	 When compiling a Linux kernel, use this value for the ARCH
 	 environment variable.
 
 config cflags
@@ -14,7 +14,7 @@ config cflags
 	string
 	help
 	 When compiling a package that uses the GNU autoconf system,
-	 this value for the CFLAGS environment variable.
+	 use this value for the CFLAGS environment variable.
 
 config ac_target
 	prompt "GNU autoconf target"
@@ -22,10 +22,10 @@ config ac_target
 	string
 	help
 	 When compiling a package that uses the GNU autoconf system,
-	 this value for the --host flag to the configure script. This
-	 flag describes the target machine where the programs should
-	 run and is sometimes the same as or similar to the name of
-	 the cross compiler.
+	 use this value for the --host flag to the configure
+	 script. This flag describes the target machine where the
+	 programs should run and is sometimes the same as or similar
+	 to the name of the cross compiler.
 
 endmenu
 
