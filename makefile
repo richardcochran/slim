@@ -56,6 +56,7 @@ export needed = $(pwd)/scripts/needed.sh
 export start  = $(pwd)/scripts/start.sh -d $(stage)/etc
 export unpack = $(pwd)/scripts/unpack.sh
 
+export karch = $(CONFIG_karch)
 export liclist = OSS_LICENSE.TXT
 
 #
