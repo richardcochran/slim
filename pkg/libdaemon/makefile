@@ -3,7 +3,7 @@
 PKG = libdaemon
 VER = cross
 GET = git
-URL = git@github.com:richardcochran/libdaemon.git
+URL = git://github.com/richardcochran/libdaemon.git
 PRG = libdaemon
 TGZ = $(PKG).tgz
 SRC = $(build)/$(PKG)
