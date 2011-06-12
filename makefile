@@ -52,6 +52,7 @@ export etc    = $(pwd)/config/$(BOARD)/etc
 export catlic = $(pwd)/scripts/catlic.sh
 export comply = $(pwd)/scripts/comply.sh
 export fetch  = $(pwd)/scripts/fetch.sh
+export gitbase= $(pwd)/scripts/gitbase.awk
 export needed = $(pwd)/scripts/needed.sh
 export start  = $(pwd)/scripts/start.sh -d $(stage)/etc
 export unpack = $(pwd)/scripts/unpack.sh
@@ -296,6 +297,28 @@ menuconfig: scripts/kconfig/mconf kc_body kc_end
 
 scripts/kconfig/mconf:
 	$(Q) $(MAKE) -C scripts/kconfig mconf
+
+#
+# Target to create a baseline over the git packages.
+#
+
+gitbase_pkg := $(foreach p, $(pkg-y), $(stamp)/pkg.$(p).gitbase)
+
+baseline: $(gitbase_pkg)
+
+$(stamp)/pkg.%.gitbase:
+	$(Q) $(MAKE) -C pkg/$* -I$(pwd) baseline OUTPUT=$(pwd)/$@ pkg=$*
+
+#
+# Targets to help keep a developer's git mirror up to date.
+#
+
+gitdev_pkg := $(foreach p, $(pkg-y), $(stamp)/pkg.$(p).gitdev)
+
+gitdev: $(gitdev_pkg)
+
+$(stamp)/pkg.%.gitdev:
+	$(Q) $(MAKE) -C pkg/$* -I$(pwd) gitdev OUTPUT=$(pwd)/$@ pkg=$*
 
 #
 # Help on the make targets.
