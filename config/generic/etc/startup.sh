@@ -1,4 +1,6 @@
-#!/bin/sh
+#
+# Startup for the SLIM 'generic' board.
+#
 
 mount -a
 

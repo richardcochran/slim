@@ -19,7 +19,9 @@ DST = $(rootfs)/etc
 
 all:
 	$(Q) mkdir -p $(rootfs)/etc
-	$(Q) cp $(etc)/startup.sh $(rootfs)/etc
+	$(Q) mkdir -p $(SRC)
+	$(Q) cp $(etc)/startup.sh $(SRC)/startup-000-board
+	$(Q) printf "#!/bin/sh \n" > $(rootfs)/etc/startup.sh
 	$(Q) for f in $(SRC)/startup-[0-9]*-*; do \
 		echo                >> $(rootfs)/etc/startup.sh; \
 		echo -n "# "        >> $(rootfs)/etc/startup.sh; \

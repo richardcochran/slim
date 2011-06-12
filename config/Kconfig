@@ -28,3 +28,10 @@ config ac_target
 	 the cross compiler.
 
 endmenu
+
+config essential
+	default y
+	bool
+	select basefiles
+	select manifest
+	select startup
