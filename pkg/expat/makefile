@@ -3,7 +3,7 @@
 PKG = expat
 VER = 2.0.1
 GET = wget
-URL = http://sourceforge.net/projects/expat/files/expat/
+URL = http://downloads.sourceforge.net/project/expat/expat/2.0.1
 PRG = expat
 TGZ = $(PKG)-$(VER).tar.gz
 SRC = $(build)/$(PKG)-$(VER)
