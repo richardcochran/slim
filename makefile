@@ -324,6 +324,23 @@ $(stamp)/pkg.%.gitdev:
 # Targets to make new packages and boards.
 #
 
+ifeq ($(AC),yes)
+genpkg_options += -a
+endif
+ifeq ($(GET),git)
+genpkg_options += -g
+endif
+
+new_package:
+	if [ x$(PKG) = x ] || [ x$(GET) = x ] || [ x$(AC) = x ] ; then \
+		printf "\nPlease set all three needed variables, like so:\n\n"; \
+		printf "\tmake new_package PKG=xyz GET=git|wget AC=yes|no\n\n"; \
+		false; \
+	fi
+	mkdir -p pkg/$(PKG)
+	./scripts/genpkg.sh $(genpkg_options) -d template/package -p $(PKG) > \
+	pkg/$(PKG)/makefile
+
 new_board:
 	if [ -z $(BRD) ]; then echo Need a board name, BRD=xyz; false; fi
 	mkdir -p config/$(BRD)
