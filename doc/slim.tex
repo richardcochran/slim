@@ -1,0 +1,632 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{calc}
+\usepackage{color}
+\usepackage{epsfig}
+\usepackage{lastpage}
+\usepackage{listings}
+\usepackage{url}
+\usepackage{xspace}
+
+\newenvironment{Description}[1][\quad]{%
+  \begin{list}{}{%
+      \renewcommand{\makelabel}[1]{\textbf{##1}\hfill}%
+      \settowidth{\labelwidth}{\textbf{#1}}%
+      \setlength{\leftmargin}{\labelwidth+\labelsep}%
+  }%
+}{%
+  \end{list}%
+}
+
+\newenvironment{MyTable}{
+ \bigskip
+ \begin{table}[!hbp]\begin{center}
+} {
+ \end{center}\end{table}
+}
+\newenvironment{MyFigure}{
+ \begin{figure}[!ptb]\begin{center}
+} {
+ \end{center}\end{figure}
+}
+\newenvironment{MyFigureHere}{
+ \begin{figure}[!hbp]\begin{center}
+} {
+ \end{center}\end{figure}
+}
+\newcommand{\slim}{\textsc{Slim}\xspace}
+\newcommand{\fw}{\tt\bf}
+
+\begin{document}
+
+\title{
+  The Simple Linux Image Maker
+}
+\author{
+  Richard Cochran \\
+  OMICRON electronics GmbH \\
+  {\tt richard.cochran@omicron.at}
+}
+\date{June 9, 2011}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\definecolor{gray}{rgb}{0.75,0.75,0.75}
+\lstset{
+  aboveskip=\baselineskip,
+  basicstyle=\ttfamily,
+  frame=shadowbox,
+  framexbottommargin=1em,
+  framexleftmargin=1mm,
+  framextopmargin=1em,
+  language=Make,
+  rulesepcolor=\color{gray}
+}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
+
+\section{Introduction}
+
+    The Simple Linux Image Maker (\slim) is a tool to develop root
+    file systems for embedded computers running the GNU/Linux
+    operating system. The \slim system enables a developer working on
+    a Debian GNU/Linux work station to painlessly create a bootable
+    image for one or more embedded devices.
+
+    The \slim build system came about during a development project at
+    OMICRON electronics which required creating a GNU/Linux based
+    embedded computer. After lengthy trials with existing open source
+    build systems, it became apparent that no single existing system
+    met all of our needs.
+
+\subsection{Audience}
+
+    \slim can be used by two different classes of end users, namely
+    build managers and platform integration developers. For the build
+    managers, using \slim requires only basic knowledge of working
+    with a GNU/Linux system from the command line. To perform a build,
+    you need to set three environment variables and then run ``make.''
+
+    The integration developer should posses a good understanding of
+    GNU makefiles and should have experience in configuring and
+    building software packages directly from source. In addition,
+    experience working with the git version control system is required
+    to benefit from the advantages of the \slim system.
+
+\subsection{Design Goals}
+
+\begin{enumerate}
+\item Simple, transparent build system.
+\item Automatically creates manifests and source archives for GPL/OSS
+  license compliance.
+\item Uses an external cross compiler and glibc \\
+  (optionally can use the host compiler).
+\item Does not build any host tools, but runs under Debian GNU/Linux.
+\item Written completely in GNU makefiles, with minimal bash shell scripting
+(no Perl, Python, or other scripting languages).
+\item Creates a monolithic image \\
+  (does not ``nickel and dime'' with individual packages).
+\item Supports multiple architectures.
+\item Supports multiple build configurations simultaneously.
+\item Optionally builds an external Linux kernel.
+\item Supports fetching upstream sources via git or wget.
+\end{enumerate}
+
+\subsection{Putting Patches in Their Place.}
+
+    One critical weakness of existing build systems is their
+    management of patches to upstream sources. Many upstream software
+    packages do not build correctly when cross compiling, and so the
+    integration developer must provide patches to these
+    packages. Often, the only minimal changes are required, but still,
+    for whatever reason,%
+    \footnote {
+      Perhaps the embedded developer is too lazy to submit his patch,
+      or upstream maintainer is not interested in the needs of the
+      embedded developer, or maybe a bit of both.
+    }
+    these patches are not integrated upstream. 
+
+    As a result the integration developer must maintain the
+    {\it patches themselves}, along with the build system, in his
+    version control system (VCS). In many cases, for example when
+    working with the Linux kernel, the only practical way to create
+    and maintain the patches is to use the VCS of the upstream
+    project. As a result, the developer is faced with the tedious and
+    error-prone task of synchronizing his patches within the build
+    system to multiple external VC systems.
+
+    The \slim build system presents a novel solution to this
+    problem. By supporting fetching of git sources by named commit,
+    tag or branch, \slim eliminates the need to duplicate the embedded
+    patches within the \slim system itself. Instead, the integration
+    developer maintains the patches in an external git repository,
+    which is the ``right way'' to do it. Using git, the task of
+    tracking external projects, even those in SVN or CVS, is much more
+    manageable than with any other method.
+
+    Of course, credit for the fact that the embedded developer can
+    simplify his work in this way belongs to git. The \slim build
+    system just takes advantage of the power of git. For example, when
+    the \slim makefiles contain references to specific commits, a
+    ``stable release'' is built. In contrast, when the makefiles
+    contain reference to branch heads, a ``bleeding edge'' image can
+    be automatically built, without any manual updating of the
+    sources.
+
+\subsection{Comparison to Existing Systems}
+
+    There are many different Open Source systems for creating embedded
+    systems. Each one has its own purpose and methods, and every
+    project has its strengths and weaknesses. \slim owes its existence
+    to and stands on the shoulders of a number of them, by both
+    stealing the good ideas and avoiding the ugly stuff.
+
+    The following evaluations should be read with a grain salt. The
+    facts and opinions expressed date primarily from experience
+    gathered during 2009. Open source projects often grow, improve,
+    and change very quickly, and so it is well worth the effort to
+    take another look at the current offerings now and again.
+
+    With so many choices available, we recommend the following method
+    for picking a build system. Using each system in turn, try to
+    build and boot a simple image for your own board, including at
+    least one custom package that you yourself add. If you need to
+    spend more than one week on it, then probably that build system is
+    not for you.
+
+\subsubsection{Linux Target Image Builder}
+
+    The Linux Target Image Builder~\cite{ltib} (LTIB) is written in
+    Perl and uses RPM as the package format. The documentation is
+    adequate, and adding a new package is fairly straightforward.
+    Building with LTIB requires root permissions, and adding new
+    sources or patches requires placing them in globally shared
+    directory under {\fw /opt}.
+%
+    Patch management is done using a primitive RPM method. LTIB does
+    not build a cross toolchain, but it does build many host tools
+    which are already available on a Debian system.
+%
+    LTIB allows building an external Linux kernel, but in practice
+    this method is brittle and error-prone, like many of the
+    configuration options. One major drawback of LTIB is the fact that
+    while the most recent developement occurs in an independent open
+    source project, essential configuration files and patches for many
+    boards are only found in out of date releases from Freescale.
+    LTIB does not support fetching sources directly from a VCS.
+
+\subsubsection{Open Embedded}
+
+    Open Embedded~\cite{oe} (OE) is a humongous project based on the
+    ``object oriented'' bit bake build tool, written in the python
+    scripting language. OE requires the developer to write ``recipes''
+    in python, and these recipes can ``inherit'' from base classes.
+    The documentation on how to write a recipe and on the many magic
+    variable names is very thin indeed. OE supports multiple
+    architectures and board types, but the documentation on how to add
+    a new board is lacking important detail.%
+    \footnote {
+      This author freely admits that, despite weeks of effort, he was
+      not even able to add a custom package to OE, let alone create a
+      new platform type. Maybe he is just too dimwitted to understand
+      the OE system.
+    }
+    An OE build is controlled by means of a host of different
+    configuration files.  OE builds the cross toolchain with the glibc
+    library, and it also builds many host tools which are already
+    available on a Debian system. The OE build produces packages in
+    the ipkg format.  One positive aspect of OE is that is can fetch
+    sources directly from configured version control systems.
+
+\subsubsection{OpenWrt}
+
+    The OpenWrt~\cite{openwrt} build system is written in GNU
+    makefiles, with a bit of Perl and shell scripting. Adding packages
+    and kernel modules is adequately documented and is accomplished by
+    means of slightly non-standard GNU makefiles. OpenWrt always
+    builds its own toolchain and kernel. OpenWrt produces packages in
+    the opkg format. The main drawbacks of OpenWrt are that it
+    currently only supports uClibc, it is not possible to use an
+    external toolchain, and the system does not provide a license
+    manifest. At least for the Linux kernel, OpenWrt can fetch sources
+    directly from a VCS.
+
+\subsubsection{Others}
+
+\begin{Description}[buildroot0000]
+
+\item[Andriod]
+  is a java platform with a stripped down BSD C library.
+
+\item[ptxdist \cite{ptxdist}]
+  is written in shell script and makefiles, can compile its own
+  toolchain or use an external one, does not support fetching from
+  VCS, fairly easy to add a package.
+
+\item[buildroot \cite{buildroot}]
+  is makefile based, uses Kconfig, easy to add a package, includes
+  complete source tree for all components, uClibc only.
+
+\item[emdebian \cite{emdebian}]
+  is an attempt to adapt the Debian system to the needs of embedded
+  system development.
+
+\end{Description}
+
+\section{Installing \slim}
+
+\subsection{Prerequisites}
+
+\subsubsection{Cross compiler}
+
+    The fact that \slim does not compile its own toolchain is a
+    deliberate design descision.  Choosing the right compiler is very
+    important for the success of an embedded project.  Not every
+    combination of gcc, glibc, and binutils yields a correctly working
+    compiler.  Our recommendation is to use a cross compiler for your
+    platform that has been used and tested by as many other people as
+    possible.  Often, the compiler provided by the chip vendor is a
+    good, safe choice.
+
+    If you find yourself in the position of having to compile your own
+    toolchain, then are specialized open source tools to accomplish
+    this.
+    The original crosstool project~\cite{kegel} is a bit out of date
+    by now, but still can be used to produce a working 3.x gcc
+    version.
+    The crosstool-NG project~\cite{morin} has extended the original
+    crosstool idea and provides an easy to use Kconfig (ncurses blue
+    screen) menu system to choose the settings and options for your
+    toolchain.
+
+    The installation of a cross compiler is, to quote a favorite
+    international standard of ours, a ``local issue.''  Every single
+    toolchain seems to have its own idea of where it should be
+    installed.  Before you begin working with \slim, you should add
+    the cross compiler tools into your shell's search path.
+
+\subsubsection{Host tools}
+
+    \slim assumes a Debian GNU/Linux development environment, although
+    it is probably possible to use it under other GNU/Linux
+    distributions as well. Before using \slim for the first time, you
+    should make sure the following Debian packages are installed.
+
+\begin{verbatim}
+autoconf          findutils         intltool          mtd-utils
+automake          flex              libc6             p7zip-full
+autotools-dev     g++               libc6-dev         patch
+bash              gawk              libglib2.0-dev    sed
+binutils          gcc               liblzo2-2         tar
+bison             genext2fs         liblzo2-dev       tftp
+bsdmainutils      genisoimage       libncurses5       tftpd
+bzip2             git-core          libncurses5-dev   uboot-mkimage
+coreutils         git-gui           libtool           unzip
+cpp               gitk              linux-libc-dev    util-linux
+diff              grep              m4                wget
+diffstat          groff             make              zip
+e2fslibs          groff-base        mktemp            zlib1g
+e2fsprogs         gzip              mount             zlib1g-dev
+file              initramfs-tools
+\end{verbatim}
+
+\subsection{Installation}
+
+    The \slim build system is managed under the git version control
+    system. To install \slim, run the following command.
+
+\begin{lstlisting}
+git clone git://github.com/richardcochran/slim.git
+\end{lstlisting}
+
+    This will create a new directory called {\fw slim} in your current
+    working directory. Once you change directory into {\fw slim}, you
+    will be ready to get to work.
+
+\section{Building an Image}
+
+\subsection{Setting the Environment}
+
+    Before you build, you need to set two environment variables,
+    {\fw BOARD} and {\fw CROSS\_COMPILE}, described below.
+    These variables are used by \slim during the build process.  In
+    addition to these two variables, you should also add the path to
+    your cross compiler to the {\fw PATH} variable, if it is not
+    already in the path.
+
+    Depending on your larger development environment, you may want to
+    set the optional variables {\fw SLIM\_GIT} and {\fw SLIM\_WGET}.
+    These come into play when using a centralized server in a
+    corporate LAN setting, for example.
+
+    \begin{Description}[CROSS\_COMPILE ]
+
+    \item[BOARD]
+      This identifies your target platform. This variable must match
+      one of the subdirectories of {\fw slim/config}.
+
+    \item[CROSS\_COMPILE]
+      This identifies the compiler to use. Please note that the value
+      for this variable should end with a dash (or minus sign).
+
+    \item[SLIM\_GIT]
+      This names the source URL for those packages which come from a
+      git repository. If set, the git sources will be fetched from
+      this URL instead of the ones named in the package makefiles.
+      The variable can be set to either a local directory or to a file
+      server in your LAN. When using a file server, it must accept the
+      ``git archive'' command.  If unset, \slim will look for a
+      directory called {\fw slim\_git} in your home directory.
+
+    \item[SLIM\_WGET]
+      This variable names a proxy web server. If set, the tar files
+      will be fetched from this URL instead of the ones named in the
+      package makefiles. This is useful when setting up an in-house
+      archive of all the source packages used in an image.
+
+    \end{Description}
+
+    Typing these variables into the shell every time you sit down to
+    work soon becomes tedious. Instead, you can place them into a
+    small shell script, as shown.
+
+\begin{lstlisting}[language=bash,escapechar=X]
+# env.sh - Sample settings for the SLIM build system.
+export BOARD=nslu
+export CROSS_COMPILE=armeb-unknown-linux-gnu-
+export PATH=X\$XPATH:/opt/xcc/armeb-unknown-linux-gnu/bin
+\end{lstlisting}
+
+    The \slim build system already includes a default {\fw env.sh}
+    file which contains the PATH variables for cross compilers shipped
+    by the vendor with various development boards. Once you have
+    created or customized such a file, then you can simply source it
+    before you start a build, as shown:
+
+\begin{lstlisting}[language=bash,escapechar=X]
+X\$X . scripts/env.sh
+\end{lstlisting}
+
+    If you do not set {\fw SLIM\_GIT} (which is normally the case when
+    first starting out), then your need to create a directory to hold
+    the git repositories, as shown below.
+
+\begin{lstlisting}[language=bash,escapechar=X]
+X\$X mkdir ~/slim_git
+\end{lstlisting}
+
+\subsection{Building}
+
+    To build your project, simply type ``make,'' as shown below.
+
+\begin{lstlisting}[language=bash,escapechar=X]
+X\$X make
+\end{lstlisting}
+
+    Once the build completes, the build products may be found in a
+    subdirectory called {\fw slim/\$BOARD}. Normally, the build system
+    only prints a summary of the build process, along with any
+    compiler warnings or errors. If you encounter an error, or if you
+    are just curious, you can enable a verbose build by settings the
+    {\fw V} and {\fw Q} variables, as shown.
+
+\begin{lstlisting}[language=bash,escapechar=X]
+X\$X make V=1 Q=
+\end{lstlisting}
+
+    To completely remove all of the build products, make the
+    ``distclean'' target, as shown below.
+
+\begin{lstlisting}[language=bash,escapechar=X]
+X\$X make distclean
+\end{lstlisting}
+
+\subsection{Rebuilding a Package}
+
+    To force a rebuild of a certain package, type the following
+    command. For git-based packages configured to a named branch, this
+    will also update your sources to the current version from the
+    source repository.
+
+\begin{lstlisting}[language=bash,escapechar=X]
+X\$X make pkg/bob/distclean
+X\$X make
+\end{lstlisting}
+
+\section{Adding a New Package}
+
+    One of the main design goals of \slim is to make adding a custom
+    package as easy as possible. \slim makefiles are really just plain
+    old GNU makefiles. If you know how to write a makefile, then
+    adding a package to \slim should be a breeze. Also, adding third
+    party packages is relatively painless. If you can configure and
+    compile a package by hand, then it is a fairly straightforward
+    exercise to enter those shell commands into a \slim makefile.
+
+\subsection{Creating the makefile}\label{MakeNew}
+
+    Every \slim package has its own directory under the {\fw slim/pkg}
+    directory. The first step in adding a new package is to copy a
+    template makefile into a new sub-directory of {\fw slim/pkg}. The
+    ``new\_package'' make target does this for you automatically. For a
+    package named ``bob,'' enter the following command to create the
+    initial package.
+
+\begin{lstlisting}[language=bash,escapechar=X]
+X\$X make new_packge PKG=bob GET=wget AC=no
+\end{lstlisting}
+
+    For a git-based package, use this command instead.
+
+\begin{lstlisting}[language=bash,escapechar=X]
+X\$X make new_package PKG=bob GET=git AC=no
+\end{lstlisting}
+
+    If the package uses the GNU autoconf system, then you should use
+    ``AC=yes'' on the command line.
+
+\subsection{Customizing the makefile}
+
+\subsubsection{Dependencies to Other Packages}
+
+    If your package depends on other packages in order to build or to
+    install, you must specify the dependencies using list variables,
+    as shown in the following listing. Each dependency has two parts,
+    the package name and the build step.
+
+    For example, in the listing below, the variable {\fw BUILD\_DEPEND}
+    is set to {\fw basefiles.build}. This means that the build step
+    for the current makefile depends on the results of the build step
+    of the ``basefiles'' package. Even if your package has no
+    dependencies, your makefile must still include the file called
+    {\fw depend.mk} at the very end of your makefile.
+
+\begin{lstlisting}
+PREP_DEPEND =
+BUILD_DEPEND = basefiles.build
+INSTALL_DEPEND = basefiles.install
+\end{lstlisting}
+
+\subsubsection{Required Targets}
+
+    There are seven required targets: fetch, unpack, prep, build,
+    install, clean and distclean. You can choose to do nothing for a
+    target, if nothing needs to be done. If you create your makefile
+    using the {\fw make new\_package} target, as described in
+    Section~\ref{MakeNew}, then the generated makefile presents
+    reasonable default rules.
+
+\subsubsection{Writing the Rules}
+
+    The \slim build system exports a number of environment variables
+    to your makefile, listed below. By convention, variables set by
+    the build system are in lower case, and user customizable
+    variables are upper case. When referencing a path or a script in
+    your makefile, always use the system variables, rather than hard
+    coding any paths.
+
+    \begin{Description}[HOSTCCX]
+    \item[build]
+      The directory to hold the build products.  You should untar your
+      sources into this directory.
+
+    % comply - internal use only
+
+    \item[dld]
+      The download directory, in which to put the source tar files.
+
+    \item[etc]
+      The directory containing the sources for {\fw /etc} on the
+      target.
+
+    \item[fetch]
+      A script you should use to get your source tar file.
+
+    % gitbase - internal use only
+    % liclist - internal use only
+    % needed - internal use only
+    % redist - internal use only
+
+    \item[rootfs]
+      The target root file system. Install the build products into
+      this directory. Bear in mind that we are making an embedded
+      system, so you might want to pick out just the essential files,
+      and not run the normal 'make install'.
+
+    \item[stage]
+      The staging area for development libraries and headers. If your
+      package provides a shared library for other packages, then do a
+      full install into this directory.
+
+    % stamp - internal use only
+
+    \item[start]
+      A script you should use to install a startup script for your
+      application or daemon.
+
+    \item[unpack]
+      A script you may use to unpack your source tar file. If your
+      package originates from a third party and is licensed from under
+      the GPL, and you have modified it, then you should use this
+      script. It will automatically diff the original sources with
+      your modified version.
+
+    \item[HOSTCC]
+      The host compiler, usually just plain old gcc.
+
+    \item[Q]
+      This controls the build verbosity and will be either set to @,
+      or it will be empty. Precede each rule that you write with this
+      variable.
+
+    \item[ac\_env]
+      An environmnet suitable for passing to a GNU configure script.
+
+    \item[ac\_flags]
+      Command line options suitable for passing to a GNU configure
+      script.
+
+    \item[karch]
+      This variable contains the name of the appropriate Linux
+      architecture for the particular board.
+
+    \item[kconfig]
+      If this variable is set, then the user would like to run the
+      interactive menuconfig option, if any.
+
+    \item[muffle]
+      This macro can be used to control the build verbosity. It
+      redirects the standard output to {\fw /dev/null}. Add this to
+      the end of your rules if your upstream build is too noisy.
+
+    \end{Description}
+
+\section{Adding a New Board}
+
+    Adding a new board type is initially just as easy as adding a new
+    package. To add a new board named ``alice,'' enter the following
+    command.
+
+\begin{lstlisting}[language=bash,escapechar=X]
+X\$X make new_board BRD=alice
+\end{lstlisting}
+
+   This will create under {\fw config/alice} a new board derived from
+   the generic board. Every new board requires a few first steps.
+
+   \begin{enumerate}
+   \item Edit {\fw config/\$BOARD/etc/inittab} to set the desired login terminals.
+   \item Run {\fw make menuconfig} to customize the Board Settings menu.
+   \end{enumerate}
+
+\section{License Compliance}
+% explain license compliance
+% explain packages with multiple licenses
+\subsection{License Notification}
+\subsection{Redistributables}
+\subsection{Upstream Sources}
+% explain the UPSTREAM variable and the unpack.sh script
+
+\section{Working with \slim}
+\subsection{Continuous Disintegration}
+% explain baselines
+% explain off line development
+\subsection{Release Management}
+
+\bibliographystyle{elsarticle-num}
+\bibliography{refs}
+\end{document}
+
+* support mutiple flavors
+  - two or more package sets, possibly overlapping
+  - compile shared packages just once
+  - stamp directory partly? shared
+  - separate download directories (otherwise might mix same package name, two different SHA1 sums)
+  - separate rootfs (make repopulate)
+  - separate stage (otherwise might mix same library name, two different versions)
+  - separate build products:
+    1. kernel image
+    2. file system image
+    3. redist: manifest, licenses, gpl sources
