@@ -123,9 +123,9 @@ case "$method" in
 	;;
     wget)
 	cd "$dest"
-	if [ -n "$SLIM_WGET_MIRROR" ]; then
-	    echo "   FETCH    from $SLIM_WGET_MIRROR instead of $source"
-	    source="$SLIM_WGET_MIRROR"
+	if [ -n "$SLIM_WGET" ]; then
+	    echo "   FETCH    from $SLIM_WGET instead of $source"
+	    source="$SLIM_WGET"
 	fi
 	if [ -f "../../download/$file" ]; then
 	    echo "   FETCH    already have $file in main download area"
