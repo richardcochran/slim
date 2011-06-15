@@ -321,6 +321,21 @@ $(stamp)/pkg.%.gitdev:
 	$(Q) $(MAKE) -C pkg/$* -I$(pwd) gitdev OUTPUT=$(pwd)/$@ pkg=$*
 
 #
+# Targets to make new packages and boards.
+#
+
+new_board:
+	if [ -z $(BRD) ]; then echo Need a board name, BRD=xyz; false; fi
+	mkdir -p config/$(BRD)
+	cp -a config/generic/etc config/$(BRD)
+	sed -e 's/generic/$(BRD)/g' config/generic/slim_config > config/$(BRD)/slim_config
+	printf "\nA new board has been created under config/$(BRD).\n"
+	printf "Please be sure to complete the following steps:\n\n"
+	printf "\t1. Edit config/$(BRD)/etc/inittab to set the desired console.\n"
+	printf "\t2. Enter 'export BOARD=$(BRD)'\n"
+	printf "\t3. Enter 'make menuconfig' and customize the Board Settings menu.\n\n"
+
+#
 # Help on the make targets.
 #
 
