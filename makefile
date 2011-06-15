@@ -280,6 +280,9 @@ endef
 	touch $(stamp)/pkg.$(notdir $*).prefetch
 	$(Q) $(MAKE) -C $* -I$(pwd) distclean
 
+%/update:
+	touch $(stamp)/pkg.$(notdir $*).*
+
 #
 # Menu support
 #
