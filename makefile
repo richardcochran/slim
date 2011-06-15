@@ -258,6 +258,24 @@ $(stamp)/pkg.%.install: $(stamp)/pkg.%.stage
 # Operate on individual packages.
 #
 
+define force
+	$(Q) printf "   %-8s $*\n" $(1)
+	$(Q) $(MAKE) -C $* -I$(pwd) $(2)
+endef
+
+%/fetch:
+	$(call force,FETCH,fetch)
+%/unpack:
+	$(call force,UNPACK,unpack)
+%/prep:
+	$(call force,PREP,prep)
+%/build:
+	$(call force,BUILD,build)
+%/stage:
+	$(call force,STAGE,stage)
+%/install:
+	$(call force,INSTALL,install)
+
 %/distclean:
 	touch $(stamp)/pkg.$(notdir $*).prefetch
 	$(Q) $(MAKE) -C $* -I$(pwd) distclean
