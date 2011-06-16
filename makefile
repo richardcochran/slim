@@ -369,7 +369,7 @@ new_board:
 	sed -e 's/generic/$(BRD)/g' config/generic/slim_config > config/$(BRD)/slim_config
 	printf "\nA new board has been created under config/$(BRD).\n"
 	printf "Please be sure to complete the following steps:\n\n"
-	printf "\t1. Edit config/$(BRD)/etc/inittab to set the desired console.\n"
+	printf "\t1. Edit config/$(BRD)/etc/inittab to set the login terminals.\n"
 	printf "\t2. Enter 'export BOARD=$(BRD)'\n"
 	printf "\t3. Enter 'make menuconfig' and customize the Board Settings menu.\n\n"
 
