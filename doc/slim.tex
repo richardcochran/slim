@@ -192,7 +192,7 @@
     LTIB allows building an external Linux kernel, but in practice
     this method is brittle and error-prone, like many of the
     configuration options. One major drawback of LTIB is the fact that
-    while the most recent developement occurs in an independent open
+    while the most recent development occurs in an independent open
     source project, essential configuration files and patches for many
     boards are only found in out of date releases from Freescale.
     LTIB does not support fetching sources directly from a VCS.
@@ -262,7 +262,7 @@
 \subsubsection{Cross compiler}
 
     The fact that \slim does not compile its own toolchain is a
-    deliberate design descision.  Choosing the right compiler is very
+    deliberate design decision.  Choosing the right compiler is very
     important for the success of an embedded project.  Not every
     combination of gcc, glibc, and binutils yields a correctly working
     compiler.  Our recommendation is to use a cross compiler for your
@@ -341,13 +341,13 @@ git clone git://github.com/richardcochran/slim.git
     These come into play when using a centralized server in a
     corporate LAN setting, for example.
 
-    \begin{Description}[CROSS\_COMPILE ]
+    \begin{Description}[SLIM\_WGETX]
 
     \item[BOARD]
       This identifies your target platform. This variable must match
       one of the subdirectories of {\fw slim/config}.
 
-    \item[CROSS\_COMPILE]
+    \item[CROSS\_COMPILE]\mbox{}\\
       This identifies the compiler to use. Please note that the value
       for this variable should end with a dash (or minus sign).
 
@@ -455,7 +455,7 @@ X\$X make
     initial package.
 
 \begin{lstlisting}[language=bash,escapechar=X]
-X\$X make new_packge PKG=bob GET=wget AC=no
+X\$X make new_package PKG=bob GET=wget AC=no
 \end{lstlisting}
 
     For a git-based package, use this command instead.
@@ -468,6 +468,81 @@ X\$X make new_package PKG=bob GET=git AC=no
     ``AC=yes'' on the command line.
 
 \subsection{Customizing the makefile}
+
+    After creating your package's makefile, the next step is to
+    properly customize its variables and rules. As discussed in
+    Section~\ref{RequiredTargets}, the targets must not be changed,
+    but the rules may be freely changed to do the ``right thing'' for
+    your software package. Some of the variables in the template
+    makefile are used by the build system for license compliance,
+    figuring package dependencies, and for the menu system. These
+    variables are not strictly required by the build system, and if
+    omitted, \slim tries to fall back to a reasonable default. You are
+    free to add any other variables that you need in order to program
+    your makefile correctly or to make it more readable.
+
+    \begin{Description}[XXXXXX]
+    \item[VER]
+      The version string for your package. In the case of a git
+      package, this can be a branch name, a tag, or a SHA1 sum.
+
+    \item[GET]
+      How to fetch your package's sources, either ``git'' or ``wget.''
+
+    \item[URL]
+      The URL for the package's sources. When used as an argument to
+      the {\fw fetch} script, the exact form to use differs depending
+      on whether {\fw GET} is set to ``git'' or ``wget.''  For git,
+      the URL must include the entire path. For wget, the URL should
+      not include the file name itself.
+
+    \item[TGZ]
+      The file name of the source archive. For git packages, this may
+      be different from the name of the repository.
+
+    \end{Description}
+
+\subsubsection{Variables for License Compliance}
+
+    \begin{Description}[UPSTREAMXX]
+    \item[LICENSE]
+      The type of license. Some examples are: \\
+      BSD, GPL, GPL2, GPL3, LGPL, LGPL2, LGPL3, MIT, Proprietary.
+
+    \item[LICFILE]
+      The path within the source archive to the file containing the
+      text of the license. If this variable is non-empty, then the
+      license will be added into {\fw \$BOARD/redist} for the purpose
+      of license notification. This should be set for packages under a
+      GPL or BSD style license.
+
+    \item[UPSTREAM]
+      If you are delivering a modified version of a package under the
+      GPL, and the package is in git, then you can use this variable
+      to identify the origin version. When you pass this to the
+      {\fw fetch} script, it will automatically provide the {\fw diff}
+      file required for license compliance.
+
+    \item[BINARIES]
+      Identifies which executables the package installs into the
+      image. The linkage report uses this list to show the libraries
+      to which proprietary programs have been linked.
+
+    \item[PROVIDES]
+      Identifies which shared libraries the package installs into the
+      image. This list is used when generating a linkage report.
+
+    \end{Description}
+
+\subsubsection{Kconfig Menu Variables}
+
+    \begin{Description}[DESCRIPTIONXXX]
+    \item[CATEGORY]
+      Specifies a category for the package. The package will appear on
+      the same menu together with the others in the same category.
+    \item[DESCRIPTION]
+      A short sentence or two describing the package.
+    \end{Description}
 
 \subsubsection{Dependencies to Other Packages}
 
@@ -489,7 +564,7 @@ BUILD_DEPEND = basefiles.build
 INSTALL_DEPEND = basefiles.install
 \end{lstlisting}
 
-\subsubsection{Required Targets}
+\subsubsection{Required Targets} \label{RequiredTargets}
 
     There are seven required targets: fetch, unpack, prep, build,
     install, clean and distclean. You can choose to do nothing for a
@@ -562,7 +637,7 @@ INSTALL_DEPEND = basefiles.install
       variable.
 
     \item[ac\_env]
-      An environmnet suitable for passing to a GNU configure script.
+      An environment suitable for passing to a GNU configure script.
 
     \item[ac\_flags]
       Command line options suitable for passing to a GNU configure
@@ -582,6 +657,35 @@ INSTALL_DEPEND = basefiles.install
       the end of your rules if your upstream build is too noisy.
 
     \end{Description}
+
+\subsection{Debugging your makefile}
+
+    \slim considers your makefile to be a prerequisite of your
+    package. Every time you edit your makefile, this will cause a
+    complete package remake, staring with the ``fetch'' stage.
+    The assumption behind this is that when the package's makefile
+    changes, the version might have changed, and thus a rebuild is
+    required. When developing and debugging a new package, this
+    behavior can be counter productive. \slim offers a few special
+    targets to work around the default actions in this situation.
+    To force a package (in this example, the ``bob'' package) up
+    to date, use the following make command line.
+
+\begin{lstlisting}[language=bash,escapechar=X]
+X\$X make pkg/bob/update
+\end{lstlisting}
+
+    You can run each of the five main targets, namely fetch, unpack,
+    prep, build, and install, can be run individually for a particular
+    package under development, as shown.
+
+\begin{lstlisting}[language=bash,escapechar=X]
+X\$X make pkg/bob/fetch
+X\$X make pkg/bob/unpack
+X\$X make pkg/bob/prep
+X\$X make pkg/bob/build
+X\$X make pkg/bob/install
+\end{lstlisting}
 
 \section{Adding a New Board}
 
