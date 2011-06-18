@@ -397,7 +397,7 @@ X\$X . scripts/env.sh
 X\$X mkdir ~/slim_git
 \end{lstlisting}
 
-\subsection{Building}
+\subsection{Building} \label{Building}
 
     To build your project, simply type ``make,'' as shown below.
 
@@ -685,6 +685,23 @@ X\$X make pkg/bob/unpack
 X\$X make pkg/bob/prep
 X\$X make pkg/bob/build
 X\$X make pkg/bob/install
+\end{lstlisting}
+
+    In the course of package development, it can happen that the wrong
+    items are copied into the root file system under {\fw \$BOARD/rootfs}.
+    Because \slim offers no ``uninstall'', misplaced files will stay
+    in the root file system indefinitely. One way to deal with this
+    problem is to make the ``distclean'' target, as discussed in
+    Section~\ref{Building}. However, this will result in possibly very
+    long complete rebuild.
+
+    A better solution for this problem is to use the ``repopulate''
+    target, shown below. This target removes the {\fw rootfs}
+    directory and reruns the ``install'' target for all the selected
+    packages, resulting in a clean root file system.
+
+\begin{lstlisting}[language=bash,escapechar=X]
+X\$X make repopulate
 \end{lstlisting}
 
 \section{Adding a New Board}
