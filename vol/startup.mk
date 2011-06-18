@@ -28,3 +28,4 @@ all:
 		echo `basename $$f` >> $(rootfs)/etc/startup.sh; \
 		cat $$f             >> $(rootfs)/etc/startup.sh; \
 	done
+	$(Q) chmod +x $(rootfs)/etc/startup.sh
