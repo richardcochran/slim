@@ -57,7 +57,7 @@ export needed = $(pwd)/scripts/needed.sh
 export start  = $(pwd)/scripts/start.sh -d $(stage)/etc
 export unpack = $(pwd)/scripts/unpack.sh
 
-export karch = $(CONFIG_karch)
+export karch := $(shell echo $(CONFIG_karch))
 export liclist = OSS_LICENSE.TXT
 
 #
@@ -112,6 +112,7 @@ $(foreach v, $(all_vols), $(eval $(call vol_template,$(v))))
 volumes := $(foreach v, $(vol-y), $(stamp)/vol.$(v))
 
 export CONFIG_initrd_size
+export CONFIG_uboot_initrd    := $(shell echo $(CONFIG_uboot_initrd))
 export CONFIG_jffs2_ebs
 export CONFIG_jffs2_pad
 export CONFIG_jffs2_ext       := $(shell echo $(CONFIG_jffs2_ext))
