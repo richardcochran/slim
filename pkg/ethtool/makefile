@@ -33,7 +33,7 @@ unpack:
 
 prep:
 	$(Q) cd $(SRC) && ./autogen.sh
-	$(Q) cd $(SRC) && ./configure $(ac_flags) $(muffle)
+	$(Q) cd $(SRC) && $(ac_env) ./configure $(ac_flags) $(muffle)
 
 build:
 	$(Q) $(MAKE) -C $(SRC)
