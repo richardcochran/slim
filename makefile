@@ -89,6 +89,14 @@ depend := $(stamp)/depend
 -include $(depend)
 
 #
+# Run the menuconfig for busybox, Linux, etc.
+#
+
+ifdef K
+export kconfig = 1
+endif
+
+#
 # Control the verbosity.
 #
 
