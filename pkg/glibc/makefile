@@ -92,7 +92,7 @@ install:
 	$(Q) $(CROSS_COMPILE)strip $(DST)/libstdc++.so*
 	$(Q) cp -d $(GCC_SRC)/libgcc_s.so* $(STAGE)
 	$(Q) cp -d $(GCC_SRC)/libgcc_s.so* $(DST)
-	$(Q) $(CROSS_COMPILE)strip $(DST)/libgcc_s.so*
+	$(Q) $(CROSS_COMPILE)strip $(DST)/libgcc_s.so* || true
 
 clean:
 	$(Q) true
