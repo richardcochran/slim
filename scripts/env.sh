@@ -13,11 +13,11 @@ case $BOARD in
 	generic)
 		CROSS_COMPILE=
 		;;
-	imx35)
-		CROSS_COMPILE=arm-1136jfs-linux-gnueabi-
+	imx35pdk)
+		CROSS_COMPILE=arm-none-linux-gnueabi-
 		;;
 	lite5200)
-		CROSS_COMPILE=powerpc-603e-linux-
+		CROSS_COMPILE=powerpc-linux-gnu-
 		;;
 	mpc8313erdb)
 		CROSS_COMPILE=powerpc-e300c3-linux-gnu-
@@ -45,7 +45,7 @@ append /opt/x-tools/armeb-unknown-linux-gnueabi/bin
 # Freescale i.MX35
 append /opt/freescale/usr/local/gcc-4.1.2-glibc-2.5-nptl-3/arm-none-linux-gnueabi/bin
 # Freescale lite5200
-append /opt/mtwk/usr/local/gcc-3.4.3-glibc-2.3.6-1/powerpc-603e-linux/bin
+append /opt/freescale/usr/local/gcc-4.5.55-eglibc-2.11.55/powerpc-linux-gnu/bin
 # Freescale mpc8313
 append /opt/freescale/usr/local/gcc-4.1.78-eglibc-2.5.78-1/powerpc-e300c3-linux-gnu/bin
 # Freescale p2020
