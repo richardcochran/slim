@@ -1,0 +1,53 @@
+
+* Introduction
+
+  The 'generic' board provides a simple way to compile an image for
+  the development system itself. Using it, you compile the packages
+  for your x86 workstation using the native compiler. This makes it
+  easy to try things out when developing your embedded system, even
+  if the target board is not available.
+
+* Compiling the Image
+
+  - export BOARD=generic
+  - make
+  - make install
+
+* Booting the Image
+
+  This section describes how to use the RAM disk file system. We
+  assume here that SLIM variable CONFIG_tftp_dir is /home/tftp and the
+  Linux kernel you want to use is /boot/bzImage. In order to use a RAM
+  disk file system, your Linux kernel must have the following options.
+
+  CONFIG_BLK_DEV_INITRD=y
+  CONFIG_BLK_DEV_RAM=y
+  CONFIG_EXT2_FS=y
+
+** GRUB
+
+   In the grub boot loader, change to interactive command line mode by
+   pressing 'c' and enter the following commands. Here we assume that
+   your work station's root file system is the first one on the first
+   hard drive.
+
+   root (hd0,0)
+   kernel /boot/bzImage root=/dev/ram0 ramdisk_size=32768 rw
+   initrd /home/tftp/generic-initrd.gz
+
+** QEMU
+
+   To boot the image, enter the following command.
+
+   sudo qemu \
+   -initrd /home/tftp/generic-initrd.gz \
+   -append "init=/linuxrc ramdisk_size=32768 root=/dev/ram0 rw" \
+   -cpu coreduo \
+   -kernel /boot/bzImage \
+   -net nic,model=e1000 \
+   -net tap,script=no
+
+   Then, to enable networking to the virtual system, you can use the
+   following command on the host:
+
+   sudo ifconfig tap0 192.168.0.111
