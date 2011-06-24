@@ -35,6 +35,10 @@ esac
 
 append()
 {
+	echo $PATH | grep -q $1
+	if [ $? -eq 0 ]; then
+		return
+	fi
 	if [ -d $1 ]; then
 		PATH=$PATH:$1
 	fi
