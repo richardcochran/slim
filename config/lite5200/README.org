@@ -1,0 +1,100 @@
+
+* Introduction
+
+  The 'lite5200' board supports the Freescale LITE5200B, a development
+  board for the MPC5200. For this board, the cross compiler provided
+  by Freescale is based on GCC 3.4.3 and is too old to compile a Linux
+  3.0 kernel. Thus, we recommend using a newer tool chain.  The SLIM
+  board support was developed using Code Sourcery G++ Lite 2010.09-55.
+
+* About U-Boot
+
+  The boot loader shipped with the board is U-Boot 1.1.3 (Apr 5 2006).
+  This is a bit too old to boot the Linux 3.0 kernel. We recommend
+  installing a newer U-Boot version. This is safe to try, as long as
+  you pay attention to the correct position of jumper J10 (BOOT SEL).
+  We used U-Boot 2009.03 in order to develop this SLIM board.
+
+* Compiling the Image
+
+  - export BOARD=lite5200
+  - make
+  - make install
+
+* Booting the Image
+
+  This section describes how to use the RAM disk file system. We
+  assume here that SLIM variable CONFIG_tftp_dir is /home/tftp and the
+  Linux kernel you want to use is /home/tftp/uImage. In order to use a
+  RAM disk file system, your Linux kernel must have the following
+  options.
+
+  CONFIG_BLK_DEV_INITRD=y
+  CONFIG_BLK_DEV_RAM=y
+  CONFIG_EXT2_FS=y
+
+** Configure the U-Boot network settings
+
+   1. Check network settings with the 'printenv' command.
+   2. Change 'serverip' if needed.
+
+      setenv ipaddr 192.168.0.77
+      setenv serverip 192.168.0.10
+      setenv netmask 255.255.255.0
+
+** RAM disk root file system, fetch kernel and rootfs via TFTP
+   
+*** Original 2.6.16.11-rt18 Linux kernel from Freescale's BSP
+
+   1. Fetch the kernel and rootfs.
+
+      tftp 200000 uImage.lite5200b
+      tftp 2000000 lite5200-initrd.gz.uboot
+
+   2. Set the kernel command line and boot.
+
+      setenv bootargs console=ttyPSC0,115200 root=/dev/ram ramdisk_size=16384 rw
+      bootm 200000 2000000
+
+*** Linux kernel version 3.0
+
+    setenv loadaddr	1000000
+    setenv fdtaddr	 c00000
+    setenv ramdiskaddr	2000000
+    setenv bootfile	uImage
+    setenv fdtfile	lite5200b.dtb
+    setenv ramdiskfile	lite5200-initrd.gz.uboot
+    tftp $(loadaddr)	$(bootfile)
+    tftp $(fdtaddr)	$(fdtfile)
+    tftp $(ramdiskaddr)	$(ramdiskfile)
+    setenv bootargs console=ttyPSC0,115200 root=/dev/ram rw
+    bootm $(loadaddr) $(ramdiskaddr) $(fdtaddr)
+
+** JFFS in NOR flash
+
+   The flash partitioning in the older kernel from Freescale's BSP is
+   different from the that in the current mainline kernel, as shown
+   below.  In both cases, the file system partition is 29 MB, but the
+   order of the partitions is different.  So if you want to burn the
+   SLIM image into the NOR flash, you will need to decide what
+   partitioning scheme you want to use.  Note that the main line
+   scheme does not have a backup copy of the boot loader, so please be
+   careful.
+
+*** Linux 2.6.16.11-rt18
+
+    Creating 5 MTD partitions on "flash chip on the Lite5200/Lite5200B":
+    0x00000000-0x01d00000 : "Filesystem"
+    0x01d00000-0x01f00000 : "Kernel"
+    0x01f00000-0x01f40000 : "Uboot"
+    0x01f40000-0x01f60000 : "UbootEnv"
+    0x01f60000-0x02000000 : "HighSpare"
+
+*** Linux 3.0
+
+    Creating 5 MTD partitions on "fe000000.flash":
+    0x000000000000-0x000000200000 : "kernel"
+    0x000000200000-0x000001f00000 : "rootfs"
+    0x000001f00000-0x000001f60000 : "u-boot"
+    0x000001f60000-0x000001f80000 : "u-boot-env"
+    0x000001f80000-0x000002000000 : "dtb"
