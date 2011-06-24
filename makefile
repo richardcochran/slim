@@ -140,7 +140,7 @@ $(stamp)/vol.%:
 $(volumes): $(stamp)/manifest
 
 $(stamp)/images: $(volumes)
-	@echo making images: $(vol-y)
+	$(MAKE) -C config/$(BOARD) image
 	$(Q) touch $@
 
 #
@@ -387,6 +387,7 @@ new_board:
 	if [ -z $(BRD) ]; then echo Need a board name, BRD=xyz; false; fi
 	mkdir -p config/$(BRD)
 	cp -a config/generic/etc config/$(BRD)
+	sed -e 's/generic/$(BRD)/g' config/generic/makefile > config/$(BRD)/makefile
 	sed -e 's/generic/$(BRD)/g' config/generic/slim_config > config/$(BRD)/slim_config
 	printf "\nA new board has been created under config/$(BRD).\n"
 	printf "Please be sure to complete the following steps:\n\n"
