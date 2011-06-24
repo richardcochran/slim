@@ -293,6 +293,17 @@ endef
 	touch $(stamp)/pkg.$(notdir $*).*
 
 #
+# Install finished images into a TFTP directory.
+#
+
+install_volume/%:
+	$(Q) $(MAKE) -f vol/$*.mk install
+
+install_volumes := $(foreach v, $(vol-y), install_volume/$(v))
+
+install: $(install_volumes)
+
+#
 # Menu support
 #
 
@@ -393,9 +404,10 @@ help:
 	printf " menuconfig - Update current config utilising a menu based program.\n"
 	printf " clean      - Remove all the build products.\n"
 	printf " distclean  - Remove all the build products and the configuration file.\n"
+	printf " install    - Copy finished image files into a TFTP directory.\n"
 	printf "\n"
 
 #
 # Many targets are not files at all.
 #
-.PHONY: all clean defconfig distclean help images menuconfig rescue
+.PHONY: all clean defconfig distclean help images install menuconfig rescue

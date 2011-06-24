@@ -26,3 +26,5 @@ all:
 	$(Q) cd $(redist) && tar cf - $(LICS) | (cd $(WWW) && tar xf -)
 	$(Q) cd $(WWW) && rm -f manifest.txt manifest.html pretty_manifest.css
 	$(Q) ./license_list.awk < $(redist)/manifest.txt > $(WWW)/manifest.txt
+
+install:

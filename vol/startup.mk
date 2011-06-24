@@ -29,3 +29,5 @@ all:
 		cat $$f             >> $(rootfs)/etc/startup.sh; \
 	done
 	$(Q) chmod +x $(rootfs)/etc/startup.sh
+
+install:
