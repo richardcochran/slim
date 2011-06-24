@@ -15,8 +15,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 UBI_OPT := -e $(CONFIG_ubi_ebs) $(CONFIG_ubi_ext)
-UBIFS   := $(build)/../$(BOARD)-ubifs
-UBI_OUT := $(build)/../$(BOARD)-ubi
+UBIFS   := $(imgdir)/$(BOARD)-ubifs
+UBI_OUT := $(imgdir)/$(BOARD)-ubi
 INI     := $(shell mktemp)
 
 all:

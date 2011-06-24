@@ -14,7 +14,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-IMAGE   = $(build)/../$(BOARD)-rootfs
+IMAGE   = $(imgdir)/$(BOARD)-rootfs
 OPTIONS = --pad=$(CONFIG_jffs2_pad) -e $(CONFIG_jffs2_ebs) $(CONFIG_jffs2_ext)
 
 all:

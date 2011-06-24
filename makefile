@@ -36,6 +36,7 @@ config = .config.$(BOARD)
 #
 # Directories for the board's build products.
 #
+export imgdir = $(pwd)/$(out)
 export build  = $(pwd)/$(out)/build
 export dld    = $(pwd)/$(out)/download
 export redist = $(pwd)/$(out)/redist
