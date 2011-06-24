@@ -1,0 +1,40 @@
+From 00e8f7c1bab6bc98be404b147447c44356f4b104 Mon Sep 17 00:00:00 2001
+From: Richard Cochran <richard.cochran@omicron.at>
+Date: Fri, 24 Jun 2011 10:11:21 +0200
+Subject: [PATCH] Add work around for certain glibc versions.
+
+Certain versions of Linux defined STA_NANO without defining MOD_NANO, and
+this prevents ntpd from building. The issue has been fixed in both Linux
+and glibc, but there are some cross compilers floating around with a bad
+header for <sys/timex.h>.
+
+This work around is essentially the same patch offered by Christopher
+Hoover in the following bug report.
+
+   https://support.ntp.org/bugs/show_bug.cgi?id=1373
+
+Signed-off-by: Richard Cochran <richard.cochran@omicron.at>
+---
+ ntpd/ntp_loopfilter.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/ntpd/ntp_loopfilter.c b/ntpd/ntp_loopfilter.c
+index 1846b55..9c1d7fe 100644
+--- a/ntpd/ntp_loopfilter.c
++++ b/ntpd/ntp_loopfilter.c
+@@ -133,6 +133,12 @@ int	pll_status;		/* last kernel status bits */
+ #if defined(STA_NANO) && NTP_API == 4
+ static u_int loop_tai;		/* last TAI offset */
+ #endif /* STA_NANO */
++/*
++ * Work around missing defines in some glibc/Linux versions.
++ */
++#if defined(STA_NANO) && !defined(MOD_NANO)
++#define MOD_NANO ADJ_NANO
++#endif
+ #endif /* KERNEL_PLL */
+ 
+ /*
+-- 
+1.7.0.4
+

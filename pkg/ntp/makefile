@@ -1,7 +1,7 @@
 # SLIM makefile for the 'ntp' package.
 
 PKG = ntp
-VER = 4.2.4p6
+VER = 4.2.6p3
 GET = wget
 URL = http://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-4.2
 PRG = ntpd ntpdate
@@ -22,6 +22,8 @@ INSTALL_DEPEND = basefiles.install
 
 DESCRIPTION = The Network Time Protocol Version 4 (NTP) distribution.
 
+PATCH := $(shell pwd)/work-around-certain-glibc-versions.patch
+
 ac_flags += --disable-all-clocks --disable-parse-clocks
 
 fetch:
@@ -31,6 +33,7 @@ unpack:
 	$(Q) $(unpack) -d $(build) -f $(TGZ)
 
 prep:
+	$(Q) cd $(SRC) && patch -p1 < $(PATCH) $(muffle)
 	$(Q) cd $(SRC) && $(ac_env) ./configure $(ac_flags) $(muffle)
 
 build:
