@@ -26,7 +26,7 @@ ethernet-based network interface.
 CATEGORY = networking
 
 fetch:
-	$(Q) $(fetch) -d $(dld) -m $(GET) -f $(TGZ) -s $(URL) -t $(VER)
+	$(Q) $(fetch) -m $(GET) -f $(TGZ) -s $(URL) -t $(VER)
 
 unpack:
 	$(Q) $(unpack) -d $(build) -f $(TGZ)

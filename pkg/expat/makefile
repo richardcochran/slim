@@ -23,7 +23,7 @@ INSTALL_DEPEND = basefiles.install
 DESCRIPTION = Expat is a C library for parsing XML.
 
 fetch:
-	$(Q) $(fetch) -d $(dld) -m $(GET) -f $(TGZ) -s $(URL) -t $(VER)
+	$(Q) $(fetch) -m $(GET) -f $(TGZ) -s $(URL) -t $(VER)
 
 unpack:
 	$(Q) $(unpack) -d $(build) -f $(TGZ)
