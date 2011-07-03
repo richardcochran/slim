@@ -1,0 +1,91 @@
+
+* Introduction
+
+  The 'p2020rdb' board supports the Freescale P2020 RDB, a development
+  board for the P2020. For this board, the cross compiler provided
+  by Freescale is based on GCC 4.3.2 and includes SPE (the floating
+  point co-processor) support.
+
+* Compiling the Image
+
+  - export BOARD=p2020rdb
+  - make
+  - make install
+
+* Booting the Image
+
+  This section describes how to use the RAM disk file system. We
+  assume here that SLIM variable CONFIG_tftp_dir is /home/tftp and the
+  Linux kernel you want to use is /home/tftp/uImage. In order to use a
+  RAM disk file system, your Linux kernel must have the following
+  options.
+
+  CONFIG_BLK_DEV_INITRD=y
+  CONFIG_BLK_DEV_RAM=y
+  CONFIG_EXT2_FS=y
+
+  In order to use a JFFS2 flash file system, your Linux kernel must
+  have the following options.
+
+  CONFIG_MTD=y
+  CONFIG_MTD_PARTITIONS=y
+  CONFIG_MTD_CMDLINE_PARTS=y
+  CONFIG_MTD_BLOCK=y
+  CONFIG_MTD_CFI=y
+  CONFIG_MTD_CFI_AMDSTD=y
+  CONFIG_MTD_PHYSMAP_OF=y
+  CONFIG_JFFS2_FS=y
+  CONFIG_JFFS2_FS_WRITEBUFFER=y
+
+** Configure the U-Boot network settings
+
+   1. Check network settings with the 'printenv' command.
+   2. Change 'serverip' if needed.
+
+      setenv ipaddr 192.168.0.77
+      setenv serverip 192.168.0.10
+      setenv netmask 255.255.255.0
+
+** RAM disk root file system, fetch kernel and rootfs via TFTP
+
+   1. Fetch the kernel, device tree, and rootfs.
+
+      setenv loadaddr    1000000
+      setenv fdtaddr      c00000
+      setenv ramdiskaddr 2000000
+      setenv bootfile    uImage
+      setenv fdtfile     p2020rdb.dtb
+      setenv ramdiskfile p2020-initrd.gz.uboot
+      tftp $loadaddr     $bootfile
+      tftp $fdtaddr      $fdtfile
+      tftp $ramdiskaddr  $ramdiskfile
+
+   2. Set the kernel command line and boot.
+
+      setenv bootargs root=/dev/ram rw console=$consoledev,$baudrate
+      bootm $loadaddr $ramdiskaddr $fdtaddr
+   
+** JFFS in NOR flash
+
+   It is possible to burn the image into flash directly using U-Boot,
+   but we do not recommend this since it requires typing the flash
+   addresses and using the somewhat awkward U-Boot command line. An
+   easier and safer way to burn the image into flash is to first boot
+   Linux using the RAM disk root file system, as explained above.
+   Then, you fetch the JFFS2 image via TFTP and flash it as follows.
+
+   1. Fetch the JFFS2 image and burn it into flash.
+
+      cd /tmp
+      tftp -g -r p2020rdb-rootfs 192.168.0.10
+      flash_eraseall /dev/mtd3
+      dd bs=1M count=11 if=p2020rdb-rootfs of=/dev/mtd3
+
+   2. Reboot the system, and then boot using the flash file system.
+
+      setenv bootfile uImage
+      setenv fdtfile  p2020rdb.dtb
+      setenv bootargs console=ttyS0,115200 root=/dev/mtdblock3 rootfstype=jffs2 rw
+      tftp $fdtaddr   $fdtfile
+      tftp $loadaddr  $bootfile
+      bootm $loadaddr - $fdtaddr
