@@ -1,0 +1,30 @@
+
+* Introduction
+
+  The 'imx35pdk board supports the Freescale i.MX35 PDK, a development
+  board for the i.MX35. For this board, the cross compiler provided
+  by Freescale is based on GCC 4.1.2.
+
+* Compiling the Image
+
+  - export BOARD=imx35pdk
+  - make
+  - make install
+
+* Booting the Image
+
+  This section describes how to use the RAM disk file system. We
+  assume here that SLIM variable CONFIG_tftp_dir is /home/tftp and the
+  Linux kernel you want to use is /home/tftp/uImage. In order to use a
+  RAM disk file system, your Linux kernel must have the following
+  options.
+
+  CONFIG_BLK_DEV_INITRD=y
+  CONFIG_BLK_DEV_RAM=y
+  CONFIG_EXT2_FS=y
+
+** RAM disk root file system, fetch kernel and rootfs via TFTP
+
+   load -r -b 0xa00000 imx35pdk-initrd.gz -h 192.168.0.10
+   load -r -b 0x100000 zImage -h 192.168.0.10
+   exec -r 0xa00000 -s 0x2000000 -c "console=ttymxc0,115200 ramdisk_size=65536 root=/dev/ram0"
