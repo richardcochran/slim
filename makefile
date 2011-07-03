@@ -386,6 +386,7 @@ new_package:
 new_board:
 	if [ -z $(BRD) ]; then echo Need a board name, BRD=xyz; false; fi
 	mkdir -p config/$(BRD)
+	touch config/$(BRD)/README.org
 	cp -a config/generic/etc config/$(BRD)
 	sed -e 's/generic/$(BRD)/g' config/generic/makefile > config/$(BRD)/makefile
 	sed -e 's/generic/$(BRD)/g' config/generic/slim_config > config/$(BRD)/slim_config
