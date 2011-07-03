@@ -715,12 +715,54 @@ X\$X make new_board BRD=alice
 \end{lstlisting}
 
    This will create under {\fw config/alice} a new board derived from
-   the generic board. Every new board requires a few first steps.
+   the generic board. Every new board requires a few first
+   customization steps.
 
-   \begin{enumerate}
-   \item Edit {\fw config/\$BOARD/etc/inittab} to set the desired login terminals.
-   \item Run {\fw make menuconfig} to customize the Board Settings menu.
-   \end{enumerate}
+\subsection{Login Terminals}
+
+   Edit {\fw config/\$BOARD/etc/inittab} to set the desired login
+   terminals. By default, a newly created board has an open root shell
+   on the serial port.
+
+\subsection{Board Settings and Package Selection}
+
+   Run {\fw make menuconfig} to customize the Board Settings menu.
+   The menu will save your configuration to {\fw .config.\$BOARD}.
+   Once you are satisfied with the selection of packages and the board
+   configuration, you should save the configuration as the default for
+   the board, by manually copying it to {\fw config/\$BOARD/slim\_config}.
+
+\subsection{Network Settings}
+
+   Edit {\fw config/\$BOARD/etc/interfaces} to configure the network
+   interfaces for your board. By default, a newly created board has
+   one interface configure to the static IP address 192.168.0.77.
+
+\subsection{User Accounts}
+
+   A newly created board has a simple access control scheme with two
+   user accounts, a ``normal'' user and the root user.  We recommend
+   changing the default passwords by editing their hashes in
+
+   {\fw config/\$BOARD/etc/shadow}.
+
+   Of course, you are free to change the accounts to suit your needs.
+   The default user accounts and passwords are shown in
+   Table~\ref{Passwords}.
+%
+   Note that the default sshd\_config in the openssh package allows
+   root login using keys only. By placing their public keys into
+   {\fw config/\$BOARD/etc/authorized\_keys}, you can allow developers
+   to have access to secure root shells on the running image.
+
+   \begin{MyTable}
+     \begin{tabular}{|l|l|} \hline
+     User ID	& Password \\ \hline
+     slim	& slimuser \\ \hline
+     root	& slimroot \\ \hline
+     \end{tabular}
+     \caption{Default user accounts}\label{Passwords}
+   \end{MyTable}
 
 \section{License Compliance}
 % explain license compliance
