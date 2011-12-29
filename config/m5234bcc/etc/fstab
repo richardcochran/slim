@@ -1,0 +1,5 @@
+proc	/proc		proc	defaults	0	0
+sys	/sys		sysfs	defaults	0	0
+temp	/tmp		tmpfs	defaults	0	0
+varun	/var/run	tmpfs	defaults	0	0
+temp	/var/log	tmpfs	defaults	0	0

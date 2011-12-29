@@ -19,6 +19,10 @@ case $BOARD in
 	lite5200)
 		CROSS_COMPILE=powerpc-linux-gnu-
 		;;
+	m5234bcc)
+		export SKIP_STRIP=y
+		CROSS_COMPILE=m68k-uclinux-
+		;;
 	mpc8313erdb)
 		CROSS_COMPILE=powerpc-e300c3-linux-gnu-
 		;;
@@ -46,6 +50,8 @@ append()
 
 # Crosstool compiler for arm ixp4xx
 append /opt/x-tools/armeb-unknown-linux-gnueabi/bin
+# Freescale M5234BCC
+append /opt/x-tools/freescale-coldfire-2011.09/bin
 # Freescale i.MX35
 append /opt/freescale/usr/local/gcc-4.1.2-glibc-2.5-nptl-3/arm-none-linux-gnueabi/bin
 # Freescale lite5200
