@@ -89,6 +89,24 @@ config jffs2_ext
 
 endif
 
+menuconfig romfs
+	prompt "romfs"
+	default n
+	bool
+	help
+	 Create a ROMfs image.
+
+if romfs
+
+config romfs_label
+	prompt "romfs volume label"
+	default "ROMdisk"
+	string
+	help
+	 This string will be used as the image's volume label.
+
+endif
+
 menuconfig ubifs
 	prompt "ubifs"
 	default n

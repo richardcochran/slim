@@ -56,6 +56,7 @@ export comply = $(pwd)/scripts/comply.sh
 export fetch  = $(pwd)/scripts/fetch.sh
 export gitbase= $(pwd)/scripts/gitbase.awk
 export needed = $(pwd)/scripts/needed.sh
+export romdev = $(pwd)/scripts/romdev.sh
 export start  = $(pwd)/scripts/start.sh -d $(stage)/etc
 export unpack = $(pwd)/scripts/unpack.sh
 
@@ -115,7 +116,7 @@ define vol_template
 vol-$$(CONFIG_$(1)) += $(1)
 endef
 
-all_vols := manifest startup initrd jffs2 ubifs
+all_vols := manifest startup initrd jffs2 romfs ubifs
 
 $(foreach v, $(all_vols), $(eval $(call vol_template,$(v))))
 
@@ -126,6 +127,7 @@ export CONFIG_uboot_initrd    := $(shell echo $(CONFIG_uboot_initrd))
 export CONFIG_jffs2_ebs
 export CONFIG_jffs2_pad
 export CONFIG_jffs2_ext       := $(shell echo $(CONFIG_jffs2_ext))
+export CONFIG_romfs_label
 export CONFIG_tftp_dir        := $(shell echo $(CONFIG_tftp_dir))
 export CONFIG_ubi_ebs
 export CONFIG_ubi_ext         := $(shell echo $(CONFIG_ubi_ext))
