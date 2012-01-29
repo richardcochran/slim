@@ -25,6 +25,11 @@ into a single small executable. BusyBox provides a fairly complete POSIX \
 environment for any small system, both embedded environments and more full \
 featured systems concerned about space.
 
+#
+# Look for a board specific configuration file.
+#
+CFG = $(shell [ -f $(brdcfg).$(PKG) ] && echo $(brdcfg).$(PKG) || echo Config)
+
 fetch:
 	$(Q) $(fetch) -m $(GET) -f $(TGZ) -s $(URL) -t $(VER)
 
@@ -32,7 +37,7 @@ unpack:
 	$(Q) $(unpack) -d $(build) -f $(TGZ)
 
 prep:
-	$(Q) cp Config $(SRC)/.config
+	$(Q) cp $(CFG) $(SRC)/.config
 	$(Q) $(MAKE) -C $(SRC) silentoldconfig $(muffle)
 ifdef kconfig
 	$(Q) $(MAKE) -C $(SRC) menuconfig

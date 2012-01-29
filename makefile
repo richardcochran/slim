@@ -49,6 +49,7 @@ dirs = $(build) $(dld) download $(redist) $(rootfs) $(stage) $(stamp)
 #
 # Scripts for the package makefiles.
 #
+export brdcfg = $(pwd)/config/$(BOARD)/Config
 export etc    = $(pwd)/config/$(BOARD)/etc
 export catlic = $(pwd)/scripts/catlic.sh
 export comply = $(pwd)/scripts/comply.sh
