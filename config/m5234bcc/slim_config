@@ -1,6 +1,6 @@
 #
 # Automatically generated make config: don't edit
-# Wed Dec 28 19:01:09 2011
+# Sun Feb 19 15:09:36 2012
 #
 
 #
@@ -33,6 +33,7 @@ CONFIG_essential=y
 CONFIG_basefiles=y
 CONFIG_busybox=y
 # CONFIG_fbv is not set
+CONFIG_linux=y
 # CONFIG_mtd-utils is not set
 
 #
