@@ -44,7 +44,9 @@ stage:
 install:
 	$(Q) mkdir -p $(DST)
 	$(Q) cd $(SRC) && cp $(PRG) $(DST)
+ifndef SKIP_STRIP
 	$(Q) $(CROSS_COMPILE)strip $(DST)/$(PRG)
+endif
 
 clean:
 	$(Q) $(MAKE) -C $(SRC) distclean || echo nothing to clean
