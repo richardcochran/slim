@@ -289,27 +289,15 @@
 \subsubsection{Host tools}
 
     \slim assumes a Debian GNU/Linux development environment, although
-    it is probably possible to use it under other GNU/Linux
-    distributions as well. Before using \slim for the first time, you
-    should make sure the following Debian packages are installed.
+    it is probably possible to use it under other GNU/Linux distributions
+    as well. Before using \slim for the first time, you should make
+    sure the Debian packages listed in {\fw scripts/debs.sh} are
+    installed. You can run that script to install all the needed
+    packages at your convenience, as shown here.
 
-\begin{verbatim}
-autoconf          findutils         intltool          mtd-utils
-automake          flex              libc6             p7zip-full
-autotools-dev     g++               libc6-dev         patch
-bash              gawk              libglib2.0-dev    sed
-binutils          gcc               liblzo2-2         tar
-bison             genext2fs         liblzo2-dev       tftp
-bsdmainutils      genisoimage       libncurses5       tftpd
-bzip2             git-core          libncurses5-dev   uboot-mkimage
-coreutils         git-gui           libtool           unzip
-cpp               gitk              linux-libc-dev    util-linux
-diff              grep              m4                wget
-diffstat          groff             make              zip
-e2fslibs          groff-base        mktemp            zlib1g
-e2fsprogs         gzip              mount             zlib1g-dev
-file              initramfs-tools
-\end{verbatim}
+\begin{lstlisting}
+sudo ./scripts/debs.sh
+\end{lstlisting}
 
 \subsection{Installation}
 
