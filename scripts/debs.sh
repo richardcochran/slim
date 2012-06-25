@@ -27,7 +27,7 @@ gawk \
 gcc \
 genext2fs \
 genisoimage \
-git-core \
+git \
 git-gui \
 gitk \
 grep \
