@@ -1,11 +1,11 @@
 # SLIM makefile for the 'zlib' package.
 
 PKG = zlib
-VER = 1.2.5
-GET = wget
-URL = http://www.zlib.net
+VER = master
+GET = git
+URL = git://github.com/madler/zlib.git
 PRG =
-TGZ = $(PKG)-$(VER).tar.bz2
+TGZ = $(PKG)-$(VER).tgz
 SRC = $(build)/$(PKG)-$(VER)
 DST = $(rootfs)/usr/lib
 
