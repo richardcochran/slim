@@ -1,7 +1,7 @@
 # SLIM makefile for the 'openssh' package.
 
 PKG = openssh
-VER = 5.0p1
+VER = 6.1p1
 GET = wget
 URL = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable
 PRG = scp sftp ssh ssh-keygen
@@ -22,11 +22,18 @@ INSTALL_DEPEND = zlib.install openssl.install basefiles.install
 
 DESCRIPTION = The Secure SHell, a port of the OpenBSD OpenSSH to Linux.
 
-ac_flags += --disable-nls --sysconfdir=/etc/ssh --enable-shared \
---disable-static --disable-debug --disable-strip \
---disable-etc-default-login --disable-lastlog --disable-utmp \
---disable-utmpx --disable-wtmp --disable-wtmpx --without-bsd-auth \
---without-kerberos5 --without-pam --without-x
+ac_flags += \
+	--sysconfdir=/etc/ssh \
+	--disable-strip \
+	--disable-etc-default-login \
+	--disable-lastlog \
+	--disable-utmp \
+	--disable-utmpx \
+	--disable-wtmp \
+	--disable-wtmpx \
+	--without-bsd-auth \
+	--without-kerberos5 \
+	--without-pam
 
 SBIN = $(rootfs)/usr/sbin
 ETC  = $(rootfs)/etc

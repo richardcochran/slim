@@ -34,6 +34,7 @@ var/lib var/lock var/log var/run
 
 DIR += \
 dev/input \
+dev/pts \
 etc/network/if-down.d \
 etc/network/if-post-down.d \
 etc/network/if-pre-up.d \
@@ -49,7 +50,7 @@ install:
 	$(Q) cp $(etc)/hotplug $(rootfs)/sbin
 	$(Q) cp $(etc)/interfaces $(rootfs)/etc/network
 	$(Q) mkdir -p $(rootfs)/root/.ssh/
-	$(Q) chmod go-rwx $(rootfs)/root/.ssh/
+	$(Q) chmod -R go-rwx $(rootfs)/root/
 	$(Q) cp $(etc)/authorized_keys $(rootfs)/root/.ssh
 
 clean:
