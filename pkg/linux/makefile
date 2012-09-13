@@ -68,7 +68,7 @@ stage:
 
 install:
 	$(Q) grep -q CONFIG_MODULES=y $(SRC)/.config ; \
-	if [ ! $$? ]; then \
+	if [ $$? = 0 ]; then \
 	$(MAKE) $(J) -C $(SRC) ARCH=$(karch) INSTALL_MOD_PATH=$(rootfs) \
 		modules_install ; \
 	fi
