@@ -64,3 +64,5 @@ append /opt/freescale/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux
 export BOARD
 export CROSS_COMPILE
 export PATH
+
+PS1="slim_${BOARD}> "
