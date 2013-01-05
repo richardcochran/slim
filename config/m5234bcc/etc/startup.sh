@@ -1,6 +1,14 @@
 #
-# Startup for the SLIM 'generic' board.
+# Startup for the SLIM 'm5234bcc' board.
 #
+
+mount -t tmpfs -o size=64k,mode=0755 tmpfs /dev
+mkdir /dev/pts
+mount -t devpts devpts /dev/pts
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+mdev -s
 
 mount -a
 

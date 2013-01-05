@@ -33,8 +33,6 @@ DIR = bin dev etc home/slim lib mnt proc root sbin tmp sys usr \
 var/lib var/lock var/log var/run
 
 DIR += \
-dev/input \
-dev/pts \
 etc/network/if-down.d \
 etc/network/if-post-down.d \
 etc/network/if-pre-up.d \
