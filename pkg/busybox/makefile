@@ -38,7 +38,7 @@ unpack:
 
 prep:
 	$(Q) cp $(CFG) $(SRC)/.config
-	$(Q) $(MAKE) -C $(SRC) silentoldconfig $(muffle)
+	$(Q) yes n | $(MAKE) -C $(SRC) oldconfig $(muffle)
 ifdef kconfig
 	$(Q) $(MAKE) -C $(SRC) menuconfig
 endif
