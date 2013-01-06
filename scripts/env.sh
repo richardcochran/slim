@@ -13,6 +13,9 @@ case $BOARD in
 	generic)
 		CROSS_COMPILE=
 		;;
+	beaglebone)
+		CROSS_COMPILE=arm-none-linux-gnueabi-
+		;;
 	imx35pdk)
 		CROSS_COMPILE=arm-none-linux-gnueabi-
 		;;
@@ -60,6 +63,8 @@ append /opt/freescale/usr/local/gcc-4.5.55-eglibc-2.11.55/powerpc-linux-gnu/bin
 append /opt/freescale/usr/local/gcc-4.1.78-eglibc-2.5.78-1/powerpc-e300c3-linux-gnu/bin
 # Freescale p2020
 append /opt/freescale/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin
+# Code Sourcery arm
+append /opt/x-tools/arm-2009q1/bin
 
 export BOARD
 export CROSS_COMPILE

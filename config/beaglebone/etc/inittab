@@ -1,0 +1,9 @@
+::sysinit:/etc/startup.sh
+
+::shutdown:/etc/shutdown.sh
+
+# Login prompt on ttyS0:
+#::respawn:/sbin/getty -L ttyO0 115200 vt100
+
+# Open root shell on ttyS0:
+ttyO0::askfirst:/bin/ash --login
