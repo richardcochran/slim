@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.19.3
-# Wed Jan 11 20:52:33 2012
+# Sat Jan  5 20:56:37 2013
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -557,7 +557,7 @@ CONFIG_FEATURE_DMESG_PRETTY=y
 # CONFIG_LOSETUP is not set
 # CONFIG_LSPCI is not set
 # CONFIG_LSUSB is not set
-# CONFIG_MDEV is not set
+CONFIG_MDEV=y
 # CONFIG_FEATURE_MDEV_CONF is not set
 # CONFIG_FEATURE_MDEV_RENAME is not set
 # CONFIG_FEATURE_MDEV_RENAME_REGEXP is not set
