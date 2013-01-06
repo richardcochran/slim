@@ -1,7 +1,7 @@
 # SLIM makefile for the 'linux' package.
 
 PKG = linux
-VER = v3.2
+VER = v3.7.1
 GET = git
 URL = git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
 PRG = linux
