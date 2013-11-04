@@ -1,4 +1,4 @@
-# SLIM makefile for the 'nslu' board.
+# SLIM makefile for the 'beaglebone' board.
 # Copyright (C) 2011 OMICRON electronics GmbH.
 #
 # This program is free software; you can redistribute it and/or modify
