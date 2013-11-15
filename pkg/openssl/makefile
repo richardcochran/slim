@@ -1,7 +1,7 @@
 # SLIM makefile for the 'openssl' package.
 
 PKG = openssl
-VER = 0.9.8h
+VER = 1.0.1e
 GET = wget
 URL = http://www.openssl.org/source
 PRG =
@@ -46,7 +46,9 @@ prep:
 		$(CIPHERS) $(OPTIONS) $(muffle)
 
 build:
-	$(Q) $(MAKE) -C $(SRC) depend $(muffle)
+	$(Q) $(MAKE) -C $(SRC) \
+		EXTRA_CFLAGS="-I$(stage)/usr/include" \
+		depend $(muffle)
 	$(Q) mkdir -p $(stage)/usr
 	$(Q) $(MAKE) -C $(SRC) \
 		EXTRA_CFLAGS="-I$(stage)/usr/include" \
