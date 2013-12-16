@@ -1,0 +1,51 @@
+
+* Introduction
+
+  The 'beaglebone' board supports the popular Beagle Bone white, a
+  development board for the TI AM3358 ARM Cortex-A8.  The SLIM board
+  support was developed using Code Sourcery G++ Lite 2009q1-203, but
+  any recent ARM toolchain should work.
+
+* Compiling the Image
+
+  - export BOARD=beaglebone
+  - make
+  - make install
+
+* About U-Boot
+
+  The boot loader shipped with the board is a bit too old to boot a
+  mainline Linux 3.0 kernel. We recommend installing a newer U-Boot
+  version. This is safe and easy to try, since the boot loader is just
+  a file on a microSD card.
+
+* Booting the Image
+
+  This section describes how to use the RAM disk file system. We
+  assume here that SLIM variable CONFIG_tftp_dir is /home/tftp and the
+  Linux kernel you want to use is /home/tftp/uImage. In order to use a
+  RAM disk file system, your Linux kernel must have the following
+  options.
+
+  CONFIG_BLK_DEV_INITRD=y
+  CONFIG_BLK_DEV_RAM=y
+  CONFIG_EXT2_FS=y
+
+** Configure the U-Boot network settings
+
+   1. Check network settings with the 'printenv' command.
+   2. Change 'serverip' if needed.
+
+      setenv ipaddr 192.168.0.77
+      setenv serverip 192.168.0.10
+      setenv netmask 255.255.255.0
+
+** RAM disk root file system, fetch kernel and rootfs via TFTP
+
+   setenv bootargs console=ttyO0,115200n8 mem=256M root=/dev/ram rw \
+	initrd=0x82000000,16MB ramdisk_size=16384 earlyprintk=serial
+
+   tftp 81000000 uImage
+   tftp 82000000 beaglebone-initrd.gz
+   tftp 80000000 am335x-bone.dtb
+   bootm 81000000 - 80000000
