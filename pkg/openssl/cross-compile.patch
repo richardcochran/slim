@@ -1,6 +1,6 @@
-diff -ur openssl-1.0.1e.orig/Configure openssl-1.0.1e/Configure
---- openssl-1.0.1e.orig/Configure	2013-11-15 13:39:57.000000000 +0100
-+++ openssl-1.0.1e/Configure	2013-11-15 13:39:53.000000000 +0100
+diff -ur openssl-1.0.1g.orig/Configure openssl-1.0.1g/Configure
+--- openssl-1.0.1g.orig/Configure	2013-11-15 13:39:57.000000000 +0100
++++ openssl-1.0.1g/Configure	2013-11-15 13:39:53.000000000 +0100
 @@ -343,6 +343,10 @@
  ####
  #### Variety of LINUX:-)
