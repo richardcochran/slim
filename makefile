@@ -61,6 +61,7 @@ export start  = $(pwd)/scripts/start.sh -d $(stage)/etc
 export unpack = $(pwd)/scripts/unpack.sh
 
 export karch := $(shell echo $(CONFIG_karch))
+export kvers := $(shell echo $(CONFIG_kvers))
 export liclist = OSS_LICENSE.TXT
 
 #

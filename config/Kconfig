@@ -8,6 +8,15 @@ config karch
 	 When compiling a Linux kernel, use this value for the ARCH
 	 environment variable.
 
+config kvers
+	prompt "Linux Kernel Version"
+	default "v3.14.1"
+	string
+	help
+	 When compiling a Linux kernel, use this branch, SHA1, or
+	 tag. Ideally this should match the version in the board
+	 specific Config.linux file.
+
 config cflags
 	prompt "GNU autoconf cflags"
 	default "-O2"
