@@ -5,8 +5,8 @@ VER = master
 GET = git
 URL = git://github.com/madler/zlib.git
 PRG =
-TGZ = $(PKG)-$(VER).tgz
-SRC = $(build)/$(PKG)-$(VER)
+TGZ = $(PKG).tgz
+SRC = $(build)/$(PKG)
 DST = $(rootfs)/usr/lib
 
 LICENSE  = BSD
