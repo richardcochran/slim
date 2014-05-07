@@ -32,8 +32,10 @@ unpack:
 prep:
 	$(Q) true
 
+export KBUILD_OUTPUT = $(stage)
+
 build:
-	$(Q) $(MAKE) -C $(SRC) CC=$(CROSS_COMPILE)gcc KBUILD_OUTPUT=$(stage)
+	$(Q) $(MAKE) -C $(SRC) CC=$(CROSS_COMPILE)gcc
 
 stage:
 	$(Q) true
