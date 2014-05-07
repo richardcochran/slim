@@ -89,7 +89,7 @@ install:
 	done
 	$(Q) cp -d $(CXX_SRC)/libstdc++.so* $(STAGE)
 	$(Q) cp -d $(CXX_SRC)/libstdc++.so* $(DST)
-	$(Q) $(CROSS_COMPILE)strip $(DST)/libstdc++.so*
+	$(Q) $(CROSS_COMPILE)strip $(DST)/libstdc++.so* || true
 	$(Q) cp -d $(GCC_SRC)/libgcc_s.so* $(STAGE)
 	$(Q) cp -d $(GCC_SRC)/libgcc_s.so* $(DST)
 	$(Q) $(CROSS_COMPILE)strip $(DST)/libgcc_s.so* || true
