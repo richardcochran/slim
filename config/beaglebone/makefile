@@ -16,7 +16,7 @@
 
 image: dtb
 	$(Q) printf "\nBuild products in $(imgdir)\n\n"
-	$(Q) cd $(imgdir) && ls -lh *$(BOARD)* *dtb
+	$(Q) find $(imgdir) -maxdepth 1 -type f | xargs ls -lh
 	$(Q) printf "\n"
 
 DTB = \
