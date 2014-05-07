@@ -64,7 +64,7 @@ append /opt/freescale/usr/local/gcc-4.1.78-eglibc-2.5.78-1/powerpc-e300c3-linux-
 # Freescale p2020
 append /opt/freescale/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin
 # Code Sourcery arm
-append /opt/x-tools/arm-2009q1/bin
+append /opt/x-tools/arm-2011.09-70/bin
 
 export BOARD
 export CROSS_COMPILE

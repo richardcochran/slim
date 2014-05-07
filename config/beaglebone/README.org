@@ -3,8 +3,8 @@
 
   The 'beaglebone' board supports the popular Beagle Bone white, a
   development board for the TI AM3358 ARM Cortex-A8.  The SLIM board
-  support was developed using Code Sourcery G++ Lite 2009q1-203, but
-  any recent ARM toolchain should work.
+  support was developed using Code Sourcery CodeBench Lite 2011.09-70,
+  but any recent ARM toolchain should work.
 
 * Compiling the Image
 
