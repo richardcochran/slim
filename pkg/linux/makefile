@@ -63,6 +63,7 @@ build:
 	$(Q) $(MAKE) $(J) -C $(SRC) ARCH=$(karch) all $(KERNEL)
 
 stage:
+	$(Q) mkdir -p $(stage)/usr/include
 	$(Q) TMP=`mktemp -d`; \
 		$(MAKE) $(J) -C $(SRC) ARCH=$(karch) INSTALL_HDR_PATH=$$TMP \
 		headers_install; \
