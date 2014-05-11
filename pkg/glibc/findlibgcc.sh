@@ -17,7 +17,7 @@ for dir in $path; do
     else
 	#echo not empty
 	#ls $dir
-	echo $dir
+	realpath $dir
 	exit 0
     fi
     #echo

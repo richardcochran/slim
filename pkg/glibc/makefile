@@ -76,14 +76,14 @@ DST = $(rootfs)/lib
 STAGE = $(stage)/lib
 
 install:
+	$(Q) echo "Found libc      in" $(SRC)
+	$(Q) echo "Found libstdc++ in" $(CXX_SRC)
+	$(Q) echo "Found libgcc_s  in" $(GCC_SRC)
 	$(Q) mkdir -p $(STAGE)
-	$(Q) cp $(SRC)/*-*.so $(STAGE)
-	$(Q) cp -d $(SRC)/*.so.[*0-9] $(STAGE)
 	$(Q) mkdir -p $(DST)
-	$(Q) echo Found libc in $(SRC)
-	$(Q) cp $(SRC)/*-*.so $(DST)
-	$(Q) cp -d $(SRC)/*.so.[*0-9] $(DST)
-	$(Q) for f in $(DST)/*-*.so ; do \
+	$(Q) cp -d -R $(SRC)/* $(STAGE)
+	$(Q) cp -d -R $(SRC)/* $(DST)
+	$(Q) for f in `find $(DST) -name \*-\*.so` ; do \
 		echo "\t" $$f ; \
 		$(CROSS_COMPILE)strip $$f ; \
 	done

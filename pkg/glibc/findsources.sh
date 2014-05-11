@@ -8,7 +8,7 @@ path=${path//:/ }
 
 for dir in $path; do
     if [ -d ${dir}../../sources ]; then
-	echo $dir../../sources
+	realpath $dir../../sources
 	#echo FOUND
 	#ls -lh ${dir}../../sources
 	exit 0
