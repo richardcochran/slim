@@ -14,7 +14,7 @@ case $BOARD in
 		CROSS_COMPILE=
 		;;
 	beaglebone)
-		CROSS_COMPILE=arm-none-linux-gnueabi-
+		CROSS_COMPILE=arm-linux-gnueabihf-
 		;;
 	imx35pdk)
 		CROSS_COMPILE=arm-none-linux-gnueabi-
@@ -65,6 +65,8 @@ append /opt/freescale/usr/local/gcc-4.1.78-eglibc-2.5.78-1/powerpc-e300c3-linux-
 append /opt/freescale/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin
 # Code Sourcery arm
 append /opt/x-tools/arm-2011.09-70/bin
+# Linaro arm
+append /opt/x-tools/gcc-linaro-arm-linux-gnueabihf-4.8-2013.10_linux/bin
 
 export BOARD
 export CROSS_COMPILE
