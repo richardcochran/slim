@@ -1,10 +1,11 @@
 
 * Introduction
 
-  The 'beaglebone' board supports the popular Beagle Bone white, a
-  development board for the TI AM3358 ARM Cortex-A8.  The SLIM board
-  support was developed using Code Sourcery CodeBench Lite 2011.09-70,
-  but any recent ARM toolchain should work.
+  The 'beaglebone' board supports the popular Beagle Bone (either the
+  original 'white' or the newer 'black' board), a development board
+  for the TI AM3358 ARM Cortex-A8.  The SLIM board support was
+  developed using Linaro gcc 4.8 2013.10, but any recent ARM toolchain
+  should work.
 
 * Compiling the Image
 
@@ -14,38 +15,96 @@
 
 * About U-Boot
 
-  The boot loader shipped with the board is a bit too old to boot a
-  mainline Linux 3.0 kernel. We recommend installing a newer U-Boot
-  version. This is safe and easy to try, since the boot loader is just
-  a file on a microSD card.
+  The boot loader shipped with the beagle bone white is a bit too old
+  to boot a mainline Linux 3.0 kernel. We recommend installing a newer
+  U-Boot version. This is safe and easy to try, since the boot loader
+  is just a file on a microSD card. In contrast, the boot loader on
+  the beagle bone black is fine to use as is.
 
 * Booting the Image
 
   This section describes how to use the RAM disk file system. We
-  assume here that SLIM variable CONFIG_tftp_dir is /home/tftp and the
-  Linux kernel you want to use is /home/tftp/uImage. In order to use a
-  RAM disk file system, your Linux kernel must have the following
-  options.
+  assume that you have also selected CONFIG_linux and have compiled a
+  Linux kernel as part of the SLIM build. First we show how to try out
+  the image without installing anything. Then we show you can boot the
+  RAM disk automatically by copying the images to the FAT file system
+  on the microSD card.
 
-  CONFIG_BLK_DEV_INITRD=y
-  CONFIG_BLK_DEV_RAM=y
-  CONFIG_EXT2_FS=y
+** Manual Boot Procedure
 
-** Configure the U-Boot network settings
+   This procedure uses the RAM disk root file system, fetching the
+   kernel and rootfs via TFTP.
 
-   1. Check network settings with the 'printenv' command.
-   2. Change 'serverip' if needed.
+*** Configure the U-Boot network settings
 
-      setenv ipaddr 192.168.0.77
-      setenv serverip 192.168.0.10
-      setenv netmask 255.255.255.0
+    1. Check network settings with the 'printenv' command.
+    2. Change 'serverip' if needed.
 
-** RAM disk root file system, fetch kernel and rootfs via TFTP
+       setenv ipaddr 192.168.1.77
+       setenv serverip 192.168.1.12
+       setenv netmask 255.255.255.0
 
-   setenv bootargs console=ttyO0,115200n8 mem=256M root=/dev/ram rw \
-	initrd=0x82000000,16MB ramdisk_size=16384 earlyprintk=serial
+*** Beagle Bone White
 
-   tftp 81000000 uImage
-   tftp 82000000 beaglebone-initrd.gz
-   tftp 80000000 am335x-bone.dtb
-   bootm 81000000 - 80000000
+    setenv bootargs console=ttyO0,115200n8 mem=256M root=/dev/ram rw
+	 initrd=0x82000000,16MB ramdisk_size=16384 earlyprintk=serial
+
+    tftp 81000000 beaglebone-zImage
+    tftp 82000000 beaglebone-initrd.gz
+    tftp 80000000 am335x-bone.dtb
+    bootz 81000000 - 80000000
+
+*** Beagle Bone Black
+
+    setenv bootargs console=ttyO0,115200n8 mem=512M root=/dev/ram rw
+	 initrd=0x81000000,16MB ramdisk_size=16384 earlyprintk=serial
+
+    tftp 80200000 beaglebone-zImage
+    tftp 81000000 beaglebone-initrd.gz
+    tftp 80F80000 am335x-boneblack.dtb
+    bootz 80200000 - 80F80000
+
+** Automatic Boot Procedure
+
+   If you want to have the SLIM image boot automatically after
+   powering on the device, then you can copy the images to a microSD
+   card. For the beagle bone white, you can use the card that came
+   with it. The beagle bone black does not come with a microSD card,
+   but it is easy to make one work with it. Simply copy the files,
+   u-boot.img and MLO, from the boot partition to a FAT file system on
+   a fresh microSD card. You can access the boot partition by booting
+   the original firmware and then mounting the USB mass storage device
+   on your PC computer.
+
+*** Beagle Bone White
+
+    Copy the following files onto the FAT partition on the microSD
+    card.
+
+    - am335x-bone.dtb
+    - beaglebone-initrd.gz
+    - beaglebone-zImage
+
+    On the FAT partition, edit the file, uEnv.txt, so that it reads as
+    follows. Be careful to preserve the very long lines.
+
+bootargs=console=ttyO0,115200n8 mem=256M root=/dev/ram rw initrd=0x82000000,16MB ramdisk_size=16384 earlyprintk=serial
+bootcmd=mmc rescan; fatload mmc 0 80000000 am335x-bone.dtb; fatload mmc 0 81000000 beaglebone-zImage; fatload mmc 0 82000000 beaglebone-initrd.gz; bootz 81000000 - 80000000
+uenvcmd=boot
+
+*** Beagle Bone Black
+
+    Copy the following files onto the FAT partition on the microSD
+    card.
+
+    - am335x-boneblack.dtb
+    - beaglebone-initrd.gz
+    - beaglebone-zImage
+
+    On the FAT partition, edit the file, uEnv.txt, so that it reads as
+    follows. Be careful to preserve the very long lines.
+
+bootargs=console=ttyO0,115200n8 mem=512M root=/dev/ram rw initrd=0x81000000,16MB ramdisk_size=16384 earlyprintk=serial
+mmcdev=0
+bootcmd=i2c mw 0x24 1 0x3e; mmc dev ${mmcdev}; mmc rescan; fatload mmc ${mmcdev} ${fdtaddr} am335x-boneblack.dtb; fatload mmc ${mmcdev} ${loadaddr} beaglebone-zImage; fatload mmc ${mmcdev} ${rdaddr} beaglebone-initrd.gz; bootz ${loadaddr} - ${fdtaddr}
+uenvcmd=boot
