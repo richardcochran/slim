@@ -1,7 +1,7 @@
 # SLIM makefile for the 'busybox' package.
 
 PKG = busybox
-VER = 1_19_3
+VER = 1_20_stable
 GET = git
 URL = git://git.busybox.net/busybox
 PRG =
@@ -38,7 +38,7 @@ unpack:
 
 prep:
 	$(Q) cp $(CFG) $(SRC)/.config
-	$(Q) yes n | $(MAKE) -C $(SRC) oldconfig $(muffle)
+	$(Q) $(MAKE) -C $(SRC) oldconfig $(muffle)
 ifdef kconfig
 	$(Q) $(MAKE) -C $(SRC) menuconfig
 endif
