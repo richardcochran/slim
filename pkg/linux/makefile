@@ -3,7 +3,7 @@
 PKG = linux
 VER = $(kvers)
 GET = git
-URL = git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+URL = git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable
 PRG = linux
 TGZ = $(PKG).tgz
 SRC = $(build)/$(PKG)
