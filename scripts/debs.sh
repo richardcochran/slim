@@ -15,8 +15,8 @@ bsdmainutils \
 bzip2 \
 coreutils \
 cpp \
-diff \
 diffstat \
+diffutils \
 e2fslibs \
 e2fsprogs \
 file \
@@ -58,7 +58,7 @@ sed \
 tar \
 tftp \
 tftpd \
-uboot-mkimage \
+u-boot-tools \
 unzip \
 util-linux \
 wget \
