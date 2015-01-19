@@ -38,7 +38,7 @@ etc/network/if-post-down.d \
 etc/network/if-pre-up.d \
 etc/network/if-up.d
 
-ETC = fstab group inittab passwd shadow shutdown.sh
+ETC = fstab group inittab passwd profile shadow shutdown.sh
 
 install:
 	$(Q) for d in $(DIR); do mkdir -p $(rootfs)/$$d; done

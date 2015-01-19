@@ -2,6 +2,9 @@
 # Startup for the SLIM 'imx35pdk' board.
 #
 
+# Work around multilib compilers.
+export LD_LIBRARY_PATH=/lib:/usr/lib
+
 mount -t tmpfs -o size=64k,mode=0755 tmpfs /dev
 mkdir /dev/pts
 mount -t devpts devpts /dev/pts

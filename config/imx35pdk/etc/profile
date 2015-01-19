@@ -1,0 +1,2 @@
+# Work around multilib compilers.
+export LD_LIBRARY_PATH=/lib:/usr/lib
