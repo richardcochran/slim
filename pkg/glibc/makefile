@@ -62,16 +62,9 @@ ifneq ($(SOURCES_DIR),)
 	done
 endif
 
-ifeq ($(CROSS_COMPILE)gcc,$(HOSTCC))
-SRC     = /lib
-CXX_SRC = /usr/lib
-GCC_SRC = /lib
-else
 SRC     = $(shell ./findlibc.sh)
 CXX_SRC = $(shell ./findstdcxx.sh)
 GCC_SRC = $(shell ./findlibgcc.sh)
-endif
-
 DST = $(rootfs)/lib
 STAGE = $(stage)/lib
 
@@ -81,8 +74,11 @@ install:
 	$(Q) echo "Found libgcc_s  in" $(GCC_SRC)
 	$(Q) mkdir -p $(STAGE)
 	$(Q) mkdir -p $(DST)
-	$(Q) cp -d -R $(SRC)/* $(STAGE)
-	$(Q) cp -d -R $(SRC)/* $(DST)
+	$(Q) for dest in $(DST) $(STAGE); do \
+		cd $(SRC) && \
+		tar cf - `find . -name lib\*.so\* -or -name ld\*so\*` | \
+		(cd $$dest && tar xBf -); \
+	done
 	$(Q) for f in `find $(DST) -name \*-\*.so` ; do \
 		echo "\t" $$f ; \
 		$(CROSS_COMPILE)strip $$f ; \
@@ -93,6 +89,10 @@ install:
 	$(Q) cp -d $(GCC_SRC)/libgcc_s.so* $(STAGE)
 	$(Q) cp -d $(GCC_SRC)/libgcc_s.so* $(DST)
 	$(Q) $(CROSS_COMPILE)strip $(DST)/libgcc_s.so* || true
+	$(Q) if [ -d $(SRC)/../lib64 ]; then \
+		mkdir -p $(rootfs)/lib64 ; \
+		cp -d $(SRC)/../lib64/* $(rootfs)/lib64 ; \
+	fi
 
 clean:
 	$(Q) true
