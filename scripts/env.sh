@@ -66,7 +66,7 @@ append /opt/freescale/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux
 # Code Sourcery arm
 append /opt/x-tools/arm-2011.09-70/bin
 # Linaro arm
-append /opt/x-tools/gcc-linaro-arm-linux-gnueabihf-4.8-2013.10_linux/bin
+append /opt/x-tools/gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux/bin
 
 export BOARD
 export CROSS_COMPILE
