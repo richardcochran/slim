@@ -4,7 +4,7 @@
   The 'beaglebone' board supports the popular Beagle Bone (either the
   original 'white' or the newer 'black' board), a development board
   for the TI AM3358 ARM Cortex-A8.  The SLIM board support was
-  developed using Linaro gcc 4.8 2013.10, but any recent ARM toolchain
+  developed using Linaro gcc 4.8 2014.04, but any recent ARM toolchain
   should work.
 
 * Compiling the Image
