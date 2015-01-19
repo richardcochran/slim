@@ -22,7 +22,7 @@ diff --git a/ntpd/ntp_loopfilter.c b/ntpd/ntp_loopfilter.c
 index 1846b55..9c1d7fe 100644
 --- a/ntpd/ntp_loopfilter.c
 +++ b/ntpd/ntp_loopfilter.c
-@@ -133,6 +133,12 @@ int	pll_status;		/* last kernel status bits */
+@@ -136,6 +136,12 @@
  #if defined(STA_NANO) && NTP_API == 4
  static u_int loop_tai;		/* last TAI offset */
  #endif /* STA_NANO */
@@ -32,9 +32,10 @@ index 1846b55..9c1d7fe 100644
 +#if defined(STA_NANO) && !defined(MOD_NANO)
 +#define MOD_NANO ADJ_NANO
 +#endif
+ static	void	start_kern_loop(void);
+ static	void	stop_kern_loop(void);
  #endif /* KERNEL_PLL */
- 
- /*
+
 -- 
 1.7.0.4
 
