@@ -10,7 +10,7 @@ config karch
 
 config kvers
 	prompt "Linux Kernel Version"
-	default "v3.14.4"
+	default "v3.14.33"
 	string
 	help
 	 When compiling a Linux kernel, use this branch, SHA1, or
