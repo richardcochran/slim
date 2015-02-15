@@ -54,9 +54,10 @@ unpack:
 
 prep:
 	$(Q) cp $(CFG) $(SRC)/.config
-	$(Q) $(MAKE) -C $(SRC) ARCH=$(karch) oldnoconfig $(muffle)
 ifdef kconfig
 	$(Q) $(MAKE) -C $(SRC) ARCH=$(karch) menuconfig
+else
+	$(Q) $(MAKE) -C $(SRC) ARCH=$(karch) oldnoconfig $(muffle)
 endif
 
 build:
