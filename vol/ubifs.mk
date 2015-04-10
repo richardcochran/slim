@@ -30,9 +30,9 @@ all:
 	$(Q) echo "vol_size=$(CONFIG_ubi_volume_size)"	>> $(INI)
 	$(Q) echo "vol_type=dynamic"			>> $(INI)
 #
-	$(Q) mkfs.ubifs $(UBI_OPT) -o $(UBIFS) -d $(rootfs) -D $(etc)/device-table
+	$(Q) /usr/sbin/mkfs.ubifs $(UBI_OPT) -o $(UBIFS) -d $(rootfs) -D $(etc)/device-table
 #
-	$(Q) ubinize $(CONFIG_ubinize_opt) -o $(UBI_OUT) $(INI)
+	$(Q) /usr/sbin/ubinize $(CONFIG_ubinize_opt) -o $(UBI_OUT) $(INI)
 	$(Q) rm -f $(INI)
 
 install:
