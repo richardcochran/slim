@@ -1,0 +1,71 @@
+#
+# Automatically generated make config: don't edit
+# Thu Jun 23 19:12:46 2011
+#
+
+#
+# Board Settings
+#
+CONFIG_karch="arm"
+CONFIG_cflags="-O2"
+CONFIG_ac_target="arm-unknown-linux"
+CONFIG_essential=y
+
+#
+# Software Packages
+#
+
+#
+# libraries
+#
+# CONFIG_boost is not set
+# CONFIG_expat is not set
+CONFIG_glibc=y
+# CONFIG_libdaemon is not set
+# CONFIG_libpng is not set
+# CONFIG_qt is not set
+# CONFIG_tslib is not set
+CONFIG_zlib=y
+
+#
+# main
+#
+CONFIG_basefiles=y
+CONFIG_busybox=y
+# CONFIG_fbv is not set
+# CONFIG_mtd-utils is not set
+
+#
+# networking
+#
+# CONFIG_avahi is not set
+CONFIG_ethtool=y
+# CONFIG_fcgi is not set
+# CONFIG_lighttpd is not set
+CONFIG_networking=y
+# CONFIG_ntp is not set
+CONFIG_openssh=y
+CONFIG_openssl=y
+# CONFIG_php is not set
+# CONFIG_vsftpd is not set
+# CONFIG_xcache is not set
+
+#
+# Image Options
+#
+
+#
+# Image Options
+#
+CONFIG_manifest=y
+CONFIG_startup=y
+CONFIG_tftp_dir="/home/tftp"
+
+#
+# Image Types
+#
+CONFIG_initrd=y
+CONFIG_initrd_size=32768
+# CONFIG_uboot_initrd is not set
+# CONFIG_jffs2 is not set
+# CONFIG_ubifs is not set
