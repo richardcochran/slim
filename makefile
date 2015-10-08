@@ -191,7 +191,7 @@ define pkg_template
 pkg-$$(CONFIG_$(1)) += $(1)
 endef
 
-all_packages := $(notdir $(wildcard pkg/*))
+all_packages := $(sort $(notdir $(wildcard pkg/*)))
 
 $(foreach p,$(all_packages),$(eval $(call pkg_template,$(p))))
 
