@@ -1,7 +1,7 @@
 # SLIM makefile for the 'openssh' package.
 
 PKG = openssh
-VER = 6.7p1
+VER = 7.1p1
 GET = wget
 URL = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable
 PRG = scp sftp ssh ssh-keygen
