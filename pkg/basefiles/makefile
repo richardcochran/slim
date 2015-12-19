@@ -29,7 +29,7 @@ prep:
 build:
 stage:
 
-DIR = bin dev etc home/slim lib mnt proc root sbin tmp sys usr \
+DIR = bin dev etc home/slim lib mnt proc root sbin tmp sys usr usr/lib \
 var/lib var/lock var/log var/run
 
 DIR += \
@@ -50,6 +50,10 @@ install:
 	$(Q) mkdir -p $(rootfs)/root/.ssh/
 	$(Q) chmod -R go-rwx $(rootfs)/root/
 	$(Q) cp $(etc)/authorized_keys $(rootfs)/root/.ssh
+	$(Q) multiarch=`$(CROSS_COMPILE)gcc -print-multiarch 2>/dev/null`; \
+	if [ "x$$multiarch" != "x" ]; then \
+		cd $(rootfs)/usr/lib && ln -s . $$multiarch; \
+	fi
 
 clean:
 	$(Q) rm -Rf $(rootfs)/var/tmp
