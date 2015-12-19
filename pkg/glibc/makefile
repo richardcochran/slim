@@ -6,7 +6,6 @@ GET = NA
 URL = NA
 PRG =
 TGZ =
-SRC = $(shell ./findlibc.sh)
 DST = $(rootfs)/lib
 
 LICENSE  = LGPL
