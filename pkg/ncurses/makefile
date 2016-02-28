@@ -29,8 +29,7 @@ ac_flags += \
 --without-ada \
 --without-manpages \
 --without-progs \
---without-tests \
---disable-ext-funcs
+--without-tests
 
 fetch:
 	$(Q) $(fetch) -m $(GET) -f $(TGZ) -s $(URL) -t $(VER)
