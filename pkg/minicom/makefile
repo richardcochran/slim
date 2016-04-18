@@ -4,7 +4,7 @@ PKG = minicom
 VER = 2.7
 GET = wget
 URL = https://alioth.debian.org/frs/download.php/latestfile/3
-PRG = minicom
+PRG = minicom runscript
 TGZ = $(PKG)-$(VER).tar.gz
 SRC = $(build)/$(PKG)-$(VER)
 DST = $(rootfs)/usr/bin
@@ -41,7 +41,9 @@ stage:
 install:
 	$(Q) mkdir -p $(DST)
 	$(Q) cd $(SRC)/src && cp $(PRG) $(DST)
-	$(Q) $(CROSS_COMPILE)strip $(DST)/$(PRG)
+	$(Q) for p in $(PRG); do \
+		$(CROSS_COMPILE)strip $(DST)/$$p; \
+	done
 #	$(Q) $(start) -n 800 -f template.init
 
 clean:
