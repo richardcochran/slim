@@ -27,6 +27,15 @@ config kdtb
 	 If your board does not need a device tree, then leave this
 	 blank.
 
+config ipipe_vers
+	prompt "I-pipe Linux Kernel Version"
+	default "ipipe-3.14"
+	string
+	help
+	 When compiling an I-pipe Linux kernel, use this branch, SHA1,
+	 or tag.  Ideally this should match the version in the board
+	 specific Config.ipipe file.
+
 config cflags
 	prompt "GNU autoconf cflags"
 	default "-O2"
