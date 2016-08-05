@@ -1,0 +1,12 @@
+
+* Introduction
+
+  The 'sockit' is a development board for the Altera socfpga, an ARM
+  Cortex-A9 SoC.  The SLIM board support was developed using Linaro
+  gcc 4.9 2014.09.
+
+* Compiling the Image
+
+  - export BOARD=sockit
+  - make
+  - make install
