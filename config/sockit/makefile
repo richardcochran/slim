@@ -14,10 +14,19 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-image:
+image: dtb
 	$(Q) printf "\nBuild products in $(imgdir)\n\n"
 	$(Q) find $(imgdir) -maxdepth 1 -type f | xargs ls -lh
 	$(Q) printf "\n"
+
+DTB = $(build)/linux/arch/arm/boot/dts/socfpga_cyclone5_sockit.dtb
+
+dtb:
+	$(Q) for x in $(DTB); do \
+		if [ -f $$x ]; then \
+			cp $$x $(imgdir); \
+		fi \
+	done
 
 #
 #  In a real embedded system, you might combine the file system and
