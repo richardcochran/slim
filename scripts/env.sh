@@ -35,7 +35,7 @@ case $BOARD in
 	nslu)
 		CROSS_COMPILE=armeb-unknown-linux-gnueabi-
 		;;
-	socfpga)
+	sockit)
 		CROSS_COMPILE=arm-linux-gnueabihf-
 		;;
 	*)
