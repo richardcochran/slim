@@ -1,4 +1,4 @@
-# SLIM makefile for the 'socfpga' board.
+# SLIM makefile for the 'sockit' board.
 # Copyright (C) 2011 OMICRON electronics GmbH.
 #
 # This program is free software; you can redistribute it and/or modify
