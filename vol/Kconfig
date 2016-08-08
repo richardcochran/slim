@@ -107,6 +107,13 @@ config romfs_label
 
 endif
 
+config tarball
+	prompt "tgz file"
+	default n
+	bool
+	help
+	 Create a gzipped tar file containing the image.
+
 menuconfig ubifs
 	prompt "ubifs"
 	default n

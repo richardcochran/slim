@@ -117,7 +117,7 @@ define vol_template
 vol-$$(CONFIG_$(1)) += $(1)
 endef
 
-all_vols := manifest startup initrd jffs2 romfs ubifs
+all_vols := manifest startup initrd jffs2 romfs tarball ubifs
 
 $(foreach v, $(all_vols), $(eval $(call vol_template,$(v))))
 
