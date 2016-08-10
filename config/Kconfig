@@ -17,6 +17,16 @@ config kvers
 	 tag. Ideally this should match the version in the board
 	 specific Config.linux file.
 
+config kdtb
+	prompt "Linux Kernel Device Tree Blob"
+	default ""
+	string
+	help
+	 When compiling a Linux kernel, also compile and install this
+	 device tree.  Enter the name including the .dtb extension.
+	 If your board does not need a device tree, then leave this
+	 blank.
+
 config cflags
 	prompt "GNU autoconf cflags"
 	default "-O2"

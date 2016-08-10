@@ -61,6 +61,7 @@ export unpack = $(pwd)/scripts/unpack.sh
 
 export karch := $(shell echo $(CONFIG_karch))
 export kvers := $(shell echo $(CONFIG_kvers))
+export kdtb  := $(shell echo $(CONFIG_kdtb))
 export liclist = OSS_LICENSE.TXT
 
 #

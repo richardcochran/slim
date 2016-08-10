@@ -62,6 +62,9 @@ endif
 
 build:
 	$(Q) $(MAKE) $(J) -C $(SRC) ARCH=$(karch) all $(KERNEL)
+ifneq ($(kdtb),)
+	$(Q) $(MAKE) -C $(SRC) ARCH=$(karch) all $(kdtb)
+endif
 
 stage:
 	$(Q) mkdir -p $(stage)/usr/include
@@ -78,6 +81,9 @@ install:
 		modules_install ; \
 	fi
 	$(Q) cp $(SRC)/$(BOOT)/$(KERNEL) $(imgdir)/$(BOARD)-$(KERNEL)
+ifneq ($(kdtb),)
+	$(Q) cp $(SRC)/$(BOOT)/dts/$(kdtb) $(imgdir)
+endif
 
 clean:
 	$(Q) $(MAKE) -C $(SRC) distclean || echo nothing to clean
