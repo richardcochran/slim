@@ -27,6 +27,13 @@ config kdtb
 	 If your board does not need a device tree, then leave this
 	 blank.
 
+config krfs
+	prompt "Linux Kernel in the root file system"
+	bool
+	help
+	 When compiling a Linux kernel, install the kernel into the
+	 root file system under the /boot directory.
+
 config ipipe_vers
 	prompt "I-pipe Linux Kernel Version"
 	default "ipipe-3.14"

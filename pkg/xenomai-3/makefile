@@ -92,8 +92,15 @@ install:
 		modules_install ; \
 	fi
 	$(Q) cp $(IPIPE_SRC)/$(BOOT)/$(KERNEL) $(imgdir)/$(BOARD)-$(KERNEL).xeno
+ifeq ($(krfs),y)
+	$(Q) mkdir -p $(rootfs)/boot
+	$(Q) cp $(IPIPE_SRC)/$(BOOT)/$(KERNEL) $(rootfs)/boot/$(BOARD)-$(KERNEL).xeno
+endif
 ifneq ($(kdtb),)
 	$(Q) cp $(IPIPE_SRC)/$(BOOT)/dts/$(kdtb) $(imgdir)/$(kdtb).xeno
+ifeq ($(krfs),y)
+	$(Q) cp $(IPIPE_SRC)/$(BOOT)/dts/$(kdtb) $(rootfs)/boot/$(kdtb).xeno
+endif
 endif
 	$(Q) mkdir -p $(DST)/bin
 	$(Q) cd $(stage)/usr/xenomai/bin && \

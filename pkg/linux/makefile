@@ -81,8 +81,15 @@ install:
 		modules_install ; \
 	fi
 	$(Q) cp $(SRC)/$(BOOT)/$(KERNEL) $(imgdir)/$(BOARD)-$(KERNEL)
+ifeq ($(krfs),y)
+	$(Q) mkdir -p $(rootfs)/boot
+	$(Q) cp $(SRC)/$(BOOT)/$(KERNEL) $(rootfs)/boot/$(BOARD)-$(KERNEL)
+endif
 ifneq ($(kdtb),)
 	$(Q) cp $(SRC)/$(BOOT)/dts/$(kdtb) $(imgdir)
+ifeq ($(krfs),y)
+	$(Q) cp $(SRC)/$(BOOT)/dts/$(kdtb) $(rootfs)/boot
+endif
 endif
 
 clean:
