@@ -1,0 +1,12 @@
+
+* Introduction
+
+  The 'zed' board is a development board for the Xilinx Zynq-7000, an
+  ARM Cortex-A9 SoC.  The SLIM board support was developed using
+  Linaro gcc 4.9 2014.09.
+
+* Compiling the Image
+
+  - export BOARD=zed
+  - make
+  - make install

@@ -38,6 +38,9 @@ case $BOARD in
 	sockit)
 		CROSS_COMPILE=arm-linux-gnueabihf-
 		;;
+	zed)
+		CROSS_COMPILE=arm-linux-gnueabihf-
+		;;
 	*)
 		CROSS_COMPILE=
 		;;
