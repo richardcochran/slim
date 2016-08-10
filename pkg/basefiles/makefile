@@ -30,7 +30,7 @@ build:
 stage:
 
 DIR = bin dev etc home/slim lib mnt proc root sbin tmp sys usr usr/lib \
-var/lib var/lock var/log var/run
+ usr/sbin var/lib var/lock var/log var/run
 
 DIR += \
 etc/network/if-down.d \
@@ -46,6 +46,7 @@ install:
 	$(Q) cd $(rootfs)/var && ln -s -f ../tmp tmp
 	$(Q) for f in $(ETC); do cp $(etc)/$$f $(rootfs)/etc/$$f; done
 	$(Q) cp $(etc)/hotplug $(rootfs)/sbin
+	$(Q) cp install-tarball.sh $(rootfs)/usr/sbin
 	$(Q) cp $(etc)/interfaces $(rootfs)/etc/network
 	$(Q) mkdir -p $(rootfs)/root/.ssh/
 	$(Q) chmod -R go-rwx $(rootfs)/root/
