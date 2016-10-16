@@ -1,12 +1,13 @@
 #
 # Automatically generated make config: don't edit
-# Sun Feb 19 15:09:36 2012
+# Tue Dec 23 13:57:44 2014
 #
 
 #
 # Board Settings
 #
 CONFIG_karch="m68k"
+CONFIG_kvers="v3.14.79"
 CONFIG_cflags="-Os"
 CONFIG_ac_target="m68k-uclinux"
 CONFIG_essential=y
@@ -31,6 +32,7 @@ CONFIG_essential=y
 # main
 #
 CONFIG_basefiles=y
+CONFIG_blob=y
 CONFIG_busybox=y
 # CONFIG_fbv is not set
 CONFIG_linux=y
@@ -43,11 +45,13 @@ CONFIG_linux=y
 # CONFIG_ethtool is not set
 # CONFIG_fcgi is not set
 # CONFIG_lighttpd is not set
+# CONFIG_linuxptp is not set
 CONFIG_networking=y
 # CONFIG_ntp is not set
 # CONFIG_openssh is not set
 # CONFIG_openssl is not set
 # CONFIG_php is not set
+# CONFIG_ppp is not set
 # CONFIG_vsftpd is not set
 # CONFIG_xcache is not set
 
