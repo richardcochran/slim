@@ -1,13 +1,16 @@
 #
 # Automatically generated make config: don't edit
-# Tue Dec 23 13:57:44 2014
+# Sat Nov  5 21:23:31 2016
 #
 
 #
 # Board Settings
 #
 CONFIG_karch="m68k"
-CONFIG_kvers="v3.14.79"
+CONFIG_kvers="v4.1.33"
+CONFIG_kdtb=""
+# CONFIG_krfs is not set
+CONFIG_ipipe_vers="ipipe-3.14"
 CONFIG_cflags="-Os"
 CONFIG_ac_target="m68k-uclinux"
 CONFIG_essential=y
@@ -35,8 +38,17 @@ CONFIG_basefiles=y
 CONFIG_blob=y
 CONFIG_busybox=y
 # CONFIG_fbv is not set
+# CONFIG_i2c-tools is not set
+# CONFIG_ipipe is not set
 CONFIG_linux=y
+# CONFIG_minicom is not set
 # CONFIG_mtd-utils is not set
+# CONFIG_ncurses is not set
+# CONFIG_procps-ng is not set
+# CONFIG_rt-tests is not set
+# CONFIG_slush is not set
+# CONFIG_trace-cmd is not set
+# CONFIG_xenomai-3 is not set
 
 #
 # networking
@@ -73,4 +85,5 @@ CONFIG_tftp_dir="/home/tftp"
 # CONFIG_jffs2 is not set
 CONFIG_romfs=y
 CONFIG_romfs_label="ROMdisk"
+# CONFIG_tarball is not set
 # CONFIG_ubifs is not set
