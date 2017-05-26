@@ -1,7 +1,7 @@
 # SLIM makefile for the 'openssl' package.
 
 PKG = openssl
-VER = 1.0.2h
+VER = 1.0.2l
 GET = wget
 URL = http://www.openssl.org/source
 PRG =
