@@ -9,8 +9,8 @@ RSAKEY=/etc/ssh/backup/ssh_host_rsa_key
 ssh_generate_backup()
 {
     rm -f $DSAKEY $RSAKEY
-    /usr/bin/ssh-keygen -N "" -t dsa -f $DSAKEY
-    /usr/bin/ssh-keygen -N "" -t rsa -f $RSAKEY
+    /usr/bin/ssh-keygen -N "" -t dsa -f $DSAKEY > /dev/null
+    /usr/bin/ssh-keygen -N "" -t rsa -f $RSAKEY > /dev/null
     sync
 }
 
