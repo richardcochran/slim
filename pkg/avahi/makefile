@@ -1,9 +1,9 @@
 # SLIM makefile for the 'avahi' package.
 
 PKG = avahi
-VER = v0.6.25
+VER = v0.6.32
 GET = git
-URL = git://git.0pointer.de/avahi.git
+URL = https://github.com/lathiat/avahi.git
 PRG = avahi-autoipd
 TGZ = $(PKG).tgz
 SRC = $(build)/$(PKG)
