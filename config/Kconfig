@@ -17,6 +17,18 @@ config kvers
 	 tag. Ideally this should match the version in the board
 	 specific Config.linux file.
 
+config kcfg
+	prompt "Linux Kernel defconfig"
+	default ""
+	string
+	help
+	 When compiling a Linux kernel, use this defconfig from the
+	 kernel source tree.  Note that this is one of two ways you
+	 can provide the kernel configuration to SLIM.  The other way
+	 is to create a file called config/$BOARD/Config.linux that
+	 contains the desired configuration.  In that case, be sure to
+	 leave this option blank.
+
 config kdtb
 	prompt "Linux Kernel Device Tree Blob"
 	default ""

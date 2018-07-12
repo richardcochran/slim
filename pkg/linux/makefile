@@ -53,7 +53,11 @@ unpack:
 	$(Q) $(unpack) -d $(build) -f $(TGZ)
 
 prep:
+ifeq ($(kcfg),)
 	$(Q) cp $(CFG) $(SRC)/.config
+else
+	$(Q) $(MAKE) -C $(SRC) ARCH=$(karch) $(kcfg)
+endif
 ifdef kconfig
 	$(Q) $(MAKE) -C $(SRC) ARCH=$(karch) menuconfig
 else
