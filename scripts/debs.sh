@@ -4,7 +4,7 @@
 # Convenience script to install the Debian packages needed by SLIM.
 #
 
-aptitude install \
+apt install \
 autoconf \
 automake \
 autotools-dev \
