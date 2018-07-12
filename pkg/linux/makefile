@@ -78,6 +78,7 @@ install:
 	$(Q) grep -q CONFIG_MODULES=y $(SRC)/.config ; \
 	if [ $$? = 0 ]; then \
 	$(MAKE) $(J) -C $(SRC) ARCH=$(karch) INSTALL_MOD_PATH=$(rootfs) \
+		INSTALL_MOD_STRIP="--strip-unneeded" \
 		modules_install ; \
 	fi
 	$(Q) cp $(SRC)/$(BOOT)/$(KERNEL) $(imgdir)/$(BOARD)-$(KERNEL)
