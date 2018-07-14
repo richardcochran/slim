@@ -78,16 +78,17 @@ install:
 		tar cf - `find . -name lib\*.so\* -or -name ld\*so\*` | \
 		(cd $$dest && tar xBf -); \
 	done
-	$(Q) for f in `find $(DST) -name \*-\*.so` ; do \
-		echo "\t" $$f ; \
-		$(CROSS_COMPILE)strip $$f ; \
-	done
 	$(Q) cp -d $(CXX_SRC)/libstdc++.so* $(STAGE)
 	$(Q) cp -d $(CXX_SRC)/libstdc++.so* $(DST)
-	$(Q) $(CROSS_COMPILE)strip $(DST)/libstdc++.so* || true
 	$(Q) cp -d $(GCC_SRC)/libgcc_s.so* $(STAGE)
 	$(Q) cp -d $(GCC_SRC)/libgcc_s.so* $(DST)
-	$(Q) $(CROSS_COMPILE)strip $(DST)/libgcc_s.so* || true
+	$(Q) rm -f $(DST)/debug/libstdc++.so*
+#	Strip everything we can.
+	$(Q) for f in `find $(DST) -type f` ; do \
+		if $(CROSS_COMPILE)strip $$f ; then \
+			echo "\t" $$f ; \
+		fi \
+	done
 	$(Q) if [ -d $(SRC)/../lib64 ]; then \
 		mkdir -p $(rootfs)/lib64 ; \
 		cp -d $(SRC)/../lib64/* $(rootfs)/lib64 ; \
