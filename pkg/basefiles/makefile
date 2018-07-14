@@ -49,8 +49,8 @@ install:
 	$(Q) cp install-tarball.sh $(rootfs)/usr/sbin
 	$(Q) cp $(etc)/interfaces $(rootfs)/etc/network
 	$(Q) mkdir -p $(rootfs)/root/.ssh/
-	$(Q) chmod -R go-rwx $(rootfs)/root/
 	$(Q) cp $(etc)/authorized_keys $(rootfs)/root/.ssh
+	$(Q) chmod -R go-rwx $(rootfs)/root/
 	$(Q) multiarch=`$(CROSS_COMPILE)gcc -print-multiarch 2>/dev/null`; \
 	if [ "x$$multiarch" != "x" ]; then \
 		cd $(rootfs)/usr/lib && ln -s . $$multiarch; \
