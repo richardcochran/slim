@@ -47,7 +47,11 @@ while getopts :dh: OPT; do
 	esac
 done
 
-check config/${BOARD}/Config.busybox ${BOARD}/build/busybox/.config
+if [ -f config/${BOARD}/Config.busybox ]; then
+	check config/${BOARD}/Config.busybox ${BOARD}/build/busybox/.config
+else
+	check pkg/busybox/Config ${BOARD}/build/busybox/.config
+fi
 check config/${BOARD}/Config.ipipe   ${BOARD}/build/ipipe/.config
 check config/${BOARD}/Config.linux   ${BOARD}/build/linux/.config
 check config/${BOARD}/slim_config    .config.${BOARD}
