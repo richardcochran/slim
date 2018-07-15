@@ -1,7 +1,7 @@
 # SLIM makefile for the 'busybox' package.
 
 PKG = busybox
-VER = 1_20_stable
+VER = 1_29_stable
 GET = git
 URL = git://git.busybox.net/busybox
 PRG =
