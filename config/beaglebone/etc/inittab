@@ -2,8 +2,8 @@
 
 ::shutdown:/etc/shutdown.sh
 
-# Login prompt on ttyS0:
-#::respawn:/sbin/getty -L ttyO0 115200 vt100
+# Login prompt on @CONSOLE@:
+#::respawn:/sbin/getty -L @CONSOLE@ 115200 vt100
 
-# Open root shell on ttyS0:
-ttyO0::askfirst:/bin/ash --login
+# Open root shell on @CONSOLE@:
+#vanishing#@CONSOLE@::askfirst:/bin/ash --login

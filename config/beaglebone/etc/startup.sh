@@ -19,3 +19,13 @@ depmod -a
 
 # Set log level to LOG_INFO (debug messages are not logged)
 syslogd -C -l 7
+
+# Start a shell on the kernel's console device
+console=`cat /proc/cmdline | awk -Fconsole= '{print $2}' | awk -F" " '{ print $1 }' | awk -F, '{ print $1 }'`
+if [ -z "$console" ]; then
+	echo "Console device missing from kernel command line."
+else
+	echo "Picked console device $console from kernel command line."
+	sed -i -e 's/#vanishing#//g' -e "s/@CONSOLE@/$console/g" /etc/inittab
+	init -q
+fi
