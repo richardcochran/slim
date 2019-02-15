@@ -35,6 +35,9 @@ case $BOARD in
 	nslu)
 		CROSS_COMPILE=armeb-unknown-linux-gnueabi-
 		;;
+	octeontx)
+		CROSS_COMPILE=aarch64-linux-gnu-
+		;;
 	sockit)
 		CROSS_COMPILE=arm-linux-gnueabihf-
 		;;
@@ -73,6 +76,7 @@ append /opt/freescale/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux
 append /opt/x-tools/arm-2011.09-70/bin
 # Linaro arm
 append /opt/x-tools/gcc-linaro-6.4.1-2017.11-x86_64_arm-linux-gnueabihf/bin
+append /opt/x-tools/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin
 
 export BOARD
 export CROSS_COMPILE

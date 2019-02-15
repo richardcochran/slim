@@ -1,0 +1,94 @@
+#
+# Automatically generated make config: don't edit
+# Sun Nov  4 19:39:18 2018
+#
+
+#
+# Board Settings
+#
+CONFIG_karch="arm64"
+CONFIG_kvers="v3.14.33"
+CONFIG_kcfg=""
+CONFIG_kdtb=""
+# CONFIG_krfs is not set
+CONFIG_ipipe_vers="ipipe-3.14"
+CONFIG_cflags="-O2"
+CONFIG_ac_target="aarch64"
+CONFIG_essential=y
+
+#
+# Software Packages
+#
+
+#
+# libraries
+#
+# CONFIG_boost is not set
+# CONFIG_expat is not set
+CONFIG_glibc=y
+# CONFIG_libdaemon is not set
+# CONFIG_libpng is not set
+# CONFIG_qt is not set
+# CONFIG_tslib is not set
+CONFIG_zlib=y
+
+#
+# main
+#
+CONFIG_basefiles=y
+# CONFIG_blob is not set
+CONFIG_busybox=y
+# CONFIG_e2fsprogs is not set
+# CONFIG_fbv is not set
+# CONFIG_i2c-tools is not set
+# CONFIG_ipipe is not set
+# CONFIG_linux is not set
+# CONFIG_minicom is not set
+# CONFIG_mtd-utils is not set
+# CONFIG_ncurses is not set
+# CONFIG_procps-ng is not set
+# CONFIG_rt-tests is not set
+# CONFIG_slush is not set
+# CONFIG_spi-tools is not set
+# CONFIG_trace-cmd is not set
+# CONFIG_xenomai-3 is not set
+
+#
+# networking
+#
+# CONFIG_avahi is not set
+CONFIG_ethtool=y
+# CONFIG_fcgi is not set
+# CONFIG_lighttpd is not set
+# CONFIG_linuxptp is not set
+# CONFIG_net-snmp is not set
+CONFIG_networking=y
+# CONFIG_ntp is not set
+CONFIG_openssh=y
+CONFIG_openssl=y
+# CONFIG_php is not set
+# CONFIG_ppp is not set
+# CONFIG_vsftpd is not set
+# CONFIG_xcache is not set
+
+#
+# Image Options
+#
+
+#
+# Image Options
+#
+CONFIG_manifest=y
+CONFIG_startup=y
+CONFIG_tftp_dir="/home/tftp"
+
+#
+# Image Types
+#
+CONFIG_initrd=y
+CONFIG_initrd_size=32768
+# CONFIG_uboot_initrd is not set
+# CONFIG_jffs2 is not set
+# CONFIG_romfs is not set
+# CONFIG_tarball is not set
+# CONFIG_ubifs is not set
