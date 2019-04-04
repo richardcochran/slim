@@ -56,7 +56,7 @@ fi
 
 cd "$destdir"
 
-tar -xf "$srcdir"/"$file"
+tar --touch -xf "$srcdir"/"$file"
 
 [ ! -e "$srcdir"/upstream_"$file" ] && exit 0
 
