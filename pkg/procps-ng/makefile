@@ -35,6 +35,9 @@ ac_flags += \
 --disable-wide-memory \
 --disable-numa
 
+export ac_cv_func_malloc_0_nonnull=yes
+export ac_cv_func_realloc_0_nonnull=yes
+
 fetch:
 	$(Q) $(fetch) -m $(GET) -f $(TGZ) -s $(URL) -t $(VER)
 
