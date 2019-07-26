@@ -160,6 +160,7 @@ clean:
 distclean: clean
 	$(MAKE) -C scripts/kconfig distclean
 	rm -f $(config)
+	rm -f .version
 
 repopulate:
 	$(Q) rm -Rf $(rootfs)
@@ -205,10 +206,23 @@ install := $(foreach p, $(pkg-y), $(stamp)/pkg.$(p).install)
 # Create a manifest
 #
 
+version := $(shell $(pwd)/scripts/version.sh $(pwd))
+
+.version: force
+	@echo $(version) > .version.new; \
+	cmp -s .version .version.new || cp .version.new .version; \
+	rm -f .version.new;
+
+force:
+
 pkg_manifest := $(foreach p, $(pkg-y), $(stamp)/pkg.$(p).manifest)
 
-$(stamp)/manifest: $(install) $(pkg_manifest)
-	$(Q) cat $(pkg_manifest) > $(redist)/manifest.txt
+$(stamp)/manifest: $(install) $(pkg_manifest) .version $(pwd)/scripts/version.sh
+	$(Q) printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\n" \
+		slim NA git https://github.com/richardcochran/slim.git \
+		GPL2 $(pwd)/COPYING `cat .version` \
+		> $(redist)/manifest.txt
+	$(Q) cat $(pkg_manifest) >> $(redist)/manifest.txt
 	$(Q) rm -f $(redist)/$(liclist)
 	$(Q) for p in $(pkg-y) ; do \
 		$(MAKE) -C pkg/$$p -I$(pwd) liclist pkg=$$p ; \
