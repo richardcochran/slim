@@ -1,7 +1,7 @@
 # SLIM makefile for the 'procps-ng' package.
 
 PKG = procps-ng
-VER = 3.3.11
+VER = 3.3.15
 GET = wget
 URL = http://downloads.sourceforge.net/project/procps-ng/Production
 PRG = ps top
