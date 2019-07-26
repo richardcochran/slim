@@ -1,7 +1,7 @@
 # SLIM makefile for the 'ncurses' package.
 
 PKG = ncurses
-VER = 5.9
+VER = 6.1
 GET = wget
 URL = http://ftp.gnu.org/pub/gnu/ncurses
 PRG = ncurses
@@ -29,6 +29,7 @@ ac_flags += \
 --without-ada \
 --without-manpages \
 --without-progs \
+--with-termlib \
 --without-tests
 
 fetch:
