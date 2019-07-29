@@ -48,12 +48,10 @@ linux-libc-dev \
 lzma \
 m4 \
 make \
-mktemp \
 mount \
 mtd-utils \
 p7zip-full \
 patch \
-realpath \
 sed \
 tar \
 tftp \
