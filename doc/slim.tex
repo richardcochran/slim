@@ -339,13 +339,10 @@ git clone git://github.com/richardcochran/slim.git
       for this variable should end with a dash (or minus sign).
 
     \item[SLIM\_GIT]
-      This names the source URL for those packages which come from a
-      git repository. If set, the git sources will be fetched from
-      this URL instead of the ones named in the package makefiles.
-      The variable can be set to either a local directory or to a file
-      server in your LAN. When using a file server, it must accept the
-      ``git archive'' command.  If unset, \slim will look for a
-      directory called {\fw slim\_git} in your home directory.
+      This names the directory of repositories for those packages
+      which come from git.  The git sources will be cloned from the
+      URLs named in the package makefiles.  If unset, \slim will look
+      for a directory called {\fw slim\_git} in your home directory.
 
     \item[SLIM\_WGET]
       This variable names a proxy web server. If set, the tar files

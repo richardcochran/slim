@@ -7,11 +7,6 @@ trap error_exit ERR
 do_clone()
 {
     #
-    # If the directory does not exist, assume it is a remote allowing
-    # the git-archive command.
-    #
-    [ ! -d "$slimgit" ] && return
-    #
     # If the directory exists, assume it is the cloned repository.
     #
     [ -d "$slimgit/$dirname" ] && return
@@ -30,8 +25,7 @@ error_exit()
     echo
     case "$method" in
 	git)
-	    echo "git archive --format=tar --prefix=$dirname/ \\"
-	    echo "    --remote=$slimgit/$dirname $tag | gzip > $file"
+	    echo "git archive --format=tar --prefix=$dirname/ $tag | gzip > $file"
 	    ;;
 	wget)
 	    echo wget "$source/$file"
@@ -50,7 +44,7 @@ usage ()
     echo "-f file"
     echo "-h shows this message"
     echo "-m method"
-    echo "-s source url or git remote"
+    echo "-s source url"
     echo "-t tag (only used for git, defaults to 'master')"
     echo "-u upstream tag (only used for git)"
     echo ""
@@ -113,12 +107,11 @@ case "$method" in
     git)
 	dirname=`basename $file .tgz`
 	do_clone
-	cd "$dest"
-	git archive --format=tar --prefix=$dirname/ --remote=$slimgit/$dirname $tag | \
-	    gzip > $file
+	cd $slimgit/$dirname
+	git archive --format=tar --prefix=$dirname/ $tag | gzip > "$dest"/$file
 	if [ ! -z "$upstream" ]; then
 	    git archive --format=tar --prefix=upstream_$dirname/ \
-		--remote=$slimgit/$dirname $upstream | gzip > upstream_$file
+		$upstream | gzip > "$dest"/upstream_$file
 	fi
 	;;
     wget)
