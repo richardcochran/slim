@@ -68,7 +68,7 @@ install:
 	$(Q) cd $(SRC) && cp moduli $(ETC)/ssh
 	$(Q) mkdir -p $(ETC)/ssh/backup
 	$(Q) touch $(ETC)/ssh/default_key
-	$(Q) chmod go-r ssh_host_dsa_key ssh_host_rsa_key
+	$(Q) chmod go-rw ssh_host_dsa_key ssh_host_rsa_key
 	$(Q) cp -d ssh_host_dsa_key ssh_host_rsa_key $(ETC)/ssh/
 	$(Q) $(start) -n 950 -f openssh.init
 
