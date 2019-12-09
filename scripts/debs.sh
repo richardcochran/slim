@@ -7,6 +7,7 @@
 apt install \
 autoconf \
 automake \
+automake-1.15 \
 autotools-dev \
 bash \
 binutils \
