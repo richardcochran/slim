@@ -21,7 +21,7 @@ CATEGORY = main
 
 PREP_DEPEND =
 BUILD_DEPEND =
-INSTALL_DEPEND = basefiles.install
+INSTALL_DEPEND = basefiles.install busybox.install
 
 DESCRIPTION = Utilities for working with Memory Technology Devices under Linux. \
 This package only builds the tools that are useful on an embedded computer.
@@ -54,6 +54,11 @@ stage:
 
 install:
 	$(Q) mkdir -p $(DST)
+	$(Q) for p in $(ALL_PRGS) ; do \
+		if [ -L $(DST)/$$p ]; then \
+			rm -f $(DST)/$$p; \
+		fi ; \
+	done
 	$(Q) for p in $(ALL_TARGETS) ; do \
 		cp $$p $(DST) ; \
 	done
