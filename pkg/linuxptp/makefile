@@ -47,7 +47,7 @@ ifndef SKIP_STRIP
 	$(Q) cd $(SRC) && $(CROSS_COMPILE)strip $(PRG)
 endif
 	$(Q) cd $(SRC) && cp $(PRG) $(DST)
-	$(Q) cd $(SRC) && cp default.cfg gPTP.cfg $(rootfs)/etc
+	$(Q) cd $(SRC)/configs && cp default.cfg gPTP.cfg $(rootfs)/etc
 #	$(Q) $(start) -n 800 -f template.init
 
 clean:
