@@ -16,7 +16,7 @@ BINARIES = $(PRG)
 PROVIDES =
 CATEGORY = networking
 
-PREP_DEPEND = linux.install
+PREP_DEPEND =
 BUILD_DEPEND =
 INSTALL_DEPEND = basefiles.install
 
