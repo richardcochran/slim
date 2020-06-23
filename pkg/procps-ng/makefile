@@ -66,6 +66,8 @@ install:
 	done
 	$(Q) cp -a $(stage)/usr/lib/libprocps.so* $(rootfs)/usr/lib
 	$(Q) $(CROSS_COMPILE)strip $(rootfs)/usr/lib/libprocps.so*
+	$(Q) mkdir -p $(rootfs)/root/.config/procps
+	$(Q) cp toprc $(rootfs)/root/.config/procps
 
 clean:
 	$(Q) $(MAKE) -C $(SRC) distclean || echo nothing to clean
