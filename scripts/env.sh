@@ -73,11 +73,13 @@ append /opt/freescale/usr/local/gcc-4.1.78-eglibc-2.5.78-1/powerpc-e300c3-linux-
 # Freescale p2020
 append /opt/freescale/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin
 # Linaro 32 bit arm
+append /opt/x-tools/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf/bin
 append /opt/x-tools/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin
 append /opt/x-tools/gcc-linaro-6.5.0-2018.12-x86_64_arm-linux-gnueabihf/bin
 append /opt/x-tools/gcc-linaro-5.5.0-2017.10-x86_64_arm-linux-gnueabihf/bin
 append /opt/x-tools/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/bin
 # Linaro 64 bit arm aka aarch64
+append /opt/x-tools/gcc-arm-8.3-2019.03-x86_64-aarch64-linux-gnu/bin
 append /opt/x-tools/gcc-linaro-7.4.1-2019.02-x86_64_aarch64-linux-gnu/bin
 append /opt/x-tools/gcc-linaro-6.5.0-2018.12-x86_64_aarch64-linux-gnu/bin
 
