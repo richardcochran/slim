@@ -16,6 +16,9 @@ case $BOARD in
 	beaglebone)
 		CROSS_COMPILE=arm-linux-gnueabihf-
 		;;
+	garm64)
+		CROSS_COMPILE=aarch64-linux-gnu-
+		;;
 	imx35pdk)
 		CROSS_COMPILE=arm-none-linux-gnueabi-
 		;;
