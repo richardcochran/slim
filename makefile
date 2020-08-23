@@ -19,6 +19,7 @@
 #------------------------------------------------------------------------------
 BOARD          ?= generic
 Q              ?= @
+SLIM_SANDBOX   ?= no
 
 #------------------------------------------------------------------------------
 # Do not change any of the following variables.
@@ -67,6 +68,11 @@ export kdtb  := $(shell echo $(CONFIG_kdtb))
 export krfs  := $(shell echo $(CONFIG_krfs))
 export ipipe_vers := $(shell echo $(CONFIG_ipipe_vers))
 export liclist = OSS_LICENSE.TXT
+
+ifneq ($(SLIM_SANDBOX),no)
+export sandbox=$(pwd)/sandbox
+export CROSS_COMPILE=$(pwd)/scripts/cross-compiler/sandbox-
+endif
 
 #
 # Variables for passing to autoconf.

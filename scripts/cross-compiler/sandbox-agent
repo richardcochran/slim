@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# This script runs the cross compiler inside the chroot jail.
+#
+
+board=$1	; shift
+path=$1		; shift
+command=$1	; shift
+rest="$*"
+
+#
+# Set PATH and CROSS_COMPILE
+#
+export BOARD=$board
+dir=`dirname $0`
+. $dir/../env.sh
+
+cmd=${CROSS_COMPILE}$command
+
+cd $path
+$cmd $rest
+result=$?
+
+exit $result

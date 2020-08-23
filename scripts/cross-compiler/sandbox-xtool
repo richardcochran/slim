@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# Wrapper for the cross compiler.
+#
+# This script passes the command line of the cross compiler to the
+# sandbox-agent script running inside of the chroot jail.
+#
+dir=`dirname $0`
+
+board=$BOARD
+path=$PWD
+command=`basename $0`
+command=${command#"sandbox-"}
+
+linux-user-chroot $sandbox $dir/sandbox-agent \
+	$board \
+	$path \
+	$command \
+"$*"
