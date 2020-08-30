@@ -1,5 +1,15 @@
 # SLIM makefile for the 'ipipe' package.
 
+BROKEN = 1
+
+# This still builds for the BBB, but it won't boot.  The upstream
+# ipipe repo ends its support at kernel 4.9.x, and after that there
+# are per-arch repos.  What a mess. Even the more recent repos are
+# lagging a year behind, currently 4.19.x at the time of this writing.
+#
+# See:
+#    https://gitlab.denx.de/Xenomai
+
 PKG = ipipe
 VER = $(ipipe_vers)
 GET = git

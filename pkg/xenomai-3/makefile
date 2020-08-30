@@ -1,5 +1,10 @@
 # SLIM makefile for the 'xenomai-3' package.
 
+BROKEN = 1
+
+# This still builds for the BBB, but it won't boot.  See the ipipe
+# package for more info.
+
 PKG = xenomai-3
 VER = master
 GET = git
@@ -89,6 +94,7 @@ install:
 	$(Q) grep -q CONFIG_MODULES=y $(IPIPE_SRC)/.config ; \
 	if [ $$? = 0 ]; then \
 	$(MAKE) $(J) -C $(IPIPE_SRC) ARCH=$(karch) INSTALL_MOD_PATH=$(rootfs) \
+		INSTALL_MOD_STRIP="--strip-unneeded" \
 		modules_install ; \
 	fi
 	$(Q) cp $(IPIPE_SRC)/$(BOOT)/$(KERNEL) $(imgdir)/$(BOARD)-$(KERNEL).xeno

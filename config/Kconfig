@@ -50,6 +50,7 @@ config ipipe_vers
 	prompt "I-pipe Linux Kernel Version"
 	default "ipipe-3.14"
 	string
+	depends on broken
 	help
 	 When compiling an I-pipe Linux kernel, use this branch, SHA1,
 	 or tag.  Ideally this should match the version in the board
