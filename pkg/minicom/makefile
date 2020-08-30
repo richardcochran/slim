@@ -1,12 +1,12 @@
 # SLIM makefile for the 'minicom' package.
 
 PKG = minicom
-VER = 2.7
-GET = wget
-URL = https://alioth.debian.org/frs/download.php/latestfile/3
+VER = master
+GET = git
+URL = https://salsa.debian.org/minicom-team/minicom.git
 PRG = minicom runscript
-TGZ = $(PKG)-$(VER).tar.gz
-SRC = $(build)/$(PKG)-$(VER)
+TGZ = $(PKG).tgz
+SRC = $(build)/$(PKG)
 DST = $(rootfs)/usr/bin
 
 LICENSE  = GPL2
@@ -30,6 +30,7 @@ unpack:
 	$(Q) $(unpack) -d $(build) -f $(TGZ)
 
 prep:
+	$(Q) cd $(SRC) && $(ac_env) ./autogen.sh
 	$(Q) cd $(SRC) && $(ac_env) ./configure $(ac_flags) $(muffle)
 
 build:
