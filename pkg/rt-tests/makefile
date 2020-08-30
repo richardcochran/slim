@@ -1,11 +1,11 @@
 # SLIM makefile for the 'rt-tests' package.
 
 PKG = rt-tests
-VER = master
+VER = v1.7
 GET = git
 URL = git://git.kernel.org/pub/scm/linux/kernel/git/clrkwllms/rt-tests.git
 PRG = cyclictest hackbench pi_stress pip_stress pmqtest ptsematest \
- rt-migrate-test sendme signaltest sigwaittest svsematest
+ rt-migrate-test signaltest sigwaittest svsematest
 TGZ = $(PKG).tgz
 SRC = $(build)/$(PKG)
 DST = $(rootfs)/usr/bin
