@@ -1,5 +1,11 @@
 # SLIM makefile for the 'fcgi' package.
 
+BROKEN = 1
+
+# --2020-08-29 21:06:52--  http://www.fastcgi.com/dist/fcgi-2.4.0.tar.gz
+# Resolving www.fastcgi.com (www.fastcgi.com)... 216.213.99.150
+# Connecting to www.fastcgi.com (www.fastcgi.com)|216.213.99.150|:80... failed: Connection timed out.
+
 PKG = fcgi
 VER = 2.4.0
 GET = wget

@@ -1,5 +1,14 @@
 # SLIM makefile for the 'mtd-utils' package.
 
+BROKEN = 1
+
+# /opt/x-tools/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/ld: /home/richard/git/slim/beaglebone/build/mtd-utils/build/lib/libmtd.a(libmtd.o): in function `dev_node2num':
+# /home/richard/git/slim/beaglebone/build/mtd-utils/lib/libmtd.c:446: undefined reference to `major'
+# /opt/x-tools/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/ld: /home/richard/git/slim/beaglebone/build/mtd-utils/lib/libmtd.c:447: undefined reference to `minor'
+# /opt/x-tools/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/ld: /home/richard/git/slim/beaglebone/build/mtd-utils/build/lib/libmtd.a(libmtd_legacy.o): in function `legacy_get_dev_info':
+# /home/richard/git/slim/beaglebone/build/mtd-utils/lib/libmtd_legacy.c:254: undefined reference to `major'
+# /opt/x-tools/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/ld: /home/richard/git/slim/beaglebone/build/mtd-utils/lib/libmtd_legacy.c:255: undefined reference to `minor'
+
 PKG = mtd-utils
 VER = v1.5.1
 GET = git

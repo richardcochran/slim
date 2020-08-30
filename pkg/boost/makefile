@@ -1,5 +1,14 @@
 # SLIM makefile for the 'boost' package.
 
+BROKEN = 1
+
+# Only installs:
+# /rootfs/usr/lib/libboost_system.a
+# /rootfs/usr/lib/libboost_system.so.1.43.0
+# /rootfs/usr/lib/libboost_system.so
+#
+# Thread support fails with ARM GCC 8.3
+
 PKG = boost
 VER = 1_43_0
 GET = wget

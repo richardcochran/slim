@@ -1,5 +1,13 @@
 # SLIM makefile for the 'xcache' package.
 
+BROKEN = 1
+
+# --2020-08-29 21:51:49--  http://xcache.lighttpd.net/pub/Releases/1.3.0/xcache-1.3.0.tar.gz
+# Resolving xcache.lighttpd.net (xcache.lighttpd.net)... 5.9.70.195, 2a01:4f8:161:80c9::2
+# Connecting to xcache.lighttpd.net (xcache.lighttpd.net)|5.9.70.195|:80... connected.
+# HTTP request sent, awaiting response... 404 Not Found
+# 2020-08-29 21:51:50 ERROR 404: Not Found.
+
 PKG = xcache
 VER = 1.3.0
 GET = wget

@@ -1,5 +1,10 @@
 # SLIM makefile for the 'vsftpd' package.
 
+BROKEN = 1
+
+# /opt/x-tools/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf/bin/../lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/ld: cannot find -lnsl
+# collect2: error: ld returned 1 exit status
+
 PKG = vsftpd
 VER = slim
 GET = git

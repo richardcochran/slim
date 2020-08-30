@@ -1,5 +1,11 @@
 # SLIM makefile for the 'tslib' package.
 
+BROKEN = 1
+
+# cp -d /home/richard/git/slim/beaglebone/stage/usr/lib/libts-1.0.so* /home/richard/git/slim/beaglebone/rootfs/usr/lib
+# cp: cannot stat '/home/richard/git/slim/beaglebone/stage/usr/lib/libts-1.0.so*': No such file or directory
+# make[1]: *** [makefile:55: install] Error 1
+
 PKG = tslib
 VER = master
 GET = git

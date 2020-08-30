@@ -1,5 +1,18 @@
 # SLIM makefile for the 'avahi' package.
 
+BROKEN = 1
+
+# configure: error: Package requirements ( gtk+-3.0 ) were not met:
+#
+# No package 'gtk+-3.0' found
+#
+# Consider adjusting the PKG_CONFIG_PATH environment variable if you
+# installed software in a non-standard prefix.
+#
+# Alternatively, you may set the environment variables GTK30_CFLAGS
+# and GTK30_LIBS to avoid the need to call pkg-config.
+# See the pkg-config man page for more details.
+
 PKG = avahi
 VER = v0.6.32
 GET = git

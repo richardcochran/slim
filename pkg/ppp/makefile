@@ -1,5 +1,13 @@
 # SLIM makefile for the 'ppp' package.
 
+BROKEN = 1
+
+# In file included from chap_ms.c:94:
+# pppcrypt.h:41:10: fatal error: des.h: No such file or directory
+#  #include <des.h>
+#           ^~~~~~~
+# compilation terminated.
+
 PKG = ppp
 VER = master
 GET = git

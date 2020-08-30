@@ -1,5 +1,11 @@
 # SLIM makefile for the 'qt' package.
 
+BROKEN = 1
+
+# Cloning into bare repository 'qt'...
+# fatal: unable to connect to gitorious.org:
+# gitorious.org[0: 64.13.172.37]: errno=Connection timed out
+
 PKG = qt
 VER = v4.6.3
 GET = git
