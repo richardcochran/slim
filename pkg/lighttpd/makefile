@@ -18,7 +18,7 @@ CATEGORY = networking
 
 PREP_DEPEND = openssl.stage
 BUILD_DEPEND = openssl.install
-INSTALL_DEPEND = fcgi.install php.install
+INSTALL_DEPEND = php.install
 
 DESCRIPTION = lighttpd a secure, fast, compliant and very flexible \
 web-server which has been optimized for high-performance \
@@ -30,7 +30,7 @@ MOD = $(rootfs)/usr/lib/lighttpd
 
 MODULES = alias dirlisting fastcgi indexfile staticfile
 
-ac_flags += --disable-rpath --enable-shared --libdir=/usr/lib/lighttpd \
+ac_flags += --enable-shared --libdir=/usr/lib/lighttpd \
 --sysconfdir=/etc/lighttpd --with-openssl="$(stage)/usr" --with-zlib \
 --without-attr --without-bzip2 --without-fam --without-gdbm \
 --without-ldap --without-lua --without-memcache --without-mysql \
