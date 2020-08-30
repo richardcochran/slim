@@ -76,6 +76,10 @@ config ac_target
 
 endmenu
 
+config broken
+	default n
+	bool
+
 config essential
 	default y
 	bool

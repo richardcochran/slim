@@ -108,6 +108,9 @@ Kconfig:
 	$(QQ) printf "\tprompt \"%s\"\n" "$(PROMPT)"     >> $(kc_output)
 	$(QQ) printf "\tdefault n\n"                     >> $(kc_output)
 	$(QQ) printf "\tbool\n"                          >> $(kc_output)
+ifeq ($(BROKEN),1)
+	$(QQ) printf "\tdepends on broken\n"             >> $(kc_output)
+endif
 ifneq ($(strip $(kc_select)),)
 	$(QQ) for s in $(kc_select); do \
 		dep=`echo $$s | cut -f1 -d. -` ; \
