@@ -39,6 +39,7 @@ unpack:
 
 prep:
 	$(Q) cd $(SRC) && patch -p1 < $(PATCH) $(muffle)
+	$(Q) cd $(SRC) && $(ac_env) ./bootstrap $(muffle)
 	$(Q) cd $(SRC) && $(ac_env) ./configure $(ac_flags) $(muffle)
 
 build:
