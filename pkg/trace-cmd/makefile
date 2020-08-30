@@ -1,7 +1,7 @@
 # SLIM makefile for the 'trace-cmd' package.
 
 PKG = trace-cmd
-VER = master
+VER = trace-cmd-v2.7
 GET = git
 URL = git://git.kernel.org/pub/scm/linux/kernel/git/rostedt/trace-cmd.git
 PRG = trace-cmd
