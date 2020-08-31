@@ -53,6 +53,7 @@ mount \
 mtd-utils \
 p7zip-full \
 patch \
+rsync \
 sed \
 tar \
 tftp \
