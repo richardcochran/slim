@@ -3,9 +3,9 @@
 PKG = i2c-tools
 VER = 3.1.1
 GET = wget
-URL = http://dl.lm-sensors.org/i2c-tools/releases
+URL = https://mirrors.edge.kernel.org/pub/software/utils/i2c-tools
 PRG = i2cdetect i2cdump i2cget i2cset
-TGZ = $(PKG)-$(VER).tar.bz2
+TGZ = $(PKG)-$(VER).tar.gz
 SRC = $(build)/$(PKG)-$(VER)
 DST = $(rootfs)/usr/bin
 
