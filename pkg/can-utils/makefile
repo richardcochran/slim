@@ -30,14 +30,13 @@ unpack:
 	$(Q) $(unpack) -d $(build) -f $(TGZ)
 
 prep:
-	$(Q) cd $(SRC) && $(ac_env) ./autogen.sh $(muffle)
-	$(Q) cd $(SRC) && $(ac_env) ./configure $(ac_flags) $(muffle)
+	$(Q) true
 
 build:
-	$(Q) $(MAKE) $(J) -C $(SRC) DESTDIR="$(stage)" all $(muffle)
+	$(Q) cd $(SRC) && $(MAKE) $(J) -f Makefile CC=$(CROSS_COMPILE)gcc $(PRG) $(muffle)
 
 stage:
-	$(Q) $(MAKE) -C $(SRC) DESTDIR="$(stage)" install $(muffle)
+	$(Q) true
 
 install:
 	$(Q) mkdir -p $(DST)
