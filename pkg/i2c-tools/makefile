@@ -7,7 +7,7 @@ URL = https://mirrors.edge.kernel.org/pub/software/utils/i2c-tools
 PRG = i2cdetect i2cdump i2cget i2cset
 TGZ = $(PKG)-$(VER).tar.gz
 SRC = $(build)/$(PKG)-$(VER)
-DST = $(rootfs)/usr/bin
+DST = $(rootfs)/usr/sbin
 
 LICENSE  = GPL2
 LICFILE  = $(SRC)/COPYING
@@ -18,7 +18,7 @@ CATEGORY = main
 
 PREP_DEPEND =
 BUILD_DEPEND =
-INSTALL_DEPEND = basefiles.install
+INSTALL_DEPEND = basefiles.install busybox.install
 
 DESCRIPTION = The i2c-tools package contains a heterogeneous set of \
 I2C tools for Linux.
@@ -40,6 +40,11 @@ stage:
 
 install:
 	$(Q) mkdir -p $(DST)
+	$(Q) for p in $(PRG) ; do \
+		if [ -L $(DST)/$$p ]; then \
+			rm -f $(DST)/$$p; \
+		fi ; \
+	done
 ifndef SKIP_STRIP
 	$(Q) cd $(SRC)/tools && $(CROSS_COMPILE)strip $(PRG)
 endif
