@@ -1,25 +1,16 @@
 
 * Introduction
 
-  The 'beaglebone' board supports the popular Beagle Bone (either the
-  original 'white' or the newer 'black' board), a development board
-  for the TI AM3358 ARM Cortex-A8.  The SLIM board support was
-  developed using Linaro gcc 4.8 2014.04, but any recent ARM toolchain
-  should work.
+  The 'beaglebone' board supports the popular Beagle Bone Black, a
+  development board for the TI AM3358 ARM Cortex-A8.  The SLIM board
+  support was originally developed using Linaro gcc 4.8 2014.04, but
+  any recent ARM toolchain should work.
 
 * Compiling the Image
 
   - export BOARD=beaglebone
   - make
   - make install
-
-* About U-Boot
-
-  The boot loader shipped with the beagle bone white is a bit too old
-  to boot a mainline Linux 3.0 kernel. We recommend installing a newer
-  U-Boot version. This is safe and easy to try, since the boot loader
-  is just a file on a microSD card. In contrast, the boot loader on
-  the beagle bone black is fine to use as is.
 
 * Booting the Image
 
@@ -44,19 +35,9 @@
        setenv serverip 192.168.1.12
        setenv netmask 255.255.255.0
 
-*** Beagle Bone White
+*** Load and boot the image via TFTP
 
-    setenv bootargs console=ttyO0,115200n8 mem=256M root=/dev/ram rw
-	 initrd=0x82000000,16MB ramdisk_size=16384 earlyprintk=serial
-
-    tftp 81000000 beaglebone-zImage
-    tftp 82000000 beaglebone-initrd.gz
-    tftp 80000000 am335x-bone.dtb
-    bootz 81000000 - 80000000
-
-*** Beagle Bone Black
-
-    setenv bootargs console=ttyO0,115200n8 mem=512M root=/dev/ram rw
+    setenv bootargs console=ttyS0,115200n8 mem=512M root=/dev/ram rw
 	 initrd=0x81000000,16MB ramdisk_size=16384 earlyprintk=serial
 
     tftp 80200000 beaglebone-zImage
@@ -76,22 +57,6 @@
    the original firmware and then mounting the USB mass storage device
    on your PC computer.
 
-*** Beagle Bone White
-
-    Copy the following files onto the FAT partition on the microSD
-    card.
-
-    - am335x-bone.dtb
-    - beaglebone-initrd.gz
-    - beaglebone-zImage
-
-    On the FAT partition, edit the file, uEnv.txt, so that it reads as
-    follows. Be careful to preserve the very long lines.
-
-bootargs=console=ttyO0,115200n8 mem=256M root=/dev/ram rw initrd=0x82000000,16MB ramdisk_size=16384 earlyprintk=serial
-bootcmd=mmc rescan; fatload mmc 0 80000000 am335x-bone.dtb; fatload mmc 0 81000000 beaglebone-zImage; fatload mmc 0 82000000 beaglebone-initrd.gz; bootz 81000000 - 80000000
-uenvcmd=boot
-
 *** Beagle Bone Black
 
     Copy the following files onto the FAT partition on the microSD
@@ -104,7 +69,7 @@ uenvcmd=boot
     On the FAT partition, edit the file, uEnv.txt, so that it reads as
     follows. Be careful to preserve the very long lines.
 
-bootargs=console=ttyO0,115200n8 mem=512M root=/dev/ram rw initrd=0x81000000,16MB ramdisk_size=16384 earlyprintk=serial
+bootargs=console=ttyS0,115200n8 mem=512M root=/dev/ram rw initrd=0x81000000,16MB ramdisk_size=16384 earlyprintk=serial
 mmcdev=0
 bootcmd=i2c mw 0x24 1 0x3e; mmc dev ${mmcdev}; mmc rescan; fatload mmc ${mmcdev} ${fdtaddr} am335x-boneblack.dtb; fatload mmc ${mmcdev} ${loadaddr} beaglebone-zImage; fatload mmc ${mmcdev} ${rdaddr} beaglebone-initrd.gz; bootz ${loadaddr} - ${fdtaddr}
 uenvcmd=boot
