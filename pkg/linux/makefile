@@ -61,7 +61,7 @@ endif
 ifdef kconfig
 	$(Q) $(MAKE) -C $(SRC) ARCH=$(karch) menuconfig
 else
-	$(Q) $(MAKE) -C $(SRC) ARCH=$(karch) oldnoconfig $(muffle)
+	$(Q) $(MAKE) -C $(SRC) ARCH=$(karch) olddefconfig $(muffle)
 endif
 
 build:
