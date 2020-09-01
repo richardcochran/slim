@@ -78,7 +78,7 @@ export ac_env := \
 	LDFLAGS=-L$(stage)/usr/lib
 
 export ac_flags := \
-	--build=i486-pc-linux-gnu \
+	--build=x86_64-linux-gnu \
 	--cache-file=config.cache \
 	--host=$(CONFIG_ac_target) \
 	--prefix=/usr
