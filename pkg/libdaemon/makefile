@@ -30,6 +30,7 @@ unpack:
 
 prep:
 	$(Q) cd $(SRC) && NOCONFIGURE=1 ./bootstrap.sh $(muffle)
+	$(Q) [ -f $(cache) ] && cp $(cache) $(SRC) || true
 	$(Q) cd $(SRC) && $(ac_env) ./configure $(ac_flags) $(muffle)
 
 build:

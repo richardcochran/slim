@@ -49,6 +49,7 @@ dirs = $(build) $(dld) download $(redist) $(rootfs) $(stage) $(stamp)
 # Scripts for the package makefiles.
 #
 export brdcfg = $(pwd)/config/$(BOARD)/Config
+export cache  = $(pwd)/config/$(BOARD)/config.cache
 export etc    = $(pwd)/config/$(BOARD)/etc
 export catlic = $(pwd)/scripts/catlic.sh
 export comply = $(pwd)/scripts/comply.sh
@@ -78,6 +79,7 @@ export ac_env := \
 
 export ac_flags := \
 	--build=i486-pc-linux-gnu \
+	--cache-file=config.cache \
 	--host=$(CONFIG_ac_target) \
 	--prefix=/usr
 

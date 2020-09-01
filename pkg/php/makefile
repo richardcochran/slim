@@ -50,6 +50,8 @@ unpack:
 prep:
 	$(Q) cd $(SRC) && patch -p1 < $(PATCH1) $(muffle)
 	$(Q) cd $(SRC) && patch -p1 < $(PATCH2) $(muffle)
+# Fails because of file not found.  Whatever.
+#	$(Q) [ -f $(cache) ] && cp $(cache) $(SRC) || true
 	$(Q) cd $(SRC) && $(ac_env) ./configure $(ac_flags) $(muffle)
 
 build:

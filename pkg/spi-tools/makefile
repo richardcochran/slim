@@ -34,6 +34,7 @@ unpack:
 
 prep:
 	$(Q) cd $(SRC) && autoreconf -fim
+	$(Q) [ -f $(cache) ] && cp $(cache) $(SRC) || true
 	$(Q) cd $(SRC) && $(ac_env) ./configure $(ac_flags) $(muffle)
 
 build:

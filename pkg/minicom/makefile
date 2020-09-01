@@ -31,6 +31,7 @@ unpack:
 
 prep:
 	$(Q) cd $(SRC) && $(ac_env) ./autogen.sh
+	$(Q) [ -f $(cache) ] && cp $(cache) $(SRC) || true
 	$(Q) cd $(SRC) && $(ac_env) ./configure $(ac_flags) $(muffle)
 
 build:
