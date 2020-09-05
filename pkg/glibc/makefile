@@ -83,16 +83,18 @@ install:
 	$(Q) cp -d $(GCC_SRC)/libgcc_s.so* $(STAGE)
 	$(Q) cp -d $(GCC_SRC)/libgcc_s.so* $(DST)
 	$(Q) rm -f $(DST)/debug/libstdc++.so*
+#	If this is a 64 bit toolchain, then setup links for the loader.
+	$(Q) if [ -d $(SRC)/../lib64 ]; then \
+		cd $(rootfs)/usr && ln -s ../usr/lib ./lib64 ; \
+		cd $(rootfs) && ln -s ./lib ./lib64 ; \
+		cp -d $(SRC)/../lib64/* $(DST) ; \
+	fi
 #	Strip everything we can.
 	$(Q) for f in `find $(DST) -type f` ; do \
 		if $(CROSS_COMPILE)strip $$f ; then \
 			echo "\t" $$f ; \
 		fi \
 	done
-	$(Q) if [ -d $(SRC)/../lib64 ]; then \
-		mkdir -p $(rootfs)/lib64 ; \
-		cp -d $(SRC)/../lib64/* $(rootfs)/lib64 ; \
-	fi
 
 clean:
 	$(Q) true
