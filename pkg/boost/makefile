@@ -1,18 +1,9 @@
 # SLIM makefile for the 'boost' package.
 
-BROKEN = 1
-
-# Only installs:
-# /rootfs/usr/lib/libboost_system.a
-# /rootfs/usr/lib/libboost_system.so.1.43.0
-# /rootfs/usr/lib/libboost_system.so
-#
-# Thread support fails with ARM GCC 8.3
-
 PKG = boost
-VER = 1_43_0
+VER = 1_72_0
 GET = wget
-URL = http://downloads.sourceforge.net/project/boost/boost/1.43.0
+URL = https://dl.bintray.com/boostorg/release/1.72.0/source
 PRG =
 TGZ = $(PKG)_$(VER).tar.bz2
 SRC = $(build)/$(PKG)_$(VER)
@@ -44,10 +35,12 @@ unpack:
 prep:
 	$(Q) cd $(SRC) && ./bootstrap.sh
 	$(Q) printf "using gcc : %s : %s ;\n" $(GCCVER) $(CROSS_COMPILE)gcc > \
-		$(SRC)/tools/build/v2/user-config.jam
+		$(SRC)/user-config.jam
+
+# The file, user-config.jam, must be in the HOME directory.  Brilliant.
 
 build:
-	$(Q) cd $(SRC) && ./bjam \
+	$(Q) cd $(SRC) && HOME=$(SRC) ./b2 \
 		--with-date_time \
 		--with-program_options \
 		--with-system \
@@ -61,7 +54,7 @@ stage:
 
 install:
 	$(Q) mkdir -p $(DST)
-	$(Q) cp -d $(SRC)/stage/lib/libboost* $(DST)
+	$(Q) cp -d $(SRC)/stage/lib/libboost*so* $(DST)
 	$(Q) $(CROSS_COMPILE)strip $(DST)/libboost*
 
 clean:
