@@ -28,6 +28,7 @@ gawk \
 gcc \
 genext2fs \
 genisoimage \
+genromfs \
 git \
 git-gui \
 gitk \
