@@ -25,6 +25,8 @@ ethernet-based network interface.
 
 CATEGORY = networking
 
+ac_flags += --disable-netlink
+
 fetch:
 	$(Q) $(fetch) -m $(GET) -f $(TGZ) -s $(URL) -t $(VER)
 
