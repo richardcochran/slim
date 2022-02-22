@@ -35,6 +35,9 @@ case $BOARD in
 	mpc8572ds|p2020ds|p2020rdb)
 		CROSS_COMPILE=powerpc-none-linux-gnuspe-
 		;;
+	nitrogen)
+		CROSS_COMPILE=arm-linux-gnueabihf-
+		;;
 	nslu)
 		CROSS_COMPILE=armeb-unknown-linux-gnueabi-
 		;;

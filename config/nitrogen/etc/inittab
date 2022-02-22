@@ -1,0 +1,9 @@
+::sysinit:/etc/startup.sh
+
+::shutdown:/etc/shutdown.sh
+
+# Login prompt on @CONSOLE@:
+#::respawn:/sbin/getty -L @CONSOLE@ 115200 vt100
+
+# Open root shell on @CONSOLE@:
+#vanishing#@CONSOLE@::askfirst:/bin/ash --login

@@ -1,0 +1,88 @@
+#
+# Automatically generated make config: don't edit
+# Tue Feb 22 05:53:18 2022
+#
+
+#
+# Board Settings
+#
+CONFIG_karch="arm"
+CONFIG_kvers="v3.14.33"
+CONFIG_kcfg=""
+CONFIG_kdtb=""
+# CONFIG_krfs is not set
+CONFIG_cflags="-O2"
+CONFIG_ac_target="arm-unknown-linux"
+# CONFIG_broken is not set
+CONFIG_essential=y
+
+#
+# Software Packages
+#
+
+#
+# libraries
+#
+# CONFIG_boost is not set
+# CONFIG_expat is not set
+CONFIG_glibc=y
+# CONFIG_libdaemon is not set
+# CONFIG_libpng is not set
+CONFIG_zlib=y
+
+#
+# main
+#
+CONFIG_basefiles=y
+# CONFIG_blob is not set
+CONFIG_busybox=y
+# CONFIG_e2fsprogs is not set
+# CONFIG_fbv is not set
+# CONFIG_firmware is not set
+# CONFIG_i2c-tools is not set
+# CONFIG_kexec is not set
+# CONFIG_linux is not set
+# CONFIG_minicom is not set
+# CONFIG_ncurses is not set
+# CONFIG_procps-ng is not set
+# CONFIG_rt-tests is not set
+# CONFIG_slush is not set
+# CONFIG_sox is not set
+# CONFIG_spi-tools is not set
+# CONFIG_trace-cmd is not set
+
+#
+# networking
+#
+# CONFIG_can-utils is not set
+CONFIG_ethtool=y
+# CONFIG_iproute2 is not set
+# CONFIG_lighttpd is not set
+CONFIG_linuxptp=y
+CONFIG_networking=y
+# CONFIG_ntp is not set
+CONFIG_openssh=y
+CONFIG_openssl=y
+# CONFIG_php is not set
+
+#
+# Image Options
+#
+
+#
+# Image Options
+#
+CONFIG_manifest=y
+CONFIG_startup=y
+CONFIG_tftp_dir="/home/tftp"
+
+#
+# Image Types
+#
+CONFIG_initrd=y
+CONFIG_initrd_size=65536
+# CONFIG_uboot_initrd is not set
+# CONFIG_jffs2 is not set
+# CONFIG_romfs is not set
+# CONFIG_tarball is not set
+# CONFIG_ubifs is not set
