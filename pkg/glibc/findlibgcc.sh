@@ -3,6 +3,20 @@
 shopt -s nullglob
 shopt -s extglob
 
+#
+# First, try and use -print-sysroot if available.
+#
+
+sysroot=`${CROSS_COMPILE}gcc -print-sysroot 2>/dev/null`
+code=$?
+
+if [ $code = 0 ]; then
+	if [ "x$sysroot" != "x" ]; then
+		realpath $sysroot/lib
+		exit 0
+	fi
+fi
+
 path=`${CROSS_COMPILE}gcc -print-search-dirs | grep libraries | cut -d = -f 2`
 
 path=${path//:/ }
