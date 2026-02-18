@@ -91,9 +91,7 @@ install:
 	fi
 #	Strip everything we can.
 	$(Q) for f in `find $(DST) -type f` ; do \
-		if $(CROSS_COMPILE)strip $$f ; then \
-			echo "\t" $$f ; \
-		fi \
+		$(CROSS_COMPILE)strip $$f 2> /dev/null; \
 	done
 
 clean:
